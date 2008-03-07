@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:view="com.view.*"
+	xmlns:vo="com.vo.*" 
+	layout="absolute"
+	height="500" width="600"
+	applicationComplete="initApp()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import com.view.*;
+			import flash.net.URLRequest;
+			import flash.net.URLLoader;
+			import flash.events.StatusEvent;
+			import com.vo.*;
+			import mx.managers.CursorManager;
+			import flash.system.System;
+			
+			public var urlRequest:URLRequest;
+			public var loader:URLLoader;
+			public var startIndex:Number = 1;
+			public var notebook:Notebook;
+			
+			[Bindable]
+			public var userId:String;
+			[Bindable]
+			public var notebookListUrl:String;
+			[Bindable]
+			public var notebooks:ArrayCollection = new ArrayCollection();
+			[Bindable]
+			public var entries:ArrayCollection = new ArrayCollection();
+			
+			private function initApp():void {
+				CursorManager.setBusyCursor();
+				var createFile:Boolean = true;
+				// start by checking if the users id is saved to text file
+				var file:File = File.applicationStorageDirectory;
+				file = file.resolvePath("userid.txt");
+				// if no file exists or is empty prompt for public URL
+				if (file.exists == true) {
+					var fileStream:FileStream = new FileStream();
+					fileStream.open(file, FileMode.READ);
+					if (fileStream.bytesAvailable > 0) {
+						createFile = false;
+						fileStream.close();
+						readUserId();
+					}
+				}
+				if (createFile == true) {
+					var urlPanel:UrlPanel = new UrlPanel();
+  					mx.managers.PopUpManager.addPopUp(urlPanel,mainLayout,true);
+  					mx.managers.PopUpManager.centerPopUp(urlPanel);
+				}
+			}
+			private function notebookListLoadedHandler(event:Event):void {
+				var docsListXml:XMLDocument = new XMLDocument();
+				docsListXml.parseXML(loader.data);
+				loadNotebooks(docsListXml.firstChild);
+			}
+			public function notebookLoadedHandler(event:Event):void {
+				var docsListXml:XMLDocument = new XMLDocument();
+				docsListXml.parseXML(loader.data);
+				loadEntries(docsListXml.firstChild);
+			}
+			public function readUserId():void {
+				var file:File = File.applicationStorageDirectory;
+				file = file.resolvePath("userid.txt");
+				var fileStream:FileStream = new FileStream();
+				fileStream.open(file, FileMode.READ);
+				userId = fileStream.readUTF();
+				fileStream.close();
+				loadNotebookUrl();
+			}
+			public function loadNotebookUrl():void {
+				notebookListUrl = "http://www.google.com/notebook/feeds/" + userId;
+				urlRequest = new URLRequest(notebookListUrl);
+				urlRequest.method = "GET";
+				loader = new URLLoader();
+				loader.addEventListener(Event.COMPLETE, notebookListLoadedHandler);
+				try {
+	                loader.load(urlRequest);
+	            } catch (error:Error) {
+	                trace("Unable to load Google Notebook list.");
+	            }
+			}
+			public function loadNotebooks(parent:XMLNode):void {
+				notebooks.removeAll();
+				var node:XMLNode = parent.firstChild;
+				do {
+					if (node.localName == "entry") {
+						var notebook:Notebook = new Notebook();
+						notebook.title = node.childNodes[3].firstChild.nodeValue;
+						notebook.url = node.childNodes[5].attributes.src;
+						notebooks.addItem(notebook);
+					}
+					node = node.nextSibling;
+				} while (node.nextSibling != null);
+				CursorManager.removeBusyCursor();
+				loadNotebook();
+			}
+			public function loadEntries(parent:XMLNode):void {
+				// we don't remove all here since they are appended 10 at a time
+				var node:XMLNode = parent.firstChild;
+				var totalResults:Number = 10;
+				do {
+					if (node.localName == "entry") {
+						var entry:Entry = new Entry();
+						entry.title = node.childNodes[4].firstChild.nodeValue;
+						entry.content = node.childNodes[5].firstChild.nodeValue;
+						entry.url = node.childNodes[6].attributes.href;
+						entries.addItem(entry);
+					}
+					else if (node.localName == "totalResults") {
+						totalResults = Number(node.firstChild.nodeValue);
+					}
+					node = node.nextSibling;
+				} while (node != null);
+				CursorManager.removeBusyCursor();
+				startIndex += 10;
+				if (startIndex < totalResults) {
+					callNotebookURL();
+				}
+			}
+			public function loadNotebook():void {
+				CursorManager.setBusyCursor();
+				notebook = allNotebooks.selectedItem as Notebook;
+				// we can only load 10 at a time.
+				startIndex = 1;
+				entries.removeAll();
+				callNotebookURL()
+			}
+			private function callNotebookURL():void {
+				var url:String = notebook.url + "?start-index=" + startIndex;
+				urlRequest = new URLRequest(url);
+				urlRequest.method = "GET";
+				loader = new URLLoader();
+				loader.addEventListener(Event.COMPLETE, notebookLoadedHandler);
+				try {
+	                loader.load(urlRequest);
+	            } catch (error:Error) {
+	                trace("Unable to load selected Google Notebook.");
+	            }
+			}
+			public function openEditor():void {
+				var editorPanel:EditorPanel = new EditorPanel();
+				editorPanel.entry = allEntries.selectedItem as Entry;
+  				mx.managers.PopUpManager.addPopUp(editorPanel,mainLayout,true);
+  				mx.managers.PopUpManager.centerPopUp(editorPanel);
+			}
+			private function saveToFile():void {
+				var file:File = File.desktopDirectory;
+				file = file.resolvePath("newpost.txt");
+				var fileStream:FileStream = new FileStream();
+				fileStream.open(file, FileMode.WRITE);
+				
+				var txt:String = generatePost();
+				fileStream.writeUTF(txt);
+				fileStream.close();
+				Alert.show("File written to desktop");
+			}
+			private function saveToClipboard():void {
+				var txt:String = generatePost();
+				System.setClipboard(txt);
+			}
+			private function generatePost():String {
+				var fileText:String = "";
+				for(var i:Number=0; i<entries.length; i++){
+					if (entries[i].category.id != 0) {
+						if (i == 0 || entries[i].category.id != entries[i-1].category.id) {
+							fileText += "<h3>" + entries[i].category.categoryName + "</h3>\n\n";
+						}
+						if (i == 0 || entries[i].project != entries[i-1].project) {
+							fileText += "<strong>" + entries[i].project + "</strong><br />\n";
+						}
+						fileText += "<a href='" + entries[i].url + "'>" + entries[i].title + "</a><br />\n";
+						fileText += entries[i].content + "\n\n";
+					}
+				}
+				return fileText;
+			}
+			private function getCategoryName(item:Object, column:DataGridColumn):String {
+				return item.category.categoryName;
+			}
+			public function categoryCompare(obj1:Object, obj2:Object):int {
+				if (obj1.category.id < obj2.category.id) {
+					return -1;
+				}
+				else if (obj1.category.id == obj2.category.id) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:Canvas id="mainLayout" width="100%" height="100%">
+		<mx:ComboBox id="allNotebooks" dataProvider="{notebooks}" labelField="title" change="loadNotebook()" x="118" y="10"/>
+		<mx:DataGrid id="allEntries" dataProvider="{entries}" x="10" y="66" width="578" height="364" doubleClickEnabled="true" doubleClick="openEditor()">
+			<mx:columns>
+				<mx:DataGridColumn dataField="title" />
+				<mx:DataGridColumn dataField="url" />
+				<mx:DataGridColumn headerText="category" labelFunction="getCategoryName" sortCompareFunction="categoryCompare" />
+				<mx:DataGridColumn dataField="project" />
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:Label x="10" y="12" text="Select Notebook:"/>
+		<mx:Label x="10" y="40" text="Entries:"/>
+		<mx:Button x="323" y="438" label="Copy to Clipboard" click="saveToClipboard()" />
+		<mx:Button x="456" y="438" label="Save to Text File" click="saveToFile()" />
+	</mx:Canvas>
+</mx:WindowedApplication>
