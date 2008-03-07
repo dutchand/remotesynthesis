@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" verticalAlign="middle" horizontalAlign="center" title="Public URL" creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import mx.core.Application;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.managers.CursorManager;
+			import com.vo.Entry;
+			import com.vo.Category;
+			
+			[Bindable]
+			public var entry:Entry;
+			[Bindable]
+			public var categories:Array = [
+				{label: "New Releases and Updates",data:1},
+				{label: "Announcements",data:2},
+				{label: "Tutorials, Presentations and Reviews",data:3}];
+				
+			private function init():void {
+				if (entry != null && entry.category.id != 0) {
+					entryCategory.selectedIndex = entry.category.id - 1;
+				}
+			}
+		
+			private function closePopup():void {
+				entry.title = entryTitle.text;
+				entry.content = entryContent.text;
+				entry.project = entryProject.text;
+				var category:Category = new Category();
+				category.categoryName = entryCategory.selectedItem.label;
+				category.id = entryCategory.selectedItem.data;
+				entry.category = category;
+				PopUpManager.removePopUp(this);
+				var sort:Sort = new Sort();
+				var categoryField:SortField = new SortField("category",true,false,true);
+				categoryField.compareFunction = Application.application.categoryCompare;
+				sort.fields = [categoryField, new SortField("project",true)];
+				Application.application.entries.sort = sort;
+				Application.application.entries.refresh();
+			}
+			private function loadLink():void {
+				entryLink.htmlText = "<a href='" + entry.url + "'><u>visit site</u></a>";
+			}
+		]]>
+	</mx:Script>
+		<mx:Label x="10" y="10" text="Title:"/>
+		<mx:TextInput id="entryTitle" x="43" y="8" width="227" text="{entry.title}" />
+		<mx:Label x="10" y="38" text="Link:&#xa;"/>
+		<mx:Text id="entryLink" x="43" y="38" width="227" initialize="loadLink()"/>
+		<mx:Label x="10" y="64" text="Category:"/>
+		<mx:ComboBox id="entryCategory" x="78" y="62" width="192" dataProvider="{categories}"></mx:ComboBox>
+		<mx:Label x="10" y="100" text="Project:"/>
+		<mx:TextInput id="entryProject" x="65" y="98" width="205" text="{entry.project}" />
+		<mx:Label x="10" y="126" text="Content:"/>
+		<mx:TextArea id="entryContent" x="10" y="152" width="260" height="168" text="{entry.content}"/>
+		<mx:Button id="entrySubmit" label="Submit" x="204" y="328" click="closePopup()" />
+</mx:Panel>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="100" verticalAlign="middle" horizontalAlign="center" title="Public URL">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.managers.CursorManager;
+		
+			private function setUserId():void {
+				var googleURL:String = publicNoteBookURL.text;
+				if (googleURL != "") {
+					var arrURL:Array = googleURL.split(/\//);
+					// the full url should look like this http://www.google.com/notebook/public/15420494164259897982/BDQJESgoQsO3K3Pci
+					if (arrURL.length < 6) {
+						Alert.show("The URL you entered does not appear to be properly formatted");
+					}
+					else {
+  						saveId(arrURL[5]);
+  						closePopup();
+  						mx.core.Application.application.readUserId();
+  					}
+  				}
+			}
+			private function closePopup():void {
+				PopUpManager.removePopUp(this);
+			}
+			public function saveId(id:String):void {
+				var file:File = File.applicationStorageDirectory;
+				file = file.resolvePath("userid.txt");
+				var fileStream:FileStream = new FileStream();
+				fileStream.open(file, FileMode.WRITE);
+				fileStream.writeUTF(id);
+				fileStream.close();
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox verticalAlign="middle" horizontalAlign="right">
+		<mx:HBox width="100%" horizontalAlign="center">
+			<mx:Label text="Enter the URL of a Public Notebook:" />
+			<mx:TextInput id="publicNoteBookURL" displayAsPassword="false" />
+		</mx:HBox>
+		<mx:Button id="urlSubmit" label="Submit" click="setUserId();" />
+	</mx:VBox>
+</mx:Panel>
