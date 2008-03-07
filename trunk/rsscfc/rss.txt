@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Remote Synthesis</title>
+    <link>http://www.remotesynthesis.com/blog/index.cfm</link>
+    <description>Development using ColdFusion, Flash, SQL and more</description>
+    <language>en-us</language>
+    <pubDate>Tue, 16 May 2006 10:25:12 -0400</pubDate>
+    <lastBuildDate>Mon, 15 May 2006 19:55:00 -0400</lastBuildDate>
+    <generator>BlogCFC</generator>
+    <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+    <managingEditor>brinaldi@remotesynthesis.com</managingEditor>
+    <webMaster>brinaldi@remotesynthesis.com</webMaster>
+    <item>
+      <title>100 ColdFusion Open-Source Projects</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/100-ColdFusion-OpenSource-Projects</link>
+      <description>So the ColdFusion Open-Source List hit a milestone of sorts the other day when I added the 100th project to the list. While the milestone is somewhat arbitrary since I don&apos;t list every project by excercising a very limited set of editorial control (a...</description>
+      <category>Open-Source CF</category>
+      <category>ColdFusion</category>
+      <pubDate>Mon, 15 May 2006 19:55:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/100-ColdFusion-OpenSource-Projects</guid>
+    </item>
+    <item>
+      <title>Government Spying on Confidential News Sources</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/Government-Spying-on-Confidential-News-Sources</link>
+      <description>This is a disturbing piece of news even at a time when we see enough disturbing news on a daily basis to make one numb. Brian Ross and Richard Esposito of ABC News are reporting that a confidential source in the government has warned them that their ...</description>
+      <category>Politics</category>
+      <category>General</category>
+      <pubDate>Mon, 15 May 2006 15:16:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/Government-Spying-on-Confidential-News-Sources</guid>
+    </item>
+    <item>
+      <title>Handling Null Values Returned by Java</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/Handling-Null-Values-Returned-by-Java</link>
+      <description>So in my recent exploits toying with javaLoader.cfc and a java library for parsing rss, I came upon some odd errors. Well, I am certainly a noob when it comes to Java, but it appears that when you call a method in java and that method returns a null,...</description>
+      <category>ColdFusion</category>
+      <category>Java</category>
+      <pubDate>Mon, 15 May 2006 09:09:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/Handling-Null-Values-Returned-by-Java</guid>
+    </item>
+    <item>
+      <title>ColdFusion Open-Source Update - May 15</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/ColdFusion-OpenSource-Update--May-15</link>
+      <description>The big news this week (as you probably already heard) is the new BlogCFC release. So, without further adieu...
+
+Raymond Camden Releases BlogCFC v5
+The new version of blogCFC includes a ton of new features like better CSS design, a new administrat...
+				
+				 [More&#93;</description>
+      <category>Open-Source CF</category>
+      <category>ColdFusion</category>
+      <pubDate>Mon, 15 May 2006 08:16:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/15/ColdFusion-OpenSource-Update--May-15</guid>
+    </item>
+    <item>
+      <title>Looking for a CF Job in the Boston Area?</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/12/Looking-for-a-CF-Job-in-the-Boston-Area</link>
+      <description>This is just a quick post to let people know about the jobs forum on BostonCFUG.com for anyone looking for a position in the Boston area. The forum is new, but we do have a recent posting for an Applications Developer in Waltham. Kathy Doyle of JVT A...</description>
+      <category>Boston CFUG</category>
+      <pubDate>Fri, 12 May 2006 18:53:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/12/Looking-for-a-CF-Job-in-the-Boston-Area</guid>
+    </item>
+    <item>
+      <title>Loading Java Libraries on the Fly (and Parsing RSS Easily)</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/11/Loading-Java-Libraries-on-the-Fly-and-Parsing-RSS-easily</link>
+      <description>Ok, I have to admit that the first time I read Mark Mandel&apos;s post, it went over my head. I was familiar with Spike&apos;s well known post for loading java libraries without adding them to the class path, but the significance of Mark&apos;s post didn&apos;t strike m...
+				
+				 [More&#93;</description>
+      <category>Programming</category>
+      <category>Open-Source CF</category>
+      <category>Java</category>
+      <category>ColdFusion</category>
+      <pubDate>Thu, 11 May 2006 21:15:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/11/Loading-Java-Libraries-on-the-Fly-and-Parsing-RSS-easily</guid>
+    </item>
+    <item>
+      <title>Music for Your Work Week - Sara Valenzuela</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/9/Music-for-Your-Work-Week--Sara-Valenzuela</link>
+      <description>So if you have followed any of my music related posts, you may be wondering if I like anything other than &quot;Retro-Electro-Rocktronica&quot; (ok, I made that genre up but I think it works). Well, in fact, I do, and this week&apos;s pick is a Latin album from Mex...
+				
+				 [More&#93;</description>
+      <category>Music</category>
+      <pubDate>Tue, 09 May 2006 21:44:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/9/Music-for-Your-Work-Week--Sara-Valenzuela</guid>
+    </item>
+    <item>
+      <title>Sortable Tables Custom Tag Updated</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/9/Sortable-Tables-Custom-Tag-Updated</link>
+      <description>Someone at work started using a tag that I had ignored for a while that uses the Web FX Sortable Table javascript to allow customized table sorting without page refreshes (see my previous post here). The thing is that this tag wasn&apos;t very customizabl...
+				
+				 [More&#93;</description>
+      <category>Programming</category>
+      <category>JavaScript</category>
+      <category>ColdFusion</category>
+      <pubDate>Tue, 09 May 2006 09:49:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/9/Sortable-Tables-Custom-Tag-Updated</guid>
+      <enclosure type="application/zip" length="1749" url="http://www.remotesynthesis.com/blog/enclosures/sortabletable050906.zip"/>
+
+    </item>
+    <item>
+      <title>Weekly ColdFusion Open-Source Update - May 8</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/8/Weekly-ColdFusion-OpenSource-Update</link>
+      <description>This week was nearly as busy as last week. I also expect that things might pick up with CFUnited just around the corner (some people have said they hope to have some announcements for CFUnited as it relates to thier open-source projects). This week w...
+				
+				 [More&#93;</description>
+      <category>Open-Source CF</category>
+      <category>ColdFusion</category>
+      <pubDate>Mon, 08 May 2006 13:11:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/8/Weekly-ColdFusion-OpenSource-Update</guid>
+    </item>
+    <item>
+      <title>The Microsoft Malaise - John Dvorak</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/3/The-Microsoft-Malaise--John-Dvorak</link>
+      <description>John Dvorak has written an interesting article discussing what, in his opinion, is wrong with Microsoft. Microsoft, he says, has &quot;virtually nothing interesting or exciting happening.&quot; He criticizes upcoming upgrades for not offering any compelling fe...</description>
+      <category>General</category>
+      <category>Windows</category>
+      <pubDate>Wed, 03 May 2006 20:48:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/3/The-Microsoft-Malaise--John-Dvorak</guid>
+    </item>
+    <item>
+      <title>Music for Your Work Week - Goldfrapp</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/2/Music-for-Your-Work-Week--Goldfrapp</link>
+      <description>I have been a fan of Goldfrapp from her first album, 2000&apos;s Felt Mountain (actually, while I was not aware of it at the time, I was a fan of her work on Orbital&apos;s Snivilization album). Goldfrapp&apos;s latest release is Supernature, and is definitely wort...
+				
+				 [More&#93;</description>
+      <category>Music</category>
+      <pubDate>Tue, 02 May 2006 14:26:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/2/Music-for-Your-Work-Week--Goldfrapp</guid>
+    </item>
+    <item>
+      <title>Surprise! Microsoft may delay Windows Vista again - Gartner</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/5/2/Surprise-Microsoft-may-delay-Windows-Vista-again--Gartner</link>
+      <description>In news that shocked the technology industry (j/k), Gartner Inc. is reporting that Windows Vista may be delayed further, although Microsoft is disputing the report for the moment. The release is now anticipated to be moved to &quot;April-June quarter of 2...</description>
+      <category>General</category>
+      <category>Windows</category>
+      <pubDate>Tue, 02 May 2006 13:19:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/5/2/Surprise-Microsoft-may-delay-Windows-Vista-again--Gartner</guid>
+    </item>
+    <item>
+      <title>Weekly ColdFusion Open-Source Update</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/4/30/Weekly-ColdFusion-OpenSource-Update</link>
+      <description>Lately there has been so much happening in ColdFusion open-source that it can be tough to follow. Therefore, I have decided to add what I hope will become a weekly blog post going over the past week&apos;s happenings (as long as there are items worth repo...
+				
+				 [More&#93;</description>
+      <category>Open-Source CF</category>
+      <category>ColdFusion</category>
+      <pubDate>Sun, 30 Apr 2006 20:25:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/4/30/Weekly-ColdFusion-OpenSource-Update</guid>
+    </item>
+    <item>
+      <title>Will Apple Buy Adobe - Robert Cringely</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/4/28/Will-Apple-Buy-Adobe--Robert-Cringely</link>
+      <description>Robert Cringely speculates that Apple has been preparing to buy out Adobe sometime next year perhaps in order to better compete with Microsoft and solve Apple&apos;s &quot;application vulnerability.&quot;
+
+That&apos;s because for its core media and graphics markets Ap...</description>
+      <category>General</category>
+      <pubDate>Fri, 28 Apr 2006 12:08:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/4/28/Will-Apple-Buy-Adobe--Robert-Cringely</guid>
+    </item>
+    <item>
+      <title>IE7 Stacks Up Well Against Firefox - Techweb</title>
+      <link>http://www.remotesynthesis.com/blog/index.cfm/2006/4/28/IE7-Stacks-Up-Well-Against-Firefox--Techweb</link>
+      <description>A recent article by TechWeb does an interesting feature-to-feature comparison of the recently released IE7 Beta 2 and the current version of Firefox. The author believes that IE7 holds the advantage on interface, tab management and RSS support. He be...</description>
+      <category>General</category>
+      <category>Firefox</category>
+      <pubDate>Fri, 28 Apr 2006 10:16:00 -0400</pubDate>
+      <guid>http://www.remotesynthesis.com/blog/index.cfm/2006/4/28/IE7-Stacks-Up-Well-Against-Firefox--Techweb</guid>
+    </item>
+  </channel>
+</rss>
