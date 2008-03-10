@@ -14,20 +14,52 @@
 		<cfset var x = 0 />
 		<cfset var keyName = "" />
 		<cfset var record = "" />
+		<cfset var recordXml = "" />
 		<cfset var queryXML = xmlParse(dns.doQuery(arguments.name,arguments.type,arguments.class,arguments.throwOnError).getXML()) />
 		<cfset var args = structNew() />
 		<cfset var arrReturn = arrayNew(1) />
 		<cfloop from="1" to="#arrayLen(queryXML.message.sections.xmlChildren)#" index="i">
 			<cfset args.sectionID = queryXML.message.sections.xmlChildren[i].xmlAttributes.id />
 			<cfset args.sectionName = queryXML.message.sections.xmlChildren[i].xmlAttributes.name />
-			<cfloop from="1" to="#arrayLen(queryXML.message.sections.section.records.xmlChildren)#" index="x">
-				<cfloop collection="#queryXML.message.sections.xmlChildren[i].records.xmlChildren[x].xmlAttributes#" item="keyName">
-					<cfset args[keyName] = queryXML.message.sections.xmlChildren[i].records.xmlChildren[x].xmlAttributes[keyName] />
+			<cfloop from="1" to="#arrayLen(queryXML.message.sections.xmlChildren[i].xmlChildren)#" index="x">
+				<cfset recordXml = queryXML.message.sections.xmlChildren[i].xmlChildren[x] />
+				<cfloop collection="#recordXml.record.xmlAttributes#" item="keyName">
+					<cfset args[keyName] = recordXml.record.xmlAttributes[keyName] />
 				</cfloop>
 				<cfset record = createObject("component","com.cf.record").init(argumentCollection=args) />
 				<cfset arrayAppend(arrReturn,record) />
 			</cfloop>
 		</cfloop>
 		<cfreturn arrReturn />
+	</cffunction>
+	
+	<cffunction name="getQueryTypes" access="remote" output="false" returntype="array">
+		<cfset var arrTypes = arrayNew(1) />
+		<cfset var stType =  "" />
+		<cfset var i = 0 />
+		<cfset var values = "ANY,A,IPSECKEY,LOC,MX,NS,PTR,SIG,SOA,SPF,SSHFP,TXT" />
+		<cfset var labels = "Any,Address (A),IPSEC Key,Location,Mail Exchanger (MX),Name Server (NS),Pointer Record (PTR),Signature,Start of Authority (SOA),Sender Policy Framework,SSH Key Fingerprint,Text" />
+		<cfloop from="1" to="#listLen(values)#" index="i">
+			<cfset stType = structNew() />
+			<cfset stType.data = listGetAt(values,i) />
+			<cfset stType.label = listGetAt(labels,i) />
+			<cfset arrayAppend(arrTypes,stType) />
+		</cfloop>
+		<cfreturn arrTypes />
+	</cffunction>
+	
+	<cffunction name="getQueryClasses" access="remote" output="false" returntype="array">
+		<cfset var arrClasses = arrayNew(1) />
+		<cfset var stClass =  "" />
+		<cfset var i = 0 />
+		<cfset var values = "ANY,IN,CH,CHAOS,HS,HESIOD" />
+		<cfset var labels = "Any,Internet (IN),Chaos (CH),Chaos (CHAOS),Hesiod (HS),Hesiod (HESIOD)" />
+		<cfloop from="1" to="#listLen(values)#" index="i">
+			<cfset stClass = structNew() />
+			<cfset stClass.data = listGetAt(values,i) />
+			<cfset stClass.label = listGetAt(labels,i) />
+			<cfset arrayAppend(arrClasses,stClass) />
+		</cfloop>
+		<cfreturn arrTypes />
 	</cffunction>
 </cfcomponent>
