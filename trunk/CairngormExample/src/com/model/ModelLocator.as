@@ -23,6 +23,7 @@ package com.model
 				throw new Error( "Only one ModelLocator instance should be instantiated" );	
    	}
 		public var records:ArrayCollection = new ArrayCollection();
-	}	
+		public var classes:ArrayCollection = new ArrayCollection();
+		public var types:ArrayCollection = new ArrayCollection();
+	}
 }
-

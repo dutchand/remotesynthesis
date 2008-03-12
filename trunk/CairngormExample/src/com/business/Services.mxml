@@ -7,5 +7,7 @@
 			destination="ColdFusion"
 			source="com.cf.dnsRemote">
 		<mx:method name="doQuery" />
+		<mx:method name="getQueryTypes" />
+		<mx:method name="getQueryClasses" />
 	</mx:RemoteObject>
 </cairngorm:ServiceLocator>

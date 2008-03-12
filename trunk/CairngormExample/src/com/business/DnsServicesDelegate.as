@@ -23,5 +23,19 @@ package com.business {
 			// notify this command when the service call completes
 			token.addResponder( command );
 		}
+		
+		public function getQueryTypes() : void {
+			// call the service
+			var token:AsyncToken = dnsService.getQueryTypes.send();
+			// notify this command when the service call completes
+			token.addResponder( command );
+		}
+		
+		public function getQueryClasses() : void {
+			// call the service
+			var token:AsyncToken = dnsService.getQueryClasses.send();
+			// notify this command when the service call completes
+			token.addResponder( command );
+		}
 	}
 }
