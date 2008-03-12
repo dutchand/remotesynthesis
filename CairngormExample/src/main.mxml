@@ -2,25 +2,42 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" pageTitle="DNS Lookup Cairngorm Example" applicationComplete="initApp()"
 	xmlns:business="com.business.*" 
 	xmlns:control="com.control.*" 
-	xmlns:view="com.view.*">
+	xmlns:view="com.view.*"
+	xmlns:utils="com.utils.*">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEventDispatcher;
 			import com.model.ModelLocator;
 			
-			import com.control.DoQueryEvent;
+			import com.control.GetClassesEvent;
+			import com.control.GetTypesEvent;
 			
 			[Bindable]
 			public var model : ModelLocator = ModelLocator.getInstance();
 			
 			private function initApp():void {
-				var doQueryEvent:DoQueryEvent = new DoQueryEvent("remotesynthesis.com","ANY","IN");
-				CairngormEventDispatcher.getInstance().dispatchEvent(doQueryEvent);
+				var getClassesEvent:GetClassesEvent = new GetClassesEvent();
+				CairngormEventDispatcher.getInstance().dispatchEvent(getClassesEvent);
+				
+				var getTypesEvent:GetTypesEvent = new GetTypesEvent();
+				CairngormEventDispatcher.getInstance().dispatchEvent(getTypesEvent);
+			}
+			private function showGrid():void {
+				if (model.records.length) {
+					dnsRecordGrid.visible = true;
+				}
+				else {
+					dnsRecordGrid.visible = false;
+				}
 			}
 		]]>
 	</mx:Script>
 	<business:Services id="dnsServices"/>
 	<control:DnsControl id="controller"/>
-	<mx:DataGrid x="28" y="23" width="678" height="473" id="dnsRecordGrid" dataProvider="{model.records}">
+	
+	<utils:Observe source="{ model.records.length }" handler="{ showGrid }"/>
+	
+	<view:searchForm  x="159.5" y="14"/>
+	<mx:DataGrid x="10" y="192" width="699" height="404" id="dnsRecordGrid" dataProvider="{model.records}" visible="false">
 	</mx:DataGrid>
 </mx:Application>

@@ -60,6 +60,6 @@
 			<cfset stClass.label = listGetAt(labels,i) />
 			<cfset arrayAppend(arrClasses,stClass) />
 		</cfloop>
-		<cfreturn arrTypes />
+		<cfreturn arrClasses />
 	</cffunction>
 </cfcomponent>
