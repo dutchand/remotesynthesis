@@ -4,11 +4,14 @@ package com.business {
 	
 	import mx.rpc.AsyncToken;
 	import mx.rpc.IResponder;
+	
+	import com.vo.RecordVO;
 
 	public class DnsServicesDelegate {
 
 		private var command : IResponder;
 		private var dnsService : Object;
+		private var record : RecordVO;
 
 		public function DnsServicesDelegate( command : IResponder ) {
 			// constructor will store a reference to the service we're going to call
