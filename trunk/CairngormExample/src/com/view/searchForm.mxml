@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="170" title="DNS Search" creationComplete="init()"
+	xmlns:utils="com.utils.*">
+	<mx:Script>
+		<![CDATA[
+			import com.model.ModelLocator;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.control.DoQueryEvent;
+			import mx.managers.CursorManager;
+			import mx.core.UIComponent;
+			import mx.controls.Alert;
+			
+			[Bindable]
+			public var model : ModelLocator = ModelLocator.getInstance();
+			
+			private function init():void {
+				nameInput.enabled = false;
+				typesSelect.enabled = false;
+				classesSelect.enabled = false;
+			}
+			
+			private function doQuery():void {
+				CursorManager.setBusyCursor();
+				var doQueryEvent:DoQueryEvent = new DoQueryEvent(nameInput.text,typesSelect.selectedItem.DATA,classesSelect.selectedItem.DATA);
+				CairngormEventDispatcher.getInstance().dispatchEvent(doQueryEvent);
+			}
+			private function activate(element:UIComponent):void {
+				Alert.show("foo");
+				element.enabled = true;
+			}
+			
+			private function enableForm():void {
+				if (model.classes.length && model.types.length) {
+					nameInput.enabled = true;
+					typesSelect.enabled = true;
+					classesSelect.enabled = true;
+				}
+			}
+		]]>
+	</mx:Script>
+	<utils:Observe source="{ model.types.length }" handler="{ enableForm }"/>
+	<utils:Observe source="{ model.classes.length }" handler="{ enableForm }"/>
+	<mx:FormItem label="Name:" x="10" y="12">
+		<mx:TextInput x="92" y="10" id="nameInput" width="278"/>
+	</mx:FormItem>
+	<mx:FormItem label="Query Type:" x="10" y="40">
+		<mx:ComboBox x="92" y="38" id="typesSelect" dataProvider="{model.types}" labelField="LABEL"></mx:ComboBox>
+	</mx:FormItem>
+	<mx:FormItem label="Query Class:" x="10" y="66">
+		<mx:ComboBox id="classesSelect" dataProvider="{model.classes}" labelField="LABEL"></mx:ComboBox>
+	</mx:FormItem>
+	<mx:Button x="10" y="92" label="Execute" click="doQuery()"/>
+</mx:Panel>
