@@ -5,7 +5,7 @@ package com.commands {
 	import com.business.DnsServicesDelegate;
 	import com.model.ModelLocator;
 	
-	import com.control.DoQueryEvent;
+	import com.events.DoQueryEvent;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -23,19 +23,19 @@ package com.commands {
 			delegate.doQuery(doQueryEvent.name,doQueryEvent.queryType,doQueryEvent.className);
 		}
 		
-		public function result( rpcEvent : Object ) : void {
+		public function result( event : Object ) : void {
 			CursorManager.removeBusyCursor();
-			model.records.source = rpcEvent.result;
+			model.records.source = event.result;
 			
 		}
 		
-		public function fault( rpcEvent : Object ) : void {
+		public function fault( event : Object ) : void {
 			CursorManager.removeBusyCursor();
 			// store an error message in the model locator
 			// labels, alerts, etc can bind to this to notify the user of errors
 			Alert.show("Fault occurred in DoQueryCommand.");
-			Alert.show(rpcEvent.fault.faultCode);
-			Alert.show(rpcEvent.fault.faultString);
+			Alert.show(event.fault.faultCode);
+			Alert.show(event.fault.faultString);
 		}
 	}
 }

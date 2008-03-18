@@ -5,7 +5,7 @@
 		<![CDATA[
 			import com.model.ModelLocator;
 			import com.adobe.cairngorm.control.CairngormEventDispatcher;
-			import com.control.DoQueryEvent;
+			import com.events.DoQueryEvent;
 			import mx.managers.CursorManager;
 			import mx.core.UIComponent;
 			import mx.controls.Alert;

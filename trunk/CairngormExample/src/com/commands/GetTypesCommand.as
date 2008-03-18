@@ -18,16 +18,16 @@ package com.commands {
 			delegate.getQueryTypes();
 		}
 		
-		public function result( rpcEvent : Object ) : void {
-			model.types.source = rpcEvent.result;
+		public function result( event : Object ) : void {
+			model.types.source = event.result;
 		}
 		
-		public function fault( rpcEvent : Object ) : void {
+		public function fault( event : Object ) : void {
 			// store an error message in the model locator
 			// labels, alerts, etc can bind to this to notify the user of errors
 			Alert.show("Fault occurred in GetTypesCommand.");
-			Alert.show(rpcEvent.fault.faultCode);
-			Alert.show(rpcEvent.fault.faultString);
+			Alert.show(event.fault.faultCode);
+			Alert.show(event.fault.faultString);
 		}
 	}
 }

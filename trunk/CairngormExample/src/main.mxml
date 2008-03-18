@@ -9,8 +9,8 @@
 			import com.adobe.cairngorm.control.CairngormEventDispatcher;
 			import com.model.ModelLocator;
 			
-			import com.control.GetClassesEvent;
-			import com.control.GetTypesEvent;
+			import com.events.GetClassesEvent;
+			import com.events.GetTypesEvent;
 			
 			[Bindable]
 			public var model : ModelLocator = ModelLocator.getInstance();
