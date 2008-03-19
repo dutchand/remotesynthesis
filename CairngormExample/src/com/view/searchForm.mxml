@@ -6,7 +6,6 @@
 			import com.model.ModelLocator;
 			import com.adobe.cairngorm.control.CairngormEventDispatcher;
 			import com.events.DoQueryEvent;
-			import mx.managers.CursorManager;
 			import mx.core.UIComponent;
 			import mx.controls.Alert;
 			
@@ -20,7 +19,6 @@
 			}
 			
 			private function doQuery():void {
-				CursorManager.setBusyCursor();
 				var doQueryEvent:DoQueryEvent = new DoQueryEvent(nameInput.text,typesSelect.selectedItem.DATA,classesSelect.selectedItem.DATA);
 				CairngormEventDispatcher.getInstance().dispatchEvent(doQueryEvent);
 			}

@@ -10,8 +10,6 @@ package com.commands {
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.rpc.IResponder;
-	
-	import mx.managers.CursorManager;
 
 	public class DoQueryCommand implements ICommand, IResponder {
 
@@ -24,13 +22,11 @@ package com.commands {
 		}
 		
 		public function result( event : Object ) : void {
-			CursorManager.removeBusyCursor();
 			model.records.source = event.result;
 			
 		}
 		
 		public function fault( event : Object ) : void {
-			CursorManager.removeBusyCursor();
 			// store an error message in the model locator
 			// labels, alerts, etc can bind to this to notify the user of errors
 			Alert.show("Fault occurred in DoQueryCommand.");
