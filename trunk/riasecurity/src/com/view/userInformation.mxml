@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="228" title="User Information">
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.events.SaveUserEvent;
+			import com.model.ModelLocator;
+			
+			[Bindable]
+			public var model : ModelLocator = ModelLocator.getInstance();
+			
+			private function saveUser():void {
+				var saveUserEvent:SaveUserEvent = new SaveUserEvent(fullNameTxt.text,emailTxt.text,passwordTxt.text,ssnTxt.text);
+				CairngormEventDispatcher.getInstance().dispatchEvent(saveUserEvent);
+			}
+		]]>
+	</mx:Script>
+	<mx:Label x="10" y="10" text="Full Name:"/>
+	<mx:Label x="10" y="36" text="Email:"/>
+	<mx:Label x="10" y="62" text="Password:"/>
+	<mx:Label x="10" y="90" text="SSN"/>
+	<mx:TextInput x="83" y="8" width="287" id="fullNameTxt"/>
+	<mx:TextInput x="83" y="34" width="287" id="emailTxt"/>
+	<mx:TextInput x="83" y="60" width="287" id="passwordTxt" displayAsPassword="true"/>
+	<mx:TextInput x="83" y="88" width="287" id="ssnTxt"/>
+	<mx:Button x="304" y="156" label="Submit" id="submitBtn" click="saveUser()" />
+	<mx:Label x="10" y="116" text="Public Key:"/>
+	<mx:Text x="84" y="116" text="{model.publicKey}" id="publicKey"/>
+</mx:Panel>
