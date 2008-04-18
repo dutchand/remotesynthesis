@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" applicationComplete="initApp()"
+	xmlns:business="com.business.*" 
+	xmlns:control="com.control.*" 
+	xmlns:view="com.view.*">
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.model.ModelLocator;
+			import com.events.GetPublicKeyEvent;
+			
+			[Bindable]
+			public var model : ModelLocator = ModelLocator.getInstance();
+			
+			private function initApp():void {
+				var getPublicKeyEvent:GetPublicKeyEvent = new GetPublicKeyEvent();
+				CairngormEventDispatcher.getInstance().dispatchEvent(getPublicKeyEvent);
+			}
+		]]>
+	</mx:Script>
+	<business:Services id="securityServices"/>
+	<control:SecurityControl id="controller"/>
+	
+	<view:userInformation x="10" y="10" />
+</mx:Application>
