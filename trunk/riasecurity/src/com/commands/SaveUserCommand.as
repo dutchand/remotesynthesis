@@ -3,10 +3,14 @@ package com.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.adobe.crypto.SHA256;
+	import com.hurlant.crypto.Crypto;
 	import com.business.SecurityServicesDelegate;
 	import com.events.SaveUserEvent;
 	import com.model.ModelLocator;
 	import com.vo.User;
+	import flash.utils.ByteArray;
+	import com.hurlant.crypto.symmetric.ICipher;
+	import com.hurlant.util.Hex;
 	
 	import mx.controls.Alert;
 	import mx.rpc.IResponder;
@@ -21,7 +25,10 @@ package com.commands {
 			// hash the password (one way)
 			var password:String = SHA256.hash(saveUserEvent.password);
 			// hash the ssn (two way)
-			var encryptedSSN:String = "";
+			var key:ByteArray = Hex.toArray(model.publicKey);
+			var cipher:ICipher = Crypto.getCipher("aes", key);
+			var encryptedSSN:ByteArray = Hex.toArray(saveUserEvent.ssn);
+			cipher.encrypt(encryptedSSN);
 			var user:User = new User(saveUserEvent.fullName,saveUserEvent.email,password,encryptedSSN);
 			delegate.saveUser(user);
 		}

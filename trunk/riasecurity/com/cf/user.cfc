@@ -2,13 +2,13 @@
 	<cfproperty name="fullName" type="string" required="true" />
 	<cfproperty name="email" type="string" required="true" />
 	<cfproperty name="password" type="string" required="true" />
-	<cfproperty name="ssn" type="string" required="true" />
+	<cfproperty name="ssn" type="binary" required="true" />
 		
 	<cffunction name="init" access="public" output="false" returntype="com.cf.user">
 		<cfargument name="fullName" type="string" required="true" />
 		<cfargument name="email" type="string" required="true" />
 		<cfargument name="password" type="string" required="true" />
-		<cfargument name="ssn" type="string" required="true" />
+		<cfargument name="ssn" type="binary" required="true" />
 		
 		<cfset setFullName(arguments.fullName) />
 		<cfset setEmail(arguments.email) />
@@ -45,11 +45,11 @@
 		<cfset variables.password = arguments.password />
 	</cffunction>
 	
-	<cffunction name="getSSN" access="public" output="false" returntype="string">
+	<cffunction name="getSSN" access="public" output="false" returntype="binary">
 		<cfreturn variables.ssn />
 	</cffunction>	
 	<cffunction name="setSSN" access="public" output="false" returntype="void">
-		<cfargument name="ssn" type="string" required="true" />
+		<cfargument name="ssn" type="binary" required="true" />
 		
 		<cfset variables.ssn = arguments.ssn />
 	</cffunction>
