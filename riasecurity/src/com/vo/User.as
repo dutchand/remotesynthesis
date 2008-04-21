@@ -5,13 +5,14 @@ package com.vo
 	[Bindable]
 	public class User
 	{
+		import flash.utils.ByteArray;
 
 		public var fullName:String = "";
 		public var email:String = "";
 		public var password:String = "";
-		public var ssn:String = "";
+		public var ssn:ByteArray;
 
-		public function User(fullName:String="",email:String="",password:String="",ssn:String="") {
+		public function User(fullName:String="",email:String="",password:String="",ssn:ByteArray=null) {
 			this.fullName = fullName;
 			this.email = email;
 			this.password = password;
