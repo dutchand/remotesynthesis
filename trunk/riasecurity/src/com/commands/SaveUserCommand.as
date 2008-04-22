@@ -29,7 +29,7 @@ package com.commands {
 			var cipher:ICipher = Crypto.getCipher("aes", key);
 			var encryptedSSN:ByteArray = Hex.toArray(saveUserEvent.ssn);
 			cipher.encrypt(encryptedSSN);
-			var user:User = new User(saveUserEvent.fullName,saveUserEvent.email,password,encryptedSSN);
+			var user:User = new User(saveUserEvent.fullName,saveUserEvent.email,password,"",encryptedSSN);
 			delegate.saveUser(user);
 		}
 		
