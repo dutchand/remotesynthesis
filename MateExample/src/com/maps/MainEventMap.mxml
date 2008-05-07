@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	<mx:Script>
+		<![CDATA[
+			import com.events.*;
+			import com.business.DnsManager;
+			import com.view.*;
+		]]>
+	</mx:Script>
+	<EventHandlers type="{TypesEvent.GET}" debug="true">
+		<RemoteObjectInvoker destination="ColdFusion" source="com.cf.dnsRemote"
+			method="getQueryTypes"
+			debug="false">
+			<resultHandlers>
+         		<MethodInvoker generator="{DnsManager}"
+         			method="setTypes"
+         			arguments="{resultObject}"/>
+         		<EventAnnouncer generator="com.events.TypesEvent" type="receivedTypesEvent" />
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+		<RemoteObjectInvoker destination="ColdFusion" source="com.cf.dnsRemote"
+			method="getQueryClasses"
+			debug="false">
+			<resultHandlers>
+         		<MethodInvoker generator="{DnsManager}"
+         			method="setClasses"
+         			arguments="{resultObject}"/>
+         		<EventAnnouncer generator="com.events.TypesEvent" type="receivedTypesEvent" />
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+	<EventHandlers type="{QueryEvent.DO}" debug="true">
+		<RemoteObjectInvoker destination="ColdFusion" source="com.cf.dnsRemote"
+			method="doQuery"
+			arguments="{[event.name,event.queryType,event.className]}"
+			debug="false">
+			<resultHandlers>
+         		<MethodInvoker generator="{DnsManager}"
+         			method="setDnsQuery"
+         			arguments="{resultObject}"/>
+         		<EventAnnouncer generator="com.events.QueryEvent" type="receivedQueryEvent"/>
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+	
+	<Injectors target="{SearchForm}">
+		<PropertyInjector targetKey="types" source="{DnsManager}" sourceKey="types" />
+		<PropertyInjector targetKey="classes" source="{DnsManager}" sourceKey="classes" />
+		<PropertyInjector targetKey="records" source="{DnsManager}" sourceKey="records" />
+	</Injectors>
+	<Injectors target="{DnsResults}">
+		<PropertyInjector targetKey="records" source="{DnsManager}" sourceKey="records" />
+	</Injectors>
+</EventMap>

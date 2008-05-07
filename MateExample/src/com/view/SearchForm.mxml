@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="170" title="DNS Search" creationComplete="init()"
+	xmlns:utils="com.utils.*"
+	xmlns:mate="http://mate.asfusion.com/">
+	<mx:Script>
+		<![CDATA[
+			import com.events.TypesEvent;
+			import mx.collections.ArrayCollection;
+			import com.events.QueryEvent;
+			import mx.core.UIComponent;
+			import mx.controls.Alert;
+			
+			[Bindable]
+			public var types:ArrayCollection;
+			[Bindable]
+			public var classes:ArrayCollection;
+			
+			private function init():void {
+				nameInput.enabled = false;
+				typesSelect.enabled = false;
+				classesSelect.enabled = false;
+			}
+			
+			private function doQuery():void {
+				var queryEvent:QueryEvent = new QueryEvent(QueryEvent.DO);
+				queryEvent.name = nameInput.text;
+				queryEvent.queryType = typesSelect.selectedItem.DATA;
+				queryEvent.className = classesSelect.selectedItem.DATA;
+				dispatchEvent(queryEvent);
+			}
+			
+			private function enableForm(event:TypesEvent):void {
+				if (classes.length && types.length) {
+					nameInput.enabled = true;
+					typesSelect.enabled = true;
+					classesSelect.enabled = true;
+				}
+			}
+		]]>
+	</mx:Script>
+	<mate:Listener type="receivedTypesEvent" method="enableForm" />
+	
+	<mx:FormItem label="Name:" x="10" y="12">
+		<mx:TextInput x="92" y="10" id="nameInput" width="278"/>
+	</mx:FormItem>
+	<mx:FormItem label="Query Type:" x="10" y="40">
+		<mx:ComboBox x="92" y="38" id="typesSelect" dataProvider="{types}" labelField="LABEL"></mx:ComboBox>
+	</mx:FormItem>
+	<mx:FormItem label="Query Class:" x="10" y="66">
+		<mx:ComboBox id="classesSelect" dataProvider="{classes}" labelField="LABEL"></mx:ComboBox>
+	</mx:FormItem>
+	<mx:Button x="10" y="92" label="Execute" click="doQuery()"/>
+</mx:Panel>
