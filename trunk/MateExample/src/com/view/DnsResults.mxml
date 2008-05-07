@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="700" height="400" creationComplete="showGrid(event)"
+	xmlns:mate="http://mate.asfusion.com/">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import flash.events.Event;
+			
+			[Bindable]
+			public var records:ArrayCollection = new ArrayCollection;
+			
+			private function showGrid(event:Event):void {
+				if (records.length) {
+					this.visible = true;
+				}
+				else {
+					this.visible = false;
+				}
+			}
+		]]>
+	</mx:Script>
+	<mate:Listener type="receivedQueryEvent" method="showGrid" />
+	
+	<mx:DataGrid width="700" height="400" id="dnsRecordGrid" dataProvider="{records}">
+	</mx:DataGrid>
+</mx:Panel>
