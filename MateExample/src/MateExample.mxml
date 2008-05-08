@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" pageTitle="DNS Lookup Mate Example" applicationComplete="initApp()"
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" pageTitle="DNS Lookup Mate Example"
 	xmlns:view="com.view.*"
 	xmlns:maps="com.maps.*">
-	<mx:Script>
-		<![CDATA[
-			import com.events.TypesEvent;
-			
-			private function initApp():void {
-				var typesEvent:TypesEvent = new TypesEvent(TypesEvent.GET);
-				dispatchEvent(typesEvent);
-			}
-		]]>
-	</mx:Script>
 	<maps:MainEventMap />
 	
 	<view:SearchForm x="159.5" y="14"/>

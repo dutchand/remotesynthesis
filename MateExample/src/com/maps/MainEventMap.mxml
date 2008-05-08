@@ -5,12 +5,12 @@
 			import com.events.*;
 			import com.business.DnsManager;
 			import com.view.*;
+			import mx.events.FlexEvent;
 		]]>
 	</mx:Script>
-	<EventHandlers type="{TypesEvent.GET}" debug="true">
-		<RemoteObjectInvoker destination="ColdFusion" source="com.cf.dnsRemote"
-			method="getQueryTypes"
-			debug="false">
+	<mx:RemoteObject id="dnsRemote" destination="ColdFusion" source="com.cf.dnsRemote" />
+	<EventHandlers type="{FlexEvent.APPLICATION_COMPLETE}">
+		<RemoteObjectInvoker instance="{dnsRemote}" method="getQueryTypes" debug="false">
 			<resultHandlers>
          		<MethodInvoker generator="{DnsManager}"
          			method="setTypes"
@@ -18,9 +18,7 @@
          		<EventAnnouncer generator="com.events.TypesEvent" type="receivedTypesEvent" />
          	</resultHandlers>
 		</RemoteObjectInvoker>
-		<RemoteObjectInvoker destination="ColdFusion" source="com.cf.dnsRemote"
-			method="getQueryClasses"
-			debug="false">
+		<RemoteObjectInvoker instance="{dnsRemote}" method="getQueryClasses" debug="false">
 			<resultHandlers>
          		<MethodInvoker generator="{DnsManager}"
          			method="setClasses"
@@ -29,9 +27,8 @@
          	</resultHandlers>
 		</RemoteObjectInvoker>
 	</EventHandlers>
-	<EventHandlers type="{QueryEvent.DO}" debug="true">
-		<RemoteObjectInvoker destination="ColdFusion" source="com.cf.dnsRemote"
-			method="doQuery"
+	<EventHandlers type="{QueryEvent.DO}" debug="false">
+		<RemoteObjectInvoker instance="{dnsRemote}" method="doQuery"
 			arguments="{[event.name,event.queryType,event.className]}"
 			debug="false">
 			<resultHandlers>
