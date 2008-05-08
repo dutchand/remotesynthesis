@@ -15,7 +15,7 @@
          		<MethodInvoker generator="{DnsManager}"
          			method="setTypes"
          			arguments="{resultObject}"/>
-         		<EventAnnouncer generator="com.events.TypesEvent" type="receivedTypesEvent" />
+         		<EventAnnouncer generator="{TypesEvent}" type="{TypesEvent.RECEIVED}" />
          	</resultHandlers>
 		</RemoteObjectInvoker>
 		<RemoteObjectInvoker instance="{dnsRemote}" method="getQueryClasses" debug="false">
@@ -23,7 +23,7 @@
          		<MethodInvoker generator="{DnsManager}"
          			method="setClasses"
          			arguments="{resultObject}"/>
-         		<EventAnnouncer generator="com.events.TypesEvent" type="receivedTypesEvent" />
+         		<EventAnnouncer generator="{TypesEvent}" type="{TypesEvent.RECEIVED}" />
          	</resultHandlers>
 		</RemoteObjectInvoker>
 	</EventHandlers>
@@ -35,7 +35,7 @@
          		<MethodInvoker generator="{DnsManager}"
          			method="setDnsQuery"
          			arguments="{resultObject}"/>
-         		<EventAnnouncer generator="com.events.QueryEvent" type="receivedQueryEvent"/>
+         		<EventAnnouncer generator="{QueryEvent}" type="{QueryEvent.RECEIVED}" />
          	</resultHandlers>
 		</RemoteObjectInvoker>
 	</EventHandlers>
