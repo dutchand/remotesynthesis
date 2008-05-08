@@ -4,12 +4,12 @@ package com.events
 
 	public class TypesEvent extends Event
 	{
-		public static const GET: String = "getTypesEvent";
 		public static const RECEIVED: String = "receivedTypesEvent";
 		
-		public function TypesEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false) 
+		public function TypesEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}
+
 	}	
 }
