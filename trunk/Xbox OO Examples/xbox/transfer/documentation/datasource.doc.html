@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - Datasource configuration file</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Datasource xml configuration file</h1>
+<p>
+This configuration file sets the details on the datasource that Transfer is going to be connected to, 
+and results in the 
+<a href="cfcdoc/content2efb.html">transfer.com.sql.Datasource</a>
+bean that is available from
+<a href="cfcdoc/content4533.html">transfer.TransferFactory</a>.
+</p>
+<p>
+The xml schema file can be found at:
+<a href="../resources/xsd/datasource.xsd">/transfer/resources/xsd/datasource.xsd</a>. 
+</p>
+<p>
+It is <strong>highly recommended</strong> that when creating a new
+datasource xml file, you validate your xml against this xml schema.
+</p>
+<h2>Elements</h2>
+<ul>
+	<li>
+		<strong>datasource</strong><br/>
+		Top level element for the xml file.
+		<ul>
+			<li>
+				<strong>name</strong><br/>
+				The name of the datasource as defined in the ColdFusion Adminstrator
+			</li>
+			<li>
+				<strong>username</strong><br/> 
+				If a username is required with every query, specify it here. If not, leave blank.
+			</li>
+			<li>
+				<strong>password</strong><br/>
+				If a password is required with every query, specify it here. If not, leave blank.
+			</li>						
+		</ul>
+	</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Installation</title>
+<a href="index.html" id="nav">Home</a>
+<link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+<body>
+<h1>Installation</h1>
+<p>
+	To install Transfer, the following steps must be followed.
+	
+	<ol>
+		<li>
+			<a href="http://www.compoundtheory.com/?action=transfer.download">Download Transfer.</a>
+		</li>
+		<li>
+			Either place the directory '/transfer/' in the webroot of your server, or create a mapping called '/transfer' to the
+			'/transfer/' folder.
+		</li>
+		<li>
+			Write an xml config file that outlines the database connectivity details.<br/>
+			<a href="datasource.doc.html">Datasource xml file configuration</a>
+		</li>
+		<li>
+			Write an xml config file that outlines the objects and classes for transfer
+			to manufacture.<br />
+			<a href="transfer.doc.html">Transfer xml file configuration</a>
+		</li>
+		<li>
+			Create a singleton of 
+			<a href="cfcdoc/content4533.html">transfer.TransferFactory</a>.
+			The paths that are passed in as arguments to 
+			<a href="cfcdoc/content4533.html">transfer.TransferFactory</a>
+			are all relative, and should be passed from root.<br/><br/>
+			This is particularly important for the definitions directory, as it is used to cfinclude files from, so it must
+			either be from root, or point to a ColdFusion Mapping
+			
+			For example:
+<pre>
+application.transferFactory = createObject("component", "transfer.TransferFactory").init(
+							"/myapp/configs/datasource.xml", 
+							"/myapp/configs/xml/transfer.xml",
+							"/myapp/definitions");				
+</pre> 			
+		Please note: If you change the transfer.xml file, you will need to re-instantiate this singleton, as it 
+		retains a memory resident copy of transfer.xml for performance reasons.
+		
+		<br/><br/>
+		
+		This can also be done passing a <a href="cfcdoc/content1186.html">transfer.com.config.Configuration</a> object to the TransferFactory, for example:
+
+<pre>
+config = createObject("transfer.com.config.Configuration").init(
+							"/myapp/configs/datasource.xml", 
+							"/myapp/configs/xml/transfer.xml",
+							"/myapp/definitions");
+
+application.transferFactory = createObject("component", "transfer.TransferFactory").init(config);
+</pre> 			
+
+		</li>
+		<li>
+			All interaction with Transfer is now done through the instantiated 
+			<a href="cfcdoc/content4533.html">transfer.TransferFactory</a>.
+		</li>
+	</ol>
+</p>
+<h2>Updating from a previous version </h2>
+<p>
+If you are updating from a previous version of Transfer, 
+	<ol>
+		<li>
+			You will need to delete all of your .transfer generated files.  In each version of Transfer it
+			is likely that the details written in these files will differ greatly from the previous version.
+		</li>
+		<li>
+			If the previous version of Transfer contains a Java Library (.jar) file, it is likely that you will not be able to delete it.  
+			Simply place the newer Transfer .jar files in the same library, and the previous version will be ignored by Transfer.  Once the 
+			ColdFusion server is reset, or the garbage collector picks up the Object that references the file, you will be able to delete it.
+		</li>
+	</ol>
+</p>
+
+</body>
+</html>

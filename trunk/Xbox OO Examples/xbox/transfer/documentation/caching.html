@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="default.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Caching</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Caching</h1>
+<p>
+	Transfer has an in built Object Caching system that is highly configurable.  
+</p>
+<p>
+	This means that for every TransferObject that is created, or retrieved via Transfer is also stored within
+	the configured cache.  This speeds up subsequent retrievals greatly as TransferObjects can be fetched
+	 from memory, and a database hit is not required.
+</p>
+<p>
+	For example, if I was to write;
+<pre>
+	user = getTransfer().get("user.User", 1);
+</pre>
+	The first time that this is run, Transfer will retrieve it from the database.  However, the next time that Transer is asked for user.User 
+	with the ID of '1', it will fetch it from the cache. 
+</p>
+<p>
+	Also, if I write:
+<pre>
+	post = getTransfer().get("post.Post", 1);
+</pre>	
+	And the post.Post object contains the user.User that was already retrieved above, it would fetch the User TransferObject from the cache, rather
+	than from the database.
+</p>
+<p>
+	This means that there is only ever one TransferObject for a given entity (i.e. a particular User, or a Post) stored inside 
+	the cache at any given moment.
+</p>
+<p>
+	While this can create an extra degree of complexity to an application, it also allows a great deal of control over data within the system.
+</p>
+<h2>Memory Management</h2>
+<p>
+	The cache is configured such that it discards TransferObjects when the underlying Java engine 
+	requests memory to be freed.
+</p>
+<p>
+ This runs seperately to all other configuration options, and cannot be turned off.
+</p>
+<p>
+	This is to ensure that the server's memory is not over run, and to ensure the cache doesn't become a memory leak.	
+</p>
+<h2>Configuration</h2>
+<p>
+	All the aspects of Caching in Transfer is configured via the <a href="transfer.doc.html#objectCache">Transfer configuration file</a>
+</p>
+<p>
+	By default, all TransferObjects are cached in the 'instance' scope, and are stored indefinatley.
+</p>
+<h2>Caching Types in Transfer</h2>
+<p>
+	There are several different types of caching available with Transfer, each one having it's own capabilities.
+</p>
+<ul>
+	<li>
+		<strong>instance</strong> <br/>
+		Instance caching is the default caching for Transfer Objects.  Instance caching is where the caching mechanism is stored 
+		as a proprety of the Transfer library itself, and is specific to that instance of library.
+	</li>
+	<li>
+		<strong>application</strong> <br/>
+		Application caching is where the caching mechanism is stored in the application scope of the ColdFusion application, under the key specified in the 
+		<a href="transfer.doc.html#objectCache">configuration file</a>.
+	</li>
+	<li>
+		<strong>session</strong> <br/>
+		Session caching is where the caching mechanism is stored in the session scope of the user, under the key specified in the 
+		<a href="transfer.doc.html#objectCache">configuration file</a>.
+		<br/>
+		Sessions must be enabled for session scope caching to work. If sessions are disabled, the request scope is used.
+	</li>
+	<li>
+		<strong>transaction</strong> <br/>
+		Transaction caching is where the caching mechanism is stored in the session scope of the user, under the key specified in the 
+		<a href="transfer.doc.html#objectCache">configuration file</a>, however, when a create(), update() or save() call is made on the object, it
+		is discarded from the cache.
+	</li>
+	<li>
+		<strong>request</strong> <br/>
+		Request caching is where the caching mechanism is stored in the request scope of the user, under the key specified in the 
+		<a href="transfer.doc.html#objectCache">configuration file</a>.
+	</li>
+	<li>
+		<strong>server</strong> <br/>
+		Server caching is where the caching mechanism is stored in the server scope of the ColdFusion server, under the key specified in the 
+		<a href="transfer.doc.html#objectCache">configuration file</a>.
+	</li>	
+	<li>
+		<strong>none</strong> <br/>
+		None caching is where there is no caching.
+	</li>					
+</ul>
+
+<p>
+	It should be noted that setting object definitions that are composite (i.e. onetomany, manytoone, manytomany) in different caches, could cause indeterminite beahiviour.
+</p>
+
+<h2>Caching methods</h2>
+<p>
+	There are several methods that can be used with caching. 
+</p>
+<h2><a href="cfcdoc/content3c54.html#discard()">Transfer.discard(object)</a></h2>
+<p>
+	Removes an object from its designated caching mechanism.
+</p>
+<p>
+	This will also discard any objects that have a reference to this object via composition.
+</p>
+<p>
+	It should be noted that Transfer.save() and transfer.update() on a discarded object will update the object currently in cache to the state of the saved object
+</p>
+<h2><a href="cfcdoc/content3c54.html#discardByClassAndKey()">Transfer.discardByClassAndKey(className, key))</a></h2>
+<p>
+	Removes an object from its designated caching mechanism by its class and its key, if it exists.
+</p>
+<p>
+	It should be noted that Transfer.save() and transfer.update() on a discarded object will update the object currently in cache to the state of the saved object
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#discardByClassAndKey()">Transfer.discardByClassAndKey(className, key))</a></h2>
+<p>
+	Removes an object from its designated caching mechanism by its class and its key, if it exists.
+</p>
+<p>
+	It should be noted that Transfer.save() and transfer.update() on a discarded object will update the object currently in cache to the state of the saved object
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#discardByClassAndKeyArray()">Transfer.discardByClassAndKeyArray(className, keyArray))</a></h2>
+<p>
+	Removes an object from its designated caching mechanism by its class and each key in the array, if it exists.
+</p>
+<p>
+	It should be noted that Transfer.save() and transfer.update() on a discarded object will update the object currently in cache to the state of the saved object
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#discardByClassAndKeyQuery()">Transfer.discardByClassAndKeyQuery(className, keyQuery, columnName))</a></h2>
+<p>
+	Removes an object from its designated caching mechanism by its class and each key in the query, if it exists.
+</p>
+<p>
+	It should be noted that Transfer.save() and transfer.update() on a discarded object will update the object currently in cache to the state of the saved object
+</p>
+<h2><a href="cfcdoc/content3c54.html#recycle()">Transfer.recycle(object)</a></h2>
+<p>
+	Resets the state of the TransferObject, and puts it back into a pool of TransferObjects to be populated with data.
+</p>
+<p>
+	This is very good for performance, as it means the system does not need to create a new TransferObject when requested to, it can recycle and old one.
+</p>
+<p>
+	The Recycle method should only be utilised once a TransferObject has either (a) not been inserted in the database, (b) discarded from the cache or (c) deleted from the system, 
+	as the TransferObject loses all state once it has been recycled.
+</p>
+
+<p>
+</p>
+</body>
+</html>

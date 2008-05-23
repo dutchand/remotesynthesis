@@ -1,0 +1,1 @@
+<cfcomponent displayname="accessory" output="false" extends="transfer.com.TransferDecorator">		<cfproperty name="accessoryID" type="uuid" default="" />		<cfproperty name="accessoryName" type="String" default="" />		</cfcomponent>

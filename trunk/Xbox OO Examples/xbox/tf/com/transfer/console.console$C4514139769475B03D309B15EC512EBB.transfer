@@ -1,0 +1,1114 @@
+<cffunction name="init" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="transfer" type="transfer.com.Transfer" required="true">
+<cfargument name="utility" type="transfer.com.util.Utility" required="true">
+<cfargument name="nullable" type="transfer.com.sql.Nullable" required="true">
+<cfargument name="thisObject" type="transfer.com.TransferObject" required="true">
+<cfscript>
+instance = StructNew();
+setThisObject(arguments.thisObject);
+setTransfer(arguments.transfer);
+setUtility(arguments.utility);
+setNullable(arguments.nullable);
+setClassName("console.console");
+setIsDirty(true);
+setIsPersisted(false);
+setIsClone(false);
+setconsoleID(getNullable().getNullUUID(getClassName(), "consoleID"));
+settype("");
+setstorage(0);
+setLoaded(StructNew());
+setaccessoriesisLoaded(true);
+setcontrolsisLoaded(true);
+setgamesisLoaded(true);
+setaccessoriesCollection(ArrayNew(1));
+setcontrolsCollection(ArrayNew(1));
+setgamesCollection(ArrayNew(1));
+if(StructKeyExists(this, "configure") OR StructKeyExists(variables, "configure"))
+{
+configure();
+}
+return this;
+</cfscript>
+</cffunction>
+
+<cffunction name="equalsTransfer" access="public" returntype="boolean" default="boolean" hint="If an object is persisted, returns true if they are of the same class and same id. If not, returns true if they are the same object." output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true">
+<cfscript>
+if(getIsPersisted())
+{
+if(getClassName() neq arguments.transfer.getClassName())
+{
+return false;
+}
+return (getconsoleID() eq arguments.transfer.getconsoleID());
+}
+else
+{
+return sameTransfer(arguments.transfer);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getconsoleID" access="public" returntype="uuid" default="uuid" hint="" output="false">
+<cfscript>
+return instance.consoleID;
+</cfscript>
+</cffunction>
+
+<cffunction name="setconsoleID" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="consoleID" type="uuid" required="true">
+<cfscript>
+if(NOT StructKeyExists(instance, "consoleID") OR getconsoleID() neq arguments.consoleID)
+{
+instance.consoleID = arguments.consoleID;
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="gettype" access="public" returntype="string" default="string" hint="" output="false">
+<cfscript>
+return instance.type;
+</cfscript>
+</cffunction>
+
+<cffunction name="settype" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="type" type="string" required="true">
+<cfscript>
+if(NOT StructKeyExists(instance, "type") OR Compare(gettype(), arguments.type) neq 0)
+{
+instance.type = arguments.type;
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getstorage" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfscript>
+return instance.storage;
+</cfscript>
+</cffunction>
+
+<cffunction name="setstorage" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="storage" type="numeric" required="true">
+<cfscript>
+if(NOT StructKeyExists(instance, "storage") OR getstorage() neq arguments.storage)
+{
+instance.storage = arguments.storage;
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesisLoaded" access="package" returntype="boolean" default="boolean" hint="" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "accessories"))
+{
+setaccessoriesisLoaded(false);
+}
+return StructFind(getLoaded(), "accessories");
+</cfscript>
+</cffunction>
+
+<cffunction name="setaccessoriesisLoaded" access="private" returntype="void" default="void" hint="" output="false">
+<cfargument name="loaded" type="boolean" required="true">
+<cfscript>
+StructInsert(getLoaded(), "accessories", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadaccessories" access="private" returntype="void" default="void" hint="" output="false">
+<cfif NOT getaccessoriesisLoaded()>
+<cflock name="transfer.load.console.console.#getconsoleID()#" timeout="60">
+<cfif NOT getaccessoriesisLoaded()>
+<cfscript>
+getTransfer().loadManyToMany(getThisObject(), "accessories");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="getcontrolsisLoaded" access="package" returntype="boolean" default="boolean" hint="" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "controls"))
+{
+setcontrolsisLoaded(false);
+}
+return StructFind(getLoaded(), "controls");
+</cfscript>
+</cffunction>
+
+<cffunction name="setcontrolsisLoaded" access="private" returntype="void" default="void" hint="" output="false">
+<cfargument name="loaded" type="boolean" required="true">
+<cfscript>
+StructInsert(getLoaded(), "controls", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadcontrols" access="private" returntype="void" default="void" hint="" output="false">
+<cfif NOT getcontrolsisLoaded()>
+<cflock name="transfer.load.console.console.#getconsoleID()#" timeout="60">
+<cfif NOT getcontrolsisLoaded()>
+<cfscript>
+getTransfer().loadManyToMany(getThisObject(), "controls");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="getgamesisLoaded" access="package" returntype="boolean" default="boolean" hint="" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "games"))
+{
+setgamesisLoaded(false);
+}
+return StructFind(getLoaded(), "games");
+</cfscript>
+</cffunction>
+
+<cffunction name="setgamesisLoaded" access="private" returntype="void" default="void" hint="" output="false">
+<cfargument name="loaded" type="boolean" required="true">
+<cfscript>
+StructInsert(getLoaded(), "games", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadgames" access="private" returntype="void" default="void" hint="" output="false">
+<cfif NOT getgamesisLoaded()>
+<cflock name="transfer.load.console.console.#getconsoleID()#" timeout="60">
+<cfif NOT getgamesisLoaded()>
+<cfscript>
+getTransfer().loadManyToMany(getThisObject(), "games");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="setMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="struct" required="true">
+<cfscript>
+var composite = 0;
+if(NOT getIsPersisted())
+{
+setconsoleID(arguments.memento.consoleID);
+}
+setPropertyMemento(arguments.memento);
+setaccessoriesisLoaded(false);
+if(structKeyExists(arguments.memento, "accessories"))
+{
+composite = arguments.memento.accessories;
+}
+else
+{
+composite = ArrayNew(1);
+}
+setaccessoriesMemento(composite);
+setcontrolsisLoaded(false);
+if(structKeyExists(arguments.memento, "controls"))
+{
+composite = arguments.memento.controls;
+}
+else
+{
+composite = ArrayNew(1);
+}
+setcontrolsMemento(composite);
+setgamesisLoaded(false);
+if(structKeyExists(arguments.memento, "games"))
+{
+composite = arguments.memento.games;
+}
+else
+{
+composite = ArrayNew(1);
+}
+setgamesMemento(composite);
+</cfscript>
+</cffunction>
+
+<cffunction name="setPropertyMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="struct" required="true">
+<cfscript>
+settype(arguments.memento.type);
+setstorage(arguments.memento.storage);
+</cfscript>
+</cffunction>
+
+<cffunction name="setaccessoriesMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="array" required="true">
+<cfscript>
+var collection = ArrayNew(1);
+var counter = 0;
+var len = 0;
+var item = 0;
+var composite = 0;
+</cfscript>
+<cflock name="transfer.console.console.accessories.#getconsoleID()#" timeout="60">
+<cfscript>
+setaccessoriesisLoaded(true);
+len = ArrayLen(arguments.memento);
+for(counter = 1; counter lte len; counter = counter + 1)
+{
+composite = arguments.memento[counter];
+composite.parentconsole_transferObject = getThisObject();
+item = getComposite("console.accessory", composite, "accessoryID");
+arrayAppend(collection, item);
+}
+setaccessoriesCollection(collection);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="setcontrolsMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="array" required="true">
+<cfscript>
+var collection = ArrayNew(1);
+var counter = 0;
+var len = 0;
+var item = 0;
+var composite = 0;
+</cfscript>
+<cflock name="transfer.console.console.controls.#getconsoleID()#" timeout="60">
+<cfscript>
+setcontrolsisLoaded(true);
+len = ArrayLen(arguments.memento);
+for(counter = 1; counter lte len; counter = counter + 1)
+{
+composite = arguments.memento[counter];
+composite.parentconsole_transferObject = getThisObject();
+item = getComposite("console.control", composite, "controlID");
+arrayAppend(collection, item);
+}
+setcontrolsCollection(collection);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="setgamesMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="array" required="true">
+<cfscript>
+var collection = ArrayNew(1);
+var counter = 0;
+var len = 0;
+var item = 0;
+var composite = 0;
+</cfscript>
+<cflock name="transfer.console.console.games.#getconsoleID()#" timeout="60">
+<cfscript>
+setgamesisLoaded(true);
+len = ArrayLen(arguments.memento);
+for(counter = 1; counter lte len; counter = counter + 1)
+{
+composite = arguments.memento[counter];
+composite.parentconsole_transferObject = getThisObject();
+item = getComposite("console.game", composite, "gameID");
+arrayAppend(collection, item);
+}
+setgamesCollection(collection);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="getMemento" access="public" returntype="struct" default="struct" hint="Returns the memento for all non-lazy members of this object" output="false">
+<cfscript>
+var memento = StructNew();
+memento.consoleID = getconsoleID();
+memento.transfer_isDirty = getIsDirty();
+memento.transfer_isPersisted = getIsPersisted();
+StructAppend(memento, getPropertyMemento());
+memento.accessories = getaccessoriesMemento();
+memento.controls = getcontrolsMemento();
+memento.games = getgamesMemento();
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getPropertyMemento" access="public" returntype="struct" default="struct" hint="returns the memento for properties" output="false">
+<cfscript>
+var memento = StructNew();
+memento.type = gettype();
+memento.storage = getstorage();
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany accessories" output="false">
+<cfscript>
+var memento = ArrayNew(1);
+var iterator = getaccessoriesIterator();
+var item = 0;
+while(iterator.hasNext())
+{
+item = iterator.next();
+ArrayAppend(memento, item.getMemento());
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany controls" output="false">
+<cfscript>
+var memento = ArrayNew(1);
+var iterator = getcontrolsIterator();
+var item = 0;
+while(iterator.hasNext())
+{
+item = iterator.next();
+ArrayAppend(memento, item.getMemento());
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany games" output="false">
+<cfscript>
+var memento = ArrayNew(1);
+var iterator = getgamesIterator();
+var item = 0;
+while(iterator.hasNext())
+{
+item = iterator.next();
+ArrayAppend(memento, item.getMemento());
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="copyValuesTo" access="public" returntype="void" default="void" hint="Copies the values of this object to one of the same class" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true">
+<cfscript>
+if(arguments.transfer.getClassName() neq "console.console")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.transfer.getClassName()#' does not match the expected class of 'console.console'");
+}
+arguments.transfer.setMemento(getMemento());
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesCollection" access="private" returntype="array" default="array" hint="" output="false">
+<cfscript>
+return instance.accessories;
+</cfscript>
+</cffunction>
+
+<cffunction name="setaccessoriesCollection" access="private" returntype="void" default="void" hint="" output="false">
+<cfargument name="accessories" type="array" required="true">
+<cfscript>
+instance.accessories = arguments.accessories;
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessories" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="index" type="numeric" required="true">
+<cfscript>
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+return getaccessoriesCollection().get(JavaCast("int", arguments.index - 1));
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesArray" access="public" returntype="array" default="array" hint="" output="false">
+<cfscript>
+var array = ArrayNew(1);
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+array.addAll(getaccessoriesCollection());
+return array;
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesIterator" access="public" returntype="any" default="any" hint="" output="false">
+<cfscript>
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+return getaccessoriesArray().iterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="containsaccessories" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+iterator = getaccessoriesCollection().iterator();
+if(arguments.object.getClassName() neq "console.accessory")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.accessory'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+return true;
+}
+}
+return false;
+</cfscript>
+</cffunction>
+
+<cffunction name="findaccessories" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+var counter = 0;
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+iterator = getaccessoriesCollection().iterator();
+if(arguments.object.getClassName() neq "console.accessory")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.accessory'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+counter = counter + 1;
+if(composite.equalsTransfer(arguments.object))
+{
+return counter;
+}
+}
+return -1;
+</cfscript>
+</cffunction>
+
+<cffunction name="addaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cflock name="transfer.console.console.accessories.#getconsoleID()#" timeout="60">
+<cfscript>
+if(arguments.object.getClassName() neq "console.accessory")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.accessory'");
+}
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+ArrayAppend(getaccessoriesCollection(), arguments.object);
+setIsDirty(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="removeaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(arguments.object.getClassName() neq "console.accessory")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.accessory'");
+}
+</cfscript>
+<cflock name="transfer.console.console.accessories.#getconsoleID()#" timeout="60">
+<cfscript>
+if(NOT getaccessoriesisLoaded())
+{
+loadaccessories();
+}
+iterator = getaccessoriesCollection().iterator();
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+iterator.remove();
+setIsDirty(true);
+return;
+}
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="clearaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cflock name="transfer.console.console.accessories.#getconsoleID()#" timeout="60">
+<cfscript>
+ArrayClear(getaccessoriesCollection());
+setIsDirty(true);
+setaccessoriesisLoaded(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="sortaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cflock name="transfer.console.console.accessories.#getconsoleID()#" timeout="60">
+<cfscript>
+if(NOT arrayisEmpty(getaccessoriesCollection()))
+{
+setaccessoriesCollection(getUtility().quickSort(getaccessoriesCollection(), accessoriesComparator));
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="accessoriesComparator" access="private" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object1" type="transfer.com.TransferObject" required="true">
+<cfargument name="object2" type="transfer.com.TransferObject" required="true">
+<cfscript>
+if(arguments.object1.getaccessoryID() lt arguments.object2.getaccessoryID())
+{
+return -1;
+}
+else if(arguments.object1.getaccessoryID() gt arguments.object2.getaccessoryID())
+{
+return 1;
+}
+return 0;
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsCollection" access="private" returntype="array" default="array" hint="" output="false">
+<cfscript>
+return instance.controls;
+</cfscript>
+</cffunction>
+
+<cffunction name="setcontrolsCollection" access="private" returntype="void" default="void" hint="" output="false">
+<cfargument name="controls" type="array" required="true">
+<cfscript>
+instance.controls = arguments.controls;
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrols" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="index" type="numeric" required="true">
+<cfscript>
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+return getcontrolsCollection().get(JavaCast("int", arguments.index - 1));
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsArray" access="public" returntype="array" default="array" hint="" output="false">
+<cfscript>
+var array = ArrayNew(1);
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+array.addAll(getcontrolsCollection());
+return array;
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsIterator" access="public" returntype="any" default="any" hint="" output="false">
+<cfscript>
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+return getcontrolsArray().iterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="containscontrols" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+iterator = getcontrolsCollection().iterator();
+if(arguments.object.getClassName() neq "console.control")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.control'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+return true;
+}
+}
+return false;
+</cfscript>
+</cffunction>
+
+<cffunction name="findcontrols" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+var counter = 0;
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+iterator = getcontrolsCollection().iterator();
+if(arguments.object.getClassName() neq "console.control")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.control'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+counter = counter + 1;
+if(composite.equalsTransfer(arguments.object))
+{
+return counter;
+}
+}
+return -1;
+</cfscript>
+</cffunction>
+
+<cffunction name="addcontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cflock name="transfer.console.console.controls.#getconsoleID()#" timeout="60">
+<cfscript>
+if(arguments.object.getClassName() neq "console.control")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.control'");
+}
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+ArrayAppend(getcontrolsCollection(), arguments.object);
+setIsDirty(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="removecontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(arguments.object.getClassName() neq "console.control")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.control'");
+}
+</cfscript>
+<cflock name="transfer.console.console.controls.#getconsoleID()#" timeout="60">
+<cfscript>
+if(NOT getcontrolsisLoaded())
+{
+loadcontrols();
+}
+iterator = getcontrolsCollection().iterator();
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+iterator.remove();
+setIsDirty(true);
+return;
+}
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="clearcontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cflock name="transfer.console.console.controls.#getconsoleID()#" timeout="60">
+<cfscript>
+ArrayClear(getcontrolsCollection());
+setIsDirty(true);
+setcontrolsisLoaded(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="sortcontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cflock name="transfer.console.console.controls.#getconsoleID()#" timeout="60">
+<cfscript>
+if(NOT arrayisEmpty(getcontrolsCollection()))
+{
+setcontrolsCollection(getUtility().quickSort(getcontrolsCollection(), controlsComparator));
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="controlsComparator" access="private" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object1" type="transfer.com.TransferObject" required="true">
+<cfargument name="object2" type="transfer.com.TransferObject" required="true">
+<cfscript>
+if(arguments.object1.getcontrolID() lt arguments.object2.getcontrolID())
+{
+return -1;
+}
+else if(arguments.object1.getcontrolID() gt arguments.object2.getcontrolID())
+{
+return 1;
+}
+return 0;
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesCollection" access="private" returntype="array" default="array" hint="" output="false">
+<cfscript>
+return instance.games;
+</cfscript>
+</cffunction>
+
+<cffunction name="setgamesCollection" access="private" returntype="void" default="void" hint="" output="false">
+<cfargument name="games" type="array" required="true">
+<cfscript>
+instance.games = arguments.games;
+</cfscript>
+</cffunction>
+
+<cffunction name="getgames" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="index" type="numeric" required="true">
+<cfscript>
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+return getgamesCollection().get(JavaCast("int", arguments.index - 1));
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesArray" access="public" returntype="array" default="array" hint="" output="false">
+<cfscript>
+var array = ArrayNew(1);
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+array.addAll(getgamesCollection());
+return array;
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesIterator" access="public" returntype="any" default="any" hint="" output="false">
+<cfscript>
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+return getgamesArray().iterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="containsgames" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+iterator = getgamesCollection().iterator();
+if(arguments.object.getClassName() neq "console.game")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.game'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+return true;
+}
+}
+return false;
+</cfscript>
+</cffunction>
+
+<cffunction name="findgames" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+var counter = 0;
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+iterator = getgamesCollection().iterator();
+if(arguments.object.getClassName() neq "console.game")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.game'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+counter = counter + 1;
+if(composite.equalsTransfer(arguments.object))
+{
+return counter;
+}
+}
+return -1;
+</cfscript>
+</cffunction>
+
+<cffunction name="addgames" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cflock name="transfer.console.console.games.#getconsoleID()#" timeout="60">
+<cfscript>
+if(arguments.object.getClassName() neq "console.game")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.game'");
+}
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+ArrayAppend(getgamesCollection(), arguments.object);
+setIsDirty(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="removegames" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(arguments.object.getClassName() neq "console.game")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'console.game'");
+}
+</cfscript>
+<cflock name="transfer.console.console.games.#getconsoleID()#" timeout="60">
+<cfscript>
+if(NOT getgamesisLoaded())
+{
+loadgames();
+}
+iterator = getgamesCollection().iterator();
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+iterator.remove();
+setIsDirty(true);
+return;
+}
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="cleargames" access="public" returntype="void" default="void" hint="" output="false">
+<cflock name="transfer.console.console.games.#getconsoleID()#" timeout="60">
+<cfscript>
+ArrayClear(getgamesCollection());
+setIsDirty(true);
+setgamesisLoaded(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="sortgames" access="public" returntype="void" default="void" hint="" output="false">
+<cflock name="transfer.console.console.games.#getconsoleID()#" timeout="60">
+<cfscript>
+if(NOT arrayisEmpty(getgamesCollection()))
+{
+setgamesCollection(getUtility().quickSort(getgamesCollection(), gamesComparator));
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="gamesComparator" access="private" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object1" type="transfer.com.TransferObject" required="true">
+<cfargument name="object2" type="transfer.com.TransferObject" required="true">
+<cfscript>
+if(arguments.object1.getgameID() lt arguments.object2.getgameID())
+{
+return -1;
+}
+else if(arguments.object1.getgameID() gt arguments.object2.getgameID())
+{
+return 1;
+}
+return 0;
+</cfscript>
+</cffunction>
+
+<cffunction name="validateCacheState" access="package" returntype="boolean" default="boolean" hint="if this object is cached, then validate that all it's composites are cached too" output="false">
+<cfscript>
+var iterator = 0;
+var item = 0;
+if(getIsPersisted() AND NOT getTransfer().validateIsCached(getThisObject()))
+{
+return true;
+}
+if(getaccessoriesisLoaded())
+{
+iterator = getaccessoriesiterator();
+while(iterator.hasNext())
+{
+item = iterator.next();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+}
+if(getcontrolsisLoaded())
+{
+iterator = getcontrolsiterator();
+while(iterator.hasNext())
+{
+item = iterator.next();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+}
+if(getgamesisLoaded())
+{
+iterator = getgamesiterator();
+while(iterator.hasNext())
+{
+item = iterator.next();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+}
+return true;
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterCreateTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true">
+<cfscript>
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDeleteTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true">
+<cfscript>
+switch(arguments.event.getTransferObject().getClassName())
+{
+case "console.accessory":
+if(getaccessoriesIsLoaded())
+{
+while(containsaccessories(arguments.event.getTransferObject()))
+{
+removeaccessories(arguments.event.getTransferObject());
+}
+}
+break;
+case "console.control":
+if(getcontrolsIsLoaded())
+{
+while(containscontrols(arguments.event.getTransferObject()))
+{
+removecontrols(arguments.event.getTransferObject());
+}
+}
+break;
+case "console.game":
+if(getgamesIsLoaded())
+{
+while(containsgames(arguments.event.getTransferObject()))
+{
+removegames(arguments.event.getTransferObject());
+}
+}
+break;
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterUpdateTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true">
+<cfscript>
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+case "console.accessory":
+if(getaccessoriesIsLoaded() AND containsaccessories(arguments.event.getTransferObject()))
+{
+sortaccessories();
+}
+break;
+case "console.control":
+break;
+case "console.game":
+break;
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="actionBeforeDiscardTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true">
+<cfscript>
+var discard = false;
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+case "console.accessory":
+if(getaccessoriesIsLoaded() AND containsaccessories(arguments.event.getTransferObject()))
+{
+discard = true;
+}
+break;
+case "console.control":
+if(getcontrolsIsLoaded() AND containscontrols(arguments.event.getTransferObject()))
+{
+discard = true;
+}
+break;
+case "console.game":
+if(getgamesIsLoaded() AND containsgames(arguments.event.getTransferObject()))
+{
+discard = true;
+}
+break;
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+switch(arguments.event.getTransferObject().getClassName())
+{
+}
+if(discard)
+{
+getTransfer().discard(getThisObject());
+}
+</cfscript>
+</cffunction>
+
+

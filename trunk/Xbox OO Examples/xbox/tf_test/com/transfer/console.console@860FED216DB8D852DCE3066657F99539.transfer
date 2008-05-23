@@ -1,0 +1,377 @@
+<cffunction name="findgames" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().findgames(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="setstorage" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="storage" type="numeric" required="true" default="">
+<cfscript>
+getTransferObject().setstorage(arguments.storage);
+</cfscript>
+</cffunction>
+
+<cffunction name="addgames" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().addgames(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="equalsTransfer" access="public" returntype="boolean" default="boolean" hint="If an object is persisted, returns true if they are of the same class and same id. If not, returns true if they are the same object." output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().equalsTransfer(arguments.transfer);
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany controls" output="false">
+<cfscript>
+return getTransferObject().getcontrolsMemento();
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesIterator" access="public" returntype="any" default="any" hint="" output="false">
+<cfscript>
+return getTransferObject().getgamesIterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="getClassName" access="public" returntype="string" default="string" hint="The class name of the TransferObject" output="false">
+<cfscript>
+return getTransferObject().getClassName();
+</cfscript>
+</cffunction>
+
+<cffunction name="gettype" access="public" returntype="string" default="string" hint="" output="false">
+<cfscript>
+return getTransferObject().gettype();
+</cfscript>
+</cffunction>
+
+<cffunction name="removeaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().removeaccessories(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="setcontrolsMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="array" required="true" default="">
+<cfscript>
+getTransferObject().setcontrolsMemento(arguments.memento);
+</cfscript>
+</cffunction>
+
+<cffunction name="copyValuesTo" access="public" returntype="void" default="void" hint="Copies the values of this object to one of the same class" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().copyValuesTo(arguments.transfer);
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany accessories" output="false">
+<cfscript>
+return getTransferObject().getaccessoriesMemento();
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDeleteTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" default="">
+<cfscript>
+getTransferObject().actionAfterDeleteTransferEvent(arguments.event);
+</cfscript>
+</cffunction>
+
+<cffunction name="containsgames" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().containsgames(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="addaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().addaccessories(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="getstorage" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfscript>
+return getTransferObject().getstorage();
+</cfscript>
+</cffunction>
+
+<cffunction name="clone" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Get a deep clone of this object" output="false">
+<cfscript>
+return getTransferObject().clone();
+</cfscript>
+</cffunction>
+
+<cffunction name="getconsoleID" access="public" returntype="uuid" default="uuid" hint="" output="false">
+<cfscript>
+return getTransferObject().getconsoleID();
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsIterator" access="public" returntype="any" default="any" hint="" output="false">
+<cfscript>
+return getTransferObject().getcontrolsIterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="getPropertyMemento" access="public" returntype="struct" default="struct" hint="returns the memento for properties" output="false">
+<cfscript>
+return getTransferObject().getPropertyMemento();
+</cfscript>
+</cffunction>
+
+<cffunction name="setMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="struct" required="true" default="">
+<cfscript>
+getTransferObject().setMemento(arguments.memento);
+</cfscript>
+</cffunction>
+
+<cffunction name="containsaccessories" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().containsaccessories(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrolsArray" access="public" returntype="array" default="array" hint="" output="false">
+<cfscript>
+return getTransferObject().getcontrolsArray();
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontrols" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="index" type="numeric" required="true" default="">
+<cfscript>
+return getTransferObject().getcontrols(arguments.index);
+</cfscript>
+</cffunction>
+
+<cffunction name="clearaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cfscript>
+getTransferObject().clearaccessories();
+</cfscript>
+</cffunction>
+
+<cffunction name="clearcontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cfscript>
+getTransferObject().clearcontrols();
+</cfscript>
+</cffunction>
+
+<cffunction name="getIsDirty" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfscript>
+return getTransferObject().getIsDirty();
+</cfscript>
+</cffunction>
+
+<cffunction name="sameTransfer" access="public" returntype="boolean" default="boolean" hint="Checks to see if 2 transfer objects are the same" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="Yes" default="">
+<cfscript>
+return getTransferObject().sameTransfer(arguments.transfer);
+</cfscript>
+</cffunction>
+
+<cffunction name="settype" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="type" type="string" required="true" default="">
+<cfscript>
+getTransferObject().settype(arguments.type);
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesArray" access="public" returntype="array" default="array" hint="" output="false">
+<cfscript>
+return getTransferObject().getgamesArray();
+</cfscript>
+</cffunction>
+
+<cffunction name="sortcontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cfscript>
+getTransferObject().sortcontrols();
+</cfscript>
+</cffunction>
+
+<cffunction name="containscontrols" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().containscontrols(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="addcontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().addcontrols(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="init" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="transfer" type="transfer.com.Transfer" required="true" default="">
+<cfargument name="utility" type="transfer.com.util.Utility" required="true" default="">
+<cfargument name="nullable" type="transfer.com.sql.Nullable" required="true" default="">
+<cfargument name="thisObject" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().init(arguments.transfer,arguments.utility,arguments.nullable,arguments.thisObject);
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterCreateTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" default="">
+<cfscript>
+getTransferObject().actionAfterCreateTransferEvent(arguments.event);
+</cfscript>
+</cffunction>
+
+<cffunction name="getgames" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="index" type="numeric" required="true" default="">
+<cfscript>
+return getTransferObject().getgames(arguments.index);
+</cfscript>
+</cffunction>
+
+<cffunction name="getIsPersisted" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfscript>
+return getTransferObject().getIsPersisted();
+</cfscript>
+</cffunction>
+
+<cffunction name="getIsClone" access="public" returntype="boolean" default="boolean" hint="" output="false">
+<cfscript>
+return getTransferObject().getIsClone();
+</cfscript>
+</cffunction>
+
+<cffunction name="findcontrols" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().findcontrols(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesArray" access="public" returntype="array" default="array" hint="" output="false">
+<cfscript>
+return getTransferObject().getaccessoriesArray();
+</cfscript>
+</cffunction>
+
+<cffunction name="sortgames" access="public" returntype="void" default="void" hint="" output="false">
+<cfscript>
+getTransferObject().sortgames();
+</cfscript>
+</cffunction>
+
+<cffunction name="findaccessories" access="public" returntype="numeric" default="numeric" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+return getTransferObject().findaccessories(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="getgamesMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany games" output="false">
+<cfscript>
+return getTransferObject().getgamesMemento();
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessoriesIterator" access="public" returntype="any" default="any" hint="" output="false">
+<cfscript>
+return getTransferObject().getaccessoriesIterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="cleargames" access="public" returntype="void" default="void" hint="" output="false">
+<cfscript>
+getTransferObject().cleargames();
+</cfscript>
+</cffunction>
+
+<cffunction name="removegames" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().removegames(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="actionBeforeDiscardTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" default="">
+<cfscript>
+getTransferObject().actionBeforeDiscardTransferEvent(arguments.event);
+</cfscript>
+</cffunction>
+
+<cffunction name="sortaccessories" access="public" returntype="void" default="void" hint="" output="false">
+<cfscript>
+getTransferObject().sortaccessories();
+</cfscript>
+</cffunction>
+
+<cffunction name="setconsoleID" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="consoleID" type="uuid" required="true" default="">
+<cfscript>
+getTransferObject().setconsoleID(arguments.consoleID);
+</cfscript>
+</cffunction>
+
+<cffunction name="getaccessories" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="" output="false">
+<cfargument name="index" type="numeric" required="true" default="">
+<cfscript>
+return getTransferObject().getaccessories(arguments.index);
+</cfscript>
+</cffunction>
+
+<cffunction name="setPropertyMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="struct" required="true" default="">
+<cfscript>
+getTransferObject().setPropertyMemento(arguments.memento);
+</cfscript>
+</cffunction>
+
+<cffunction name="getOriginalTransferObject" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Returns this object" output="false">
+<cfscript>
+return getTransferObject().getOriginalTransferObject();
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterUpdateTransferEvent" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" default="">
+<cfscript>
+getTransferObject().actionAfterUpdateTransferEvent(arguments.event);
+</cfscript>
+</cffunction>
+
+<cffunction name="getMemento" access="public" returntype="struct" default="struct" hint="Returns the memento for all non-lazy members of this object" output="false">
+<cfscript>
+return getTransferObject().getMemento();
+</cfscript>
+</cffunction>
+
+<cffunction name="removecontrols" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" default="">
+<cfscript>
+getTransferObject().removecontrols(arguments.object);
+</cfscript>
+</cffunction>
+
+<cffunction name="setaccessoriesMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="array" required="true" default="">
+<cfscript>
+getTransferObject().setaccessoriesMemento(arguments.memento);
+</cfscript>
+</cffunction>
+
+<cffunction name="setgamesMemento" access="public" returntype="void" default="void" hint="" output="false">
+<cfargument name="memento" type="array" required="true" default="">
+<cfscript>
+getTransferObject().setgamesMemento(arguments.memento);
+</cfscript>
+</cffunction>
+
+

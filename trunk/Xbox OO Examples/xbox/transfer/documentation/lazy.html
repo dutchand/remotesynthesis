@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Lazy Loading</title>
+<a href="index.html" id="nav">Home</a>
+<link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+<body>
+<h1>Lazy Loading</h1>
+<p>
+	If the attribute of 'lazy' is set one  a 'manytoone', 'onetomany' or 'manytomany' element, the items that are stored in
+	that composition are lazily loaded into the object.
+</p>
+<p>
+	This means that when the object is first generated from the database, these records are not retrieved with the initial load.
+</p>
+<p>
+	Only when a function that has been generated for the lazy composite element, such as 'get*Array()' or 'contains*()',  
+	is called 
+	that the required information is retrieved from the database, and the resulting object(s) are loaded.
+</p>
+</body>
+</html>

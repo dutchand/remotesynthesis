@@ -1,0 +1,51 @@
+/* doco css */
+
+body {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 0.8em;
+}
+
+table {
+	border: 1px solid #666;
+	width: 80%;
+}
+
+th, td {
+	border-left: 1px dashed #666;
+	vertical-align: top;
+	padding: 4px;
+}
+
+li {
+	padding-top: 10px;
+}
+
+a#nav {
+	float: right;
+	margin-right: 20px;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 16pt;
+}
+
+h2 {
+	font-size: 13pt;	
+}
+
+h3 {
+	font-size: 11pt;
+}
+pre, code {
+	font-size: 10pt;
+}
+
+fieldset {
+	width: 30%;
+	float: right;
+}
+
+p.indent {
+	margin-left: 15pt;
+}

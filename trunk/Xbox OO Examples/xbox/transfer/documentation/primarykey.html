@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Primary Key Management</title>
+<link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Primary Key Management</h1>
+<p>
+	Transfer has several ways of handling primary keys:
+</p>
+<h2>Database specific</h2>
+<h3>Microsoft SQL Server</h3>
+<p>
+Retrieve the last created Identity value for the table, e.g.
+</p>
+<p>
+<code>
+&lt;id name="userid" type="numeric" /&gt; <br/>
+</code>
+</p>
+<h3>mySQL</h3>
+<p>
+Retrieve the last created auto increment value for the table, e.g.
+</p>
+<p>
+<code>
+&lt;id name="userid" type="numeric" /&gt; <br/>
+</code>
+</p>
+<h3>PostGreSQL</h3>
+<p>
+Retrieve the last sequence value mapped to the table, e.g.
+</p>
+<p>
+<code>
+&lt;object name="User" sequence="user_sequence"&gt;<br/>
+&nbsp; &lt;id name="idbasic" type="numeric" /&gt; <br/>
+  ...
+</code>
+</p>
+<h3>Oracle</h3>
+<p>
+Retrieve the last sequence value mapped to the table, e.g.	
+</p>
+<p>
+<code>
+&lt;object name="User" sequence="user_sequence"&gt;<br/>
+&nbsp; &lt;id name="idbasic" type="numeric" /&gt; <br/>
+  ...
+</code>
+</p>
+<h2>Generic</h2>
+Transfer also has the capabily to generate for you:
+<h3>Numeric Primary Keys</h3>
+Transfer can generate unique numeric keys per table, by setting generate='true' when the type is 'numeric' e.g.
+<p>
+<code>
+&lt;id name="userid" type="numeric" generate="true" /&gt; <br/>
+</code>
+</p>
+<h3>UUID Primary Keys</h3>
+Transfer can generate UUID keys, by setting generate='true' when the type is 'UUID' e.g.
+<p>
+<code>
+&lt;id name="userid" type="UUID" generate="true" /&gt; <br/>
+</code>
+</p>
+<h3>GUID Primary Keys</h3>
+Transfer can generate GUID keys, by setting generate='true' when the type is 'GUID' e.g.
+<p>
+<code>
+&lt;id name="userid" type="GUID" generate="true" /&gt; <br/>
+</code>
+</p>
+<h2>Manual</h2>
+<p>
+	Lastly, this can all be manually overwritten simply by setting the primary key value via the set() method prior to the TransferObject being created in the database, e.g.
+</p>
+<p>
+<code>
+	user = getTransfer().new("User");<br/>		
+	user.setUserID(1);<br/>
+	getTransfer().save(user);
+</code>
+</p>
+<p>
+	This will attempt to insert the User record into the database with a ID of '1'.
+</p>
+</body>
+</html>

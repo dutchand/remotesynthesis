@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - ChangeLog</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Change Log</h1>
+version 0.6.3 - 17th April 2007
+<ul>
+	<li>
+		Transfer Query Langauge
+	</li>
+	<li>
+		New 'afterNew' event allows you to inject dependencies into
+		new TransferObjects
+	</li>
+	<li>
+		New Overview documentation
+	</li>
+	<li>
+		New FAQ documentation
+	</li>
+	<li>
+		New Getting Start documentation
+	</li>
+	<li>
+		Fixed bug whereby is was easy to corrupt the cache by 
+		using manually discarded objects.
+	</li>
+	<li>
+		Fixed un var'd value in TransferInserter that caused thread safety issues.
+	</li>
+	<li>
+		Fixed bug where unpersisted objects were not throwing an exception in TransferUpdater.cfc
+	</li>
+	<li>
+		Fixed bug where
+		Use of SoftReferences across 2 ClassLoaders causes non atomic clearing
+	</li>
+	<li>
+		Fixed bug where add and remove on lazy loaded questions fails when loaded=false
+	</li>
+	<li>
+		Fixed bug where clear*() on manytomany collections doesn't work is lazy=true
+	</li>
+	<li>
+		Fixed bug catching Custom Java Exceptions from the JavaLader
+	</li>
+	<li>
+		Fixed bug where Struct collection 'contains' returned true only if the object key is contained
+	</li>
+	<li>
+		Fixed bug where calling getParent() on a onetomany child, that is lazy, loads all the children
+	</li>
+	<li>
+		Fixed bug where creating a onetomany child with a non-cached parent, results in dirty data
+	</li>
+	<li>
+		Fixed bug where non cached Transfer objects not being set to un-persisted when delete() ed
+	</li>
+	<li>
+		Worked around issue where timeouts of Transfer would cause a memory leak due to a CF bug
+		where URLClassLoader's can't be garbage collected.
+	</li>
+</ul>
+
+version 0.6.1 - 20 January 2007
+<ul>
+	<li>
+		Cache enhancement to use soft references to ensure that the cache
+		cannot become a memory leak.
+	</li>
+	<li>
+		Enhancement to use a soft reference pool for caching TransferEvents to
+		improve memory usage.
+	</li>
+	<li>
+		Modelglue folder deleted.  For Model Glue : Unity integration see:
+		<a href="http://www.firemoss.com/blog/index.cfm?mode=entry&entry=F2BFB7B2-3048-55C9-4329FCB6EE13BAB3">http://www.firemoss.com/blog/index.cfm?mode=entry&entry=F2BFB7B2-3048-55C9-4329FCB6EE13BAB3</a>
+	</li>
+	<li>
+		Fixed bug where removal of a child from a clone would not result in the removal
+		of the child from the cached object on syncronisation.
+	</li>
+	<li>
+		Better locking on clone syncronisation.
+	</li>
+	<li>
+		Removed the onBeforeDelete listener on a TransferObject, increasing delete() performance.
+	</li>
+	<li>
+		Enhancement to make the clone operatoin only resolve parents if isDirty() == true, increasing
+		clone performance.
+	</li>
+	<li>
+		Fixed a bug where 
+		saving a clone with a non persisted child object causes child to be set to isPersisted == true.
+	</li>
+	<li>
+		Fixed a bug where 
+		attempting to lazy load on a deleted record causes an error.
+	</li>
+	<li>
+		Fixed a bug where conditional resolution could fail if there were duplicate
+		columns with the same name in the SQL statement between two or more tables.  Conditions are now
+		resolved back to tables to avoid this ambiguity.
+	</li>
+	<li>
+		Fixed the bug where 
+		getIsPersisted is true after calling delete() on an object.
+	</li>
+	<li>
+		Fixed the bug where
+		saving a manytomany with composition results in extra records being deleted.
+	</li>
+	<li>
+		Fixed CaseSensitive Issue.
+	</li>
+	<li>
+		Updates to documentation
+	</li>									
+</ul>
+
+version 0.6 - 5th December 2006
+<ul>
+	<li>
+		Oracle Support.
+	</li>
+	<li>
+		Lazy Loading. :D
+	</li>
+	<li>
+		Nullable properties on objects.
+	</li>
+	<li>
+		Implemented the ability to 'decorate' TransferObjects, to provide
+		greater customisation possibilities.
+	</li>
+	<li>
+		Now able to turn off internal transaction blocks within Transfer with an optional
+		argument on create(), update(), save() and delete() calls.
+	</li>
+	<li>
+		Fixed the missspelling of 'objectDefinitions' in the XSD file.
+		<strong>Note : This could cause 'object not found' errors if you 
+		are updating from a previous version of Transfer.</strong>
+		Make sure you validate against the new schema.
+	</li>
+	<li>
+		Cached objects will now automatically synchronise data if a non-cached object
+		is saved and/or deleted.
+	</li>
+	<li>
+		clone() method on all generated objects. Clone will syncronise with cached objects
+		on getTransfer().save(), getTransfer().update() and getTransfer().delete() calls.
+	</li>
+	<li>
+		Put condition on onetomany and manytone, allowing for composition filtered by a condition.
+	</li>
+	<li>
+		find() function on manytomany and onetomany composition.
+	</li>
+	<li>
+		New insert-ignore, insert-refresh, update-ignore, update-refresh attributes on
+		properties.
+	</li>
+	<li>
+		new listByPropertyMap() and readByPropertyMap() to allow for using multiple
+		property values to do reads and lists of objects.
+	</li>
+	<li>
+		Columns are aliased with property names on list*() operations.
+	</li>
+	<li>
+		New Transfer.getTransferMetaData(className) so that you are able to get the Transfer
+		meta data on an object.
+	</li>
+	<li>
+		discardByClassAndKey(className, key), 
+		discardByClassAndKeyArray(className, keyArray), 
+		discardByClassAndKeyQuery(className, keyQuery, keyColumn).
+	</li>	
+	<li>
+		XML Schema now contains documentation, so you get help with your code hinting.
+	</li>
+	<li>
+		Fixed recycle() bug.
+	</li>	
+	<li>
+		Removed the 'get' attribute on properties. It's not required, and can cause issues if set to false.
+	</li>
+	<li>
+		Fixed bug for object having more than one composition of the same class will fail.
+	</li>
+	<li>
+		Fixed bug where sort* calls on empty arrays would error.
+	</li>	
+	<li>
+		No longer creates keys on all shared scopes, it only creates keys on scopes that
+		are designated for caching.
+	</li>
+	<li>
+		Updates to documentation.
+	</li>
+	<li>
+		Refactoring of codebase.
+	</li>
+</ul>
+
+
+version 0.5 - 13th June 2006
+<ul>
+	<li>
+		Postgresql support (Allright!)
+	</li>
+	<li>
+		The ability to control the caching of objects within Transfer, down to an object and scope level.
+	</li>
+	<li>
+		Now getIsPersisted() and getIsDirty() methods on TransferObjects to 
+		determine if an object has been persisted in the database and/or had it data modified respectively.
+	</li>
+	<li>
+		If Object have not been modified since their last commitment to the database, 
+		the Transfer.update() will not fire events, or run the database update.
+	</li>
+	<li>
+		If a TransferObject has already been created, and an attempt is made to create() it again,
+		an exception is thrown.
+	</li>
+	<li>
+		If the primary key has been set before inserting, it overrides Transfer's population/retrieval mechanism, 
+		and the object is inserted under the set primary key.
+	</li>
+	<li>
+		Some better handling of database 'null' values being turned into values like dates, GUIDs, numbers etc
+		(Not much really you can do to emulate 'null' however).
+	</li>
+	<li>
+		object[@table] defaults to the object[@name] of the object
+	</li>
+	<li>
+		onetomany relationships can now removeParent, and hasParent relationships.
+	</li>
+	<li>
+		manytoone relationships now have has, and remove functions.
+	</li>
+	<li>
+		If you want to recycle your TransferObjects, you must explicitly call it now.
+		The recyle on delete() call caused some issues with objects being persisted in
+		shared scopes outside of Transfer.
+	</li>
+	<li>
+		Some general refactoring
+	</li>
+	<li>
+		Now implicitly calling connection.close() when using a java.sql.Connection objects,
+		rather than waiting for the garbage collector to come by and pick them up. (Much better!)
+	</li>
+	<li>
+		Removal of the use of a preparedStatement on Selects, and reverted back to CFQUERY, 
+		which is much more performant on memory.
+	</li>
+	<li>
+		Fixed GUID property bug
+	</li>
+	<li>
+		Fixed bug where composite objects more than 2 levels deep would fail
+	</li>
+	<li>
+		Fixed bug where composite objects with the same named columns would fail
+	</li>
+</ul>
+
+version 0.4 - 12th April 2006
+<ul>
+	<li>
+		If an object does not exist from transfer.get(); it now returns an empty object, rather
+		than throwing an exception. This is more in line with other ORMs.
+	</li>
+	<li>
+		readByProperty() and readByWhere() to retrieve objects by non-Primary Key values.
+	</li>
+	<li>
+		list(), listByProperty() and listByWhere() functions added to Transfer to provide
+		simple listing of table values.
+	</li>
+	<li>
+		property[@column] and id[@column] now default to the 
+		value of the name, which should result in less typing.
+	</li>
+	<li>
+		Added autogeneration of GUID's that conform to MS standards, and are performant for
+		indexing.  Updated XSD accordingly.
+	</li>
+	<li>
+		Refactored the transfer.com.dynamic.ObjectWriter, so that it is now far
+		more maintainable.
+	</li>
+	<li>
+		Some more small modifications to the transfer.xsd file.
+	</li>
+	<li>
+		Added a 'Home' button to page in the documentation. No more back button navigation.
+	</li>
+	<li>
+		Able to set a 'configure' custom function that is run just after the init() function is run.
+	</li>
+	<li>
+		Fixed some bugs with custom functions
+	</li>
+	<li>
+		More documentation on new features
+	</li>
+</ul>
+
+version 0.3 - 17th January 2006
+<ul>
+	<li>
+		Primary key is initialised to 0 if numeric, 
+		00000000-0000-0000-0000000000000000 if UUID, and "" if otherwise.
+	</li>
+	<li>
+		'generate' atribute added to ID element, to specify if 
+		transfer should autogenerate primary keys, or if it should
+		be handled by the database.
+	</li>
+	<li>
+		If generate attribute is not set, or is set to false on the ID element
+		Transfer retrieves the auto generated numeric ID.
+	</li>
+	<li>
+		Added a 'save()' function that sorts create/update intelligently.
+	</li>
+	<li>
+		Clean up of the transfer.xsd. Made several key attributes
+		'required' that were not that are required for the
+		lib to function.
+	</li>
+	<li>
+		ManyToOneNotSetException thrown when an attempt to get a manytoone item 
+		that has yet to be initialised. This means that an exception
+		will be thrown if an attempt is made to create a TransferObject
+		that has a manytoone item that has yet to be initialised.
+	</li>
+	<li>
+		Fixed several fatal bugs that prevented UUID's being used
+		as primary keys.
+	</li>
+	<li>
+		A TransferObject had to have at least one property.  There was 
+		really no reason for this, so now all it requires is an ID.
+	</li>
+	<li>
+		More consistent Transfer class checking on generated methods.
+	</li>
+	<li>
+		Transfer_sequence table is now created automatically, no need to create.
+	</li>	
+</ul>
+
+
+version 0.2 - 28th November 2005
+<ul>
+	<li>
+		Made it so that ID element doesn't have set and get attributes in the schema, 
+		as there is no point in having either of these items private.
+		(set="false" will actually cause an errors when a transfer is created).
+	</li>
+	<li>
+		onetomany elements now do not generate a public 'add@Name' function,
+		this is handled by the 'setParent@name' function. 
+		'add@Name' is now private.
+	</li>
+	<li>
+		Made 'sort@name; on onetomany private, as there is no need for it
+		to ever be called outside the Transfer.
+	</li>	
+	<li>
+		Modified transfer.sql.IDGenerator so that it will insert into the transfer_sequence table the table
+		name and max(primarykey) values if it cannot find a sequence of a given table.
+	</li>	
+	<li>
+		Able to set define custom cfml functions for an Object.
+	</li>
+	<li>
+		Lots more documentation.
+	</li>
+	<li>
+		Refactored some aspects of the code.
+	</li>
+</ul>
+
+</body>
+</html>

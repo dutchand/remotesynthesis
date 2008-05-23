@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transfer xsi:noNamespaceSchemaLocation="/transfer/resources/xsd/transfer.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<objectDefinitions>
+		<package name="console">
+			<object name="console" table="console" decorator="tf.com.xbox.console">
+				<id name="consoleID" type="uuid" />
+				<property name="type" type="String" column="type" />
+				<property name="storage" type="Numeric" column="storage" />
+				<manytomany name="accessories" table="relconsoleaccessories">
+		  			<link to="console.console" column="consoleID"/>
+		  			<link to="console.accessory" column="accessoryID"/>
+		  			<collection type="array">
+		  				<key order="accessoryID"/>
+		  			</collection>
+		  		</manytomany>
+				<manytomany name="controls" table="relconsolecontrols">
+		  			<link to="console.console" column="consoleID"/>
+		  			<link to="console.control" column="controlID"/>
+		  			<collection type="array">
+		  				<key order="controlID"/>
+		  			</collection>
+		  		</manytomany>
+				<manytomany name="games" table="relconsolegames">
+		  			<link to="console.console" column="consoleID"/>
+		  			<link to="console.game" column="gameID"/>
+		  			<collection type="array">
+		  				<key order="gameID"/>
+		  			</collection>
+		  		</manytomany>
+			</object>
+			<object name="accessory" table="accessory" decorator="tf.com.xbox.accessories.accessory">
+				<id name="accessoryID" type="uuid" />
+				<property name="accessoryName" type="String" column="accessoryName" />
+			</object>
+			<object name="control" table="control" decorator="tf.com.xbox.controls.control">
+				<id name="controlID" type="uuid" />
+				<property name="wireless" type="Boolean" column="wireless" />
+				<property name="headset" type="Boolean" column="headset" />
+			</object>
+			<object name="game" table="game" decorator="tf.com.xbox.games.game">
+				<id name="gameID" type="uuid" />
+				<property name="gameName" type="String" column="gameName" />
+				<property name="specialEdition" type="Boolean" column="specialEdition" />
+			</object>
+		</package>
+	</objectDefinitions>
+</transfer>

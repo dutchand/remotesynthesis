@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="default.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Database Management Methods</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Database Management Methods</h1>
+
+<h2><a href="cfcdoc/content3c54.html#new()">Transfer.new(class)</a></h2>
+<p>
+	This methods creates a new TransferObject, that has a primary key of 0.  It has not been created in the database
+	and is not stored in the persistant scope.
+</p>
+<p>
+	Note that the class name is case senstive.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#get()">Transfer.get(class, key)</a></h2>
+<p>
+	This will retrieve a TransferObject from thet database and place it in the cache that the object is configured for, for future retrieval.
+	More details on caching, can be found at <a href="caching.html">Using Caching</a>
+</p>
+<p>
+	If a object of the given key does not exist, it will return an new, empty instance of the class.
+</p>
+<p>
+	Note that the class name is case senstive.
+</p>
+
+
+<h2><a href="cfcdoc/content3c54.html#save()">Transfer.save(transferObject, [useTransaction])</a></h2>
+<p>
+	If this transferObject has yet to be created, it runs the 
+	<a href="cfcdoc/content3c54.html#create()">create(transferObject)</a>
+	function, otherwise it runs the 
+	<a href="cfcdoc/content3c54.html#update()"> update(transferObject)</a>
+	function
+</p>
+<p>
+	If 'useTransaction' is set to false, Transfer won't use it's internal cftransaction blocks.
+	Defaults to true.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#create()">Transfer.create(transferObject, [useTransaction])</a></h2>
+<p>
+	This method takes an object created by the method new() and inserts it into the database. 
+</p>
+<p>
+	If in the configuration the ID element has a <em>[@generate='true']</em> value, Transfer will
+	generate the primary key.
+	<br/>
+	If <em>[@generate='false']</em>, or there is no 'generate' attribute, the database will attempt to
+	retrieve the primary key value from the database.
+	<br/>
+	If the ID is set() before the TransferObject is inserted, this will override both of these options, and Transfer
+	will attempt to insert the data into the database under the set ID.
+	<br/>
+	More details can be found in <a href="primarykey.html">Primary Key Management</a>
+</p>
+<p>
+	This also places this object inside the configured persistance scope of the class.
+</p>
+<p>
+	If this object is referenced as a child of a onetomany collection, it will be added to its set parents collection when it is created.
+</p>
+<p>
+	Any child objects that are added to a manytomany collection on this TransferObject has its links commited to the database.
+</p>
+<p>
+	If the object has already been created, an exception will be thrown.
+</p>
+<p>
+	If 'useTransaction' is set to false, Transfer won't use it's internal cftransaction blocks.
+	Defaults to true.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#update()">Transfer.update(transferObject, [useTransaction])</a></h2>
+<p>
+	This method updates the details of a TransferObject within the database, if the details of the object have been changed since it was
+	last committed to the database.
+</p>
+<p>
+	If this TransferObject is refereced as a child of a onetomany collection that is in a cache, if the parent of this object has changed, it 
+	will both be commited to the database, and the TransferObject will be moved from the collection of one parent object to another.
+</p>
+<p>
+	If changes have been made to a collection of type manytomany on this TransferObject, children either removed or added, these changes are commited to the database at this stage.
+</p>
+<p>
+	If 'useTransaction' is set to false, Transfer won't use it's internal cftransaction blocks.
+	Defaults to true.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#delete()">Transfer.delete(transferObject, [useTransaction])</a></h2>
+<p>
+	This will delete a TransferObject from the database and the persistance scope if it has been inserted into the database.
+</p>
+<p>
+	If this TransferObject has a onetomany collection, it will set all its children to having no parent, and break a foreign key constraint, if it exists.
+	This may cause an error, depending on your database model.
+</p>
+<p>
+	If this TransferObject is a member of a onetomany collection, or a manytomany collection that is cached, it will be removed.
+</p>
+<p>
+	If 'useTransaction' is set to false, Transfer won't use it's internal cftransaction blocks.
+	Defaults to true.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#readByProperty()">Transfer.readByProperty(class, property, value)</a></h2>
+<p>
+	Retrieves a TransferObject of a given class by a property with a unique value.
+</p>
+<p>
+	If the record does not exist a new, empty instance is returned.
+<p>
+<p>
+	If the property value results in  more than one result of the given class, an exception will be thrown.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#readByPropertyMap()">Transfer.readByPropertyMap(class, propertyMap)</a></h2>
+<p>
+	Retrieves a TransferObject of a given class by a struct of values, where the struct key is the 
+	object property, and the value is the value to filter by.
+</p>
+<p>
+	If the record does not exist a new, empty instance is returned.
+<p>
+<p>
+	If the property value results in  more than one result of the given class, an exception will be thrown.
+</p>
+<h2><a href="cfcdoc/content3c54.html#readByQuery()">Transfer.readByQuery(class, query)</a></h2>
+<p>
+	Retrieves a TransferObject of a given class by result of the TQL Query object that is passed to it.
+</p>
+<p>
+	TQL Queries that are used for readByQuery() operations can either start with a <code>FROM</code> statement,
+	or can return a single coluned result, that is the value of the <em>id</em> you wish
+	to get of the given class (e.g. <code>Select Post.IDPost from...</code>).
+</p>
+<p>
+	It should be noted that TQL Query Objects are reused after they are executed, so they will lose their
+	state after the readByQuery() operation.
+<p>
+<p>
+	For information on TQL and the TQL Query object, see <a href="tql.html">Using Transfer Query Language</a>.
+</p>
+<p>
+	If the record does not exist a new, empty instance is returned.
+<p>
+<p>
+	If the TQL results in  more than one result of the given class, an exception will be thrown.
+</p>
+<h2><a href="cfcdoc/content3c54.html#readByWhere()">Transfer.readByWhere(class, whereSQL)</a></h2>
+<p>
+	Retrieves a TransferObject of a given class by where statement that returns a single record.
+</p>
+<p>
+	Either use table and column names inline in your SQL, or you can map back to the configuration file by using the
+	property name enclosed in '{}'.  <br/>
+	E.g. transfer.listByWhere("post.Comment", "{value} LIKE '%AWESOME%'");
+</p>
+<p>
+	If the record does not exist a new, empty instance is returned.
+<p>
+<p>
+	If the property value results in  more than one result of the given class, an exception will be thrown.
+</p>
+<p>
+	As a rule of thumb, readByWhere() should only used if the other readBy*() methods cannot produce the
+	desired results that are required.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#list()">Transfer.list(class, [orderProperty], [asc], [useAliases])</a></h2>
+<p>
+	Queries the database for all the records of a given class in the database and returns them
+</p>
+<p>
+Column names are aliased to the property names set in the configuration file, unless otherwise specified by setting 'useAliases=false'.
+</p>
+<h2><a href="cfcdoc/content3c54.html#listByProperty()">Transfer.listByProperty(class, property, value, [orderProperty], [asc], [useAliases])</a></h2>
+<p>
+	Queries the database for all the records of a given class in the database, filtered by a property of the class, and returns them.
+</p>
+<p>
+Column names are aliased to the property names set in the configuration file, unless otherwise specified by setting 'useAliases=false'.
+</p>
+<h2><a href="cfcdoc/content3c54.html#listByPropertyMap()">Transfer.listByPropertyMap(class, propertyMap, [orderProperty], [asc], [useAliases])</a></h2>
+<p>
+	Queries the database for all the records of a given class in the database, filtered by a struct of values, where the struct key is the 
+	object property, and the value is the value to filter by.
+</p>
+<p>
+	Column names are aliased to the property names set in the configuration file, unless otherwise specified by setting 'useAliases=false'.
+</p>
+<h2><a href="cfcdoc/content3c54.html#listByQuery()">Transfer.listByQuery(query)</a></h2>
+<p>
+	Queries the database and returns the results based on the TQL query that is passed to it.
+</p>
+<p>
+	It should be noted that TQL Query Objects are reused after they are executed, so they will lose their
+	state after the listByQuery() operation.
+<p>
+<p>
+	For information on TQL and the TQL Query object, see <a href="tql.html">Using Transfer Query Language</a>.
+</p>
+
+<h2><a href="cfcdoc/content3c54.html#listByWhere()">Transfer.listByWhere(class, whereSQL, [orderProperty], [asc], [useAliases])</a></h2>
+<p>
+	Queries the database for all the records of a given class in the database, filtered by a SQL where statement, and returns them.
+</p>
+<p>
+	Either use table and column names inline in your SQL, or you can map back to the configuration file by using the
+	property name enclosed in '{}'.  <br/>
+	E.g. transfer.listByWhere("post.Comment", "{value} LIKE '%AWESOME%'");
+</p>
+<p>
+	Column names are aliased to the property names set in the configuration file, unless otherwise specified by setting 'useAliases=false'.
+</p>
+<p>
+	As a rule of thumb, listByWhere() should only used if the other listBy*() methods cannot produce the
+	desired results that are required.
+</p>
+</body>
+</html>

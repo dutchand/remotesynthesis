@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Null Values</title>
+<a href="index.html" id="nav">Home</a>
+<link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+<body>
+<h1>Null Values</h1>
+<h2>Retrieving NULL Value</h2>
+<p>
+	Since ColdFusion does not have native support for 'null' values, if a NULL value is stored
+	in the database, configurable values are assigned when a NULL value in the database is retrieved.
+</p>
+<p>
+	The default values set to a TransferObject property when as NULL value in the database are found are:
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Type</th>
+			<th>Value</th>
+			<th>Comment</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>numeric</td>
+			<td>0</td>
+			<td>Interpreted as a empty value, hence 0</td>
+		</tr>
+		<tr>
+			<td>string</td>
+			<td>''</td>
+			<td>Interpreted as an empty value, hence the empty string</td>
+		</tr>
+		<tr>
+			<td>date</td>
+			<td>1-January-0100</td>
+			<td>This is the earliest date Coldfusion can create.</td>
+		</tr>
+		<tr>
+			<td>boolean</td>
+			<td>false</td>
+			<td>NULL is not True, hence it is false.</td>
+		</tr>
+		<tr>
+			<td>UUID</td>
+			<td>00000000-0000-0000-0000000000000000</td>
+			<td>UUID with only 0's</td>
+		</tr>
+		<tr>
+			<td>GUID</td>
+			<td>00000000-0000-0000-0000-000000000000</td>
+			<td>GUID with only 0's</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	These values can be overwritten by the 'nullValues' element in the <a href="transfer.doc.html#nullValues">configuration file</a>, as well
+	as with the '@nullValue' attribute on an individual 'property' element, but only if the 'nullable' attribute on the property is set to 'true'.
+</p>
+<p>
+	If the property value equals the configured NULL value, the 'get<em>property[@name]</em>IsNull()' will return 'true'.
+</p>
+<h2>Inserting Null Values</h2>
+<p>
+	If Transfer finds the value of the 'property' is the same as the configured Null value for that property, and 'nullable' is set to 'true' it will insert a NULL
+	value into the database instead of the actual value of the property.
+</p>
+<p>
+	The shorthand way to set the TransferObject's property to the configured NULL value is by
+	calling the 'set<em>property[@name]</em>Null()' method on the TransferObject. 
+</p>
+<h2>Foreign Keys</h2>
+<p>
+	Transfer will also INSERT or UPDATE NULL values in the Foreign Key of a manytoone Child if it has not been set or
+	in the Foreign key of a onetomany parent that has not been set.
+</p>
+</body>
+</html>

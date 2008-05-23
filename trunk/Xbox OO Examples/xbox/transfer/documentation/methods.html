@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - Generated Methods</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Generated Methods</h1>
+
+These are the methods that are available for a given TransferObject, 
+depending on its configuration.
+
+<a name="default"/><h2>Default Methods</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				TransferObject
+			</th>
+			<th>
+				Name
+			</th>
+			<th>
+				Arguments
+			</th>
+			<th>
+				Returns
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="5">
+				Object
+			</td>
+			<td>
+				getClassName
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				string: The class name of the TransferObject as defined by the config file.
+			</td>									
+		</tr>
+		<tr>
+			<td>
+				equalsTransfer
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				 : the TransferObject to check equality with
+			</td>
+			<td>
+				boolean : Whether or not two TransferObjects are the same object.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				clone
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				 : A deep clone of this object, that is outside of the Transfer cache.
+				</td>
+		</tr>
+		<tr>
+			<td>
+				getIsDirty
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				boolean : Whether or not the data on this object as changed since it was last commited to the database.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				getIsPresisted
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				boolean : Whethere or not this TransferObject has been commited to the database.
+			</td>
+		</tr>				
+	</tbody>
+</table>
+
+<a name="id"/><h2>ID Element</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				TransferObject
+			</th>
+			<th>
+				Name
+			</th>	
+			<th>
+				Arguments
+			</th>
+			<th>
+				Returns
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="10">
+				Object
+			</td>
+			<td>
+				set<em>id[@name]</em>
+			</td>
+			<td>
+				<em>id[@type]</em> : The id to set it to, of the type
+				specified by the attribute 'type'
+				
+			</td>
+			<td>
+				void : 
+				This will generally only be used by Transfer, however if the ID
+				is set before the TransferObject is create()'ed, it will be inserted with the set
+				ID, overwriting any generation or retrieval of the ID.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>id[@name]</em>
+			</td>
+			<td> 
+				none 
+			</td>
+			<td>
+				<em>id[@type]</em> : The primary key id, of the type specified
+				by the attribute 'type'.<br/>
+				If the transferObject has yet to inserted into the database it will return 
+				the configured null value for its type.
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<a name="property"/><h2>Property Element</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				TransferObject
+			</th>
+			<th>
+				Name
+			</th>	
+			<th>
+				Arguments
+			</th>
+			<th>
+				Returns
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="4">
+				Object
+			</td>
+			<td>
+				set<em>property[@name]</em><br/>
+				(If <em>property[@set]</em> == 'true')
+			</td>
+			<td>
+				<em>property[@type]</em> : The id to set it to, of the type
+				specified by the attribute 'type'
+			</td>
+			<td>
+				void
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>property[@name]</em><br/>
+				(If <em>property[@get]</em> == 'true')
+			</td>
+			<td> 
+				none 
+			</td>
+			<td>
+				<em>property[@type]</em> : The property to set, of the type specified
+				by the attribute 'type'.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>property[@name]</em>IsNull<br/>
+				(If <em>property[@nullable]</em> == 'true')
+			</td>
+			<td> 
+				none
+			</td>
+			<td>
+				boolean : if the property set is equal to the null value specified in configuration.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				set<em>property[@name]</em>Null<br/>
+				(If <em>property[@nullable]</em> == 'true')
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				void : Sets the value to the configured NULL value.
+			</td>
+		</tr>		
+	</tbody>
+</table>
+
+<a name="manytoone"/><h2>ManyToOne Element</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				TransferObject
+			</th>
+			<th>
+				Name
+			</th>	
+			<th>
+				Arguments
+			</th>
+			<th>
+				Returns
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="4">
+				Object
+			</td>
+			<td>
+				set<em>manytoone[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of the class defined
+				in the <em>link[@to]</em> child element.
+			</td>
+			<td>
+				void
+			</td>									
+		</tr>
+		<tr>
+			<td>
+				get<em>manytoone[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: The TransferObject that is currently
+				set.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				remove<em>manytoone[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				void
+				: Removes the set ManyToOne Child.  
+				This will cause Transfer to use NULL as the value for the foreign key in the database.
+			</td>
+		</tr>	
+		<tr>
+			<td>
+				has<em>manytoone[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				boolean
+				: Whether it as a ManyTOOne set or not
+			</td>
+		</tr>			
+	</tbody>
+</table>
+
+<a name="onetomany"/><h2>OneToMany Element</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				TransferObject
+			</th>
+			<th>
+				Name
+			</th>	
+			<th>
+				Arguments
+			</th>
+			<th>
+				Returns
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="8">
+				Object
+			</td>
+			<td>
+				get<em>onetomany[@name]</em>
+				<br/>
+				(if <em>collection[@type]</em> == 'array')
+			</td>
+			<td>
+				numeric : index of the array to get an item at.
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>onetomany[@name]</em>
+				<br/>
+				(if <em>collection[@type]</em> == 'struct')
+			</td>
+			<td>
+				key : The unique key the TransferObject is stored under.
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>onetomany[@name]</em>Array
+				<br/>
+				(if <em>collection[@type]</em> == 'array')				
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				array : a shallow copy of the array of child TransferObjects.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>onetomany[@name]</em>Struct
+				<br/>
+				(if <em>collection[@type]</em> == 'struct')
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				struct : a shallow copy of the struct of child TransferObjects.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>onetomany[@name]</em>Iterator
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				<a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/Iterator.html">java.util.Iterator</a>
+				 : creates a Iterator on a shallow copy of the collection.  
+				If <em>collection[@type]</em> == 'array' then the items will be sorted
+				by the specified order, if it has one.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				sort<em>onetomany[@name]</em>
+				<br/>
+				(if <em>collection[@type]</em> == 'array')
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				void : Performs a software sort on the collection. Usually used after 
+				multiple setParent<em>object[@name]</em>() statements.
+			</td>
+		</tr>		
+		<tr>
+			<td>
+				contains<em>onetomany[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+			<td>
+				boolean : whether or not the collection contains this object.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				find<em>onetomany[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+			<td>
+				(if <em>collection[@type]</em> == 'array')<br/>
+				numeric : The index of the object in the array
+				<br/>
+				(if <em>collection[@type]</em> == 'struct')<br/>
+				string : the key the object is stored under.
+			</td>
+		</tr>		
+		<tr>
+			<td rowspan="4">
+				Child
+			</td>
+			<td>
+				setParent<em>object[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: TransferObject of the type of the Object. 
+			</td>
+			<td>
+				void : This will add the Child to the Parent.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				getParent<em>object[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: The TransferObject that is the parent.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				removeParent<em>object[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				void : Sets the object to having no parent, and removes
+				the Child from the Parent. This will cause Transfer to use NULL as the value for the foreign key in the database.
+			</td>
+		</tr>	
+		<tr>
+			<td>
+				hasParent<em>object[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				boolean : If this TransferObject has a parent or not
+			</td>
+		</tr>			
+	</tbody>
+</table>
+
+<a name="manytomany"/><h2>ManyToManyElement</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				TransferObject
+			</th>
+			<th>
+				Name
+			</th>	
+			<th>
+				Arguments
+			</th>
+			<th>
+				Returns
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="11">
+				Object
+			</td>
+			<td>
+				add<em>manytomany[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: The TransferObject of type defined by <em>link[@to]</em>
+				to add to the collection
+			</td>
+			<td>
+				void
+			</td>								
+		</tr>
+		<tr>
+			<td>
+				get<em>manytomany[@name]</em>
+				<br/>
+				(if <em>collection[@type]</em> == 'array')
+			</td>
+			<td>
+				numeric : index of the array to get an item at.
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>manytomany[@name]</em>
+				<br/>
+				(if <em>collection[@type]</em> == 'struct')
+			</td>
+			<td>
+				key : The unique key the TransferObject is stored under.
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				remove<em>manytomany[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+				to be removed from the collection.
+			</td>
+			<td>
+				void
+			</td>
+		</tr>
+		<tr>
+			<td>
+				clear<em>manytomany[@name]</em>
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				void : Removes all children from the collection.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				sort<em>manytomany[@name]</em>
+				<br/>
+				(if <em>collection[@type]</em> == 'array')
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				void : Performs a software sort on the collection. Usually used after 
+				multiple add<em>collection@name</em> statements.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>manytomany[@name]</em>Array
+				<br/>
+				(if <em>collection[@type]</em> == 'array')				
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				array : a shallow copy of the array of child TransferObjects.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>manytomany[@name]</em>Struct
+				<br/>
+				(if <em>collection[@type]</em> == 'struct')
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				struct : a shallow copy of the struct of child TransferObjects.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				get<em>manytomany[@name]</em>Iterator
+			</td>
+			<td>
+				none
+			</td>
+			<td>
+				<a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/Iterator.html">java.util.Iterator</a>
+				 : creates a Iterator on a shallow copy of the collection.  
+				If <em>collection[@type]</em> == 'array' then the items will be sorted
+				by the specified order, if it has one.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				contains<em>manytomany[[@name]]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+			<td>
+				boolean : whether or not the collection contains this object.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				find<em>manytomany[@name]</em>
+			</td>
+			<td>
+				<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+				: A TransferObject of type defined by <em>link[@to]</em>
+			</td>
+			<td>
+				(if <em>collection[@type]</em> == 'array')<br/>
+				numeric : The index of the object in the array
+				<br/>
+				(if <em>collection[@type]</em> == 'struct')<br/>
+				string : the key the object is stored under.
+			</td>
+		</tr>			
+	</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - Custom Methods</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Custom Methods</h1>
+<p>
+	It is possible to define custom methods on a TransferObject within the configuration file for Transfer.
+</p>
+<p>
+	For every 'Function' element that is defined in the <a href="transfer.doc.html#function">configuration file</a>, a corresponding ColdFusion method
+	is applied to the generated TransferObject.
+</p>
+<p>
+For example, given the following definition on a TransferObject:
+</p>
+<pre>
+&lt;function name="setNewProperty" access="public" returntype="numeric"&gt;
+	&lt;argument name="newProperty" type="string" required="true"/&gt;
+	&lt;body&gt;
+		&lt;![CDATA[&lt;cfset instance.newProperty = arguments.newProperty&gt;]]&gt;
+	&lt;/body&gt;
+&lt;/function&gt;
+</pre>
+Will result in the ColdFusion method being written:
+<pre>
+&lt;cffunction name="setNewProperty" access="public" returntype="numeric" output="false"&gt;
+	&lt;cfargument name="newProperty" type="string" required="true"/&gt;
+	&lt;cfset instance.newProperty = arguments.newProperty&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<p>
+	It should also be noted that the full array of TransferObject functions are available at this scope. 
+</p>
+<p>
+Care should be taken not to overwrite any of the generated methods and/or inner properties of the TransferObject, as errors
+may occur.
+</p>
+
+<h2>Configure Method</h2>
+<p>
+	Since the init() method is automatically generated for a TransferObject, and cannot be overwritten, 
+	you are able to define an optional methond named 'configure' that is called immeadiatley after the 
+	init() method has finished processing.
+</p>
+<p>
+	If the TransferObject called is being requested from the database, init() is called <em>before</em> the properties
+	of the Object are set from the record values.
+</p>
+<p>
+	The configure() method must be named 'configure' and can have no required arguments.
+</p>
+<p>
+	Example:
+</p>
+<pre>
+&lt;function name="configure" access="private" returntype="void"&gt;
+	&lt;body&gt;
+		&lt;![CDATA[&lt;cfset setPropertyValue("defaultValue")&gt;]]&gt;
+	&lt;/body&gt;
+&lt;/function&gt;
+</pre>
+
+<h2>getTransfer()</h2>
+<p>
+	Custom methods can call 'getTransfer()' within their bodies to get access to the transfer.com.Transfer object.
+</p>
+</body>
+</html>
