@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Clone()</title>
+<a href="index.html" id="nav">Home</a>
+<link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+<body>
+<h1>Using Clone()</h1>
+<p>
+	You are able to make a deep clone of every generated TransferObject, by calling 'clone()' on it.
+</p>
+<p>
+	This cloned object is outside of any caching that is currently in use within Transfer, which means
+	that any changes that are done to this object, and are not saved, are only particlur to the request
+	that they are currently in.
+</p>
+<p>
+	It should be noted that Transfer.save() and transfer.update() on a clone object will update the object currently in cache to the state of the saved object
+</p>
+<h2>Caveat on cloned objects</h2>
+<p>
+	Cloned objects should not be added as compsites to objects that are not clones.  This can cause indeterminate results.
+</p>
+</body>
+</html>

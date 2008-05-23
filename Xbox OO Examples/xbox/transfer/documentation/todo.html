@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - TODO</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Todo</h1>
+<ul>
+	<li>
+		*0.6.3 -
+		Composite Key Support
+	</li>
+	<li>
+		*0.6.3 -
+		Binary Data on properties support
+	</li>
+	<li>
+		*0.7 -
+		Soft deletes, be able to set a field such that it is seen as deleted by the system.
+	</li>
+	<li>
+	    *0.7 - 
+		Have generated methods have hints on them for transferDoc to be able to read.
+	</li>
+	<li>
+		*0.7 -
+		On many to many, be able to set the link attributes in either order.
+	</li>
+	<li>
+		*0.7 -
+		Add the classnames of parents of an object to the end of the string
+		that is being used as a hash'd value, that way, if it changes, the
+		definition will be overwritten.
+	</li>
+	<li>
+		*0.7 -
+		Validate the datasource and transfer xml files against their xml schema files.
+	</li>
+	<li>
+		*0.8 -
+		Multiple configuration files: this is going to be done by a new element:
+		&lt;include path="file.xml" overwrite="true|false" /&gt;
+	</li>	
+	<li>
+		*0.8 - Allow for TQL on conditions
+	</li>	
+	<li>
+		*1.0 - Cascading creates, updates, deletes and saves.
+	</li>
+	<li>
+		*1.0 -
+		Have a 'allowsNull' (or somesuch) attribute on manytoone and onetomany elements,
+		that controls if NULL is used on Foreign key values if the 'have' is not defined.
+	</li>
+	<li>
+		*1.0 -
+		On composition, have the value of 'column' default to the same
+		column name as the primary key of the referenced table
+	</li>
+	<li>
+		*1.0 -
+		discardByClassName(), 
+		discardAll(), 
+	</li>
+	<li>
+		*1.0 -
+		Have a 'unique="true"' attribute on manytomany collections - this tells the system
+		that the values of both keys is unique, and therefore can perform more performant
+		updates.
+	</li>
+	<li>
+		*1.0 -
+		on update, if a struct - if the key has been changed, update
+		the key in the struct.  (if it does't contain() it, loop, and look).
+		(maybe - could be a performance issue? not sure)
+	</li>
+	<li>
+		*1.0 -
+		programatic clearing of the .transfer files
+	</li>
+	<li>
+		*1.0 -
+		programatic reloading of the XML file.
+	</li>
+	<li>
+		*1.0 -
+		Some sort of configurable 'development' mode, that you can set whether or
+		not to clear the XML, the .transfer files and / or the object cache.
+	</li>
+	<li>
+		*1.0 -
+		Transaction based caching that discards objects inside a transaction
+		if the transaction fails.
+	</li>
+	<li>
+		(Post 1.0)
+		Batch insert, update and delete operations using TQL and relevent *byQuery() methods.
+	</li>
+	<li>
+		(Post 1.0)
+		Have a look at writing closure methods for sorting and/or filtering
+		collections on child composites.
+	</li>
+	<li>
+		(Post 1.0)
+		Have some sort of lookin to cache - probably responds back with a struct -
+		key is the className, and how many of each object that is currently cached.
+	</li>
+	<li>
+		(Post 1.0) Be able to set custom SQL for read/create/update/delete operations.  That would be cool.
+	</li>
+	<li>
+		(Post. 1.0) Have a think about re-architecting with a DI lib of some description
+	</li>
+	<li>
+		(Post 1.0) Have a config section to globally 
+		define what property defaults are.
+	</li>
+	<li>
+		(Post 1.0)
+		A way to do inheritence mapping. The way 
+		<a href="http://www.hibernate.org/hib_docs/reference/en/html/inheritance.html">Hibernate does it </a>
+		is very nice, maybe something similar.
+	</li>
+</ul>
+</body>
+</html>

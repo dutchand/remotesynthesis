@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - Transfer Query Language</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Transfer Query Language</h1>
+<p>
+	Transfer Query Language is another abstraction layer between the database and 
+	the Object model that the developer has created, that allows you to perform SQL like queries
+	against the database.
+</p>
+<p>
+	This has been developed so that you can leverage the knowledge you already have about your 
+	Object Oriented model to do you gateway queries, as well as being able to do queries
+	with less code, as Transfer already knows what columns are required per table, and the
+	relationships between objects.
+</p>
+<p>
+	Transfer then takes the responsibility to translate the TQL script, combined with your
+	Object configuration file into SQL that is then run against the database.
+</p>
+<h2>The Transfer Query Object</h2>
+<p>
+	The Transfer Query object is a CFC of type <a href="cfcdoc/content79a0.html">transfer.com.tql.Query</a>	, 
+	and is used as the main holder for information about the TQL Script.
+</p>
+<p>
+	To do a <a href="cfcdoc/content3c54.html#listByQuery()">Transfer.listByQuery()</a> 
+	or a 
+	<a href="cfcdoc/content3c54.html#readByQuery()">Transfer.readByQuery()</a> you must first create a new TQL Query object.  For more
+	information  on these methods, check the <a href="database.html">Database Management Methods</a> section.
+</p>
+<h3>Creating a Query Object</h3>
+<p>
+	To create a query object, call the <a href="cfcdoc/content3c54.html#createQuery()">createQuery(tql)</a> method
+	on the <a href="cfcdoc/content3c54.html">transfer.com.Transfer</a> CFC with the required TQL Script as an argument.  
+	This will return the TQL Query object that is based on the entered TQL script.
+</p>
+<p>
+	For example:
+</p>
+<pre>
+query = getTransfer().createQuery("from post.Post");
+</pre>
+<p>
+	Where 'query' is the resultant <a href="cfcdoc/content79a0.html">transfer.com.tql.Query</a> object.
+</p>
+<h3>TQL Query Methods</h3>
+<p>
+	The TQL Query Object has a series of methods that can effect how the TQL script is resolved by Transfer:
+</p>
+<h4><a href="cfcdoc/content79a0.html#setAliasColumns()">Query.setAliasColumns(aliasColumns)</a></h4>
+<p>
+	By default, database columns are aliased to the name of the <em>Property</em> that they are assigned in the
+	Object configuration XML file.  To turn this off, so that the query uses the original column names:
+<pre>
+query.setAliasColumns(false);
+</pre>
+</p>
+<h4><a href="cfcdoc/content79a0.html#setDistinctMode()">Query.setDistinctMode(distinctMode)</a></h4>
+<p>
+	By default, the resultant SQL query from the TQL script is not a <code>SELECT DISTINCT...</code> query.
+	Since there is no <code>DISTINCT</code> keyword in TQL, the query must be set to 'DistinctMode' to 
+	produce the same effect.  e.g.
+<pre>
+query.setDistinctMode(true);
+</pre>
+</p>
+<h4><a href="cfcdoc/content79a0.html#setParam()">Query.setParam(name, [value], [type], [list], [null])</a></h4>
+<p>
+	TQL has the ability to specify place holders for mapped paramters within the TQL by using a ':' in front of the
+	mapped parameter's name. 
+	For example, the TQL:
+</p>
+<pre>
+from post.Post as Post where Post.name = :postName	
+</pre>
+<p>
+	Has the mapped parameter 'postName' that has to be set before the query can be run.
+</p>
+<p>
+	To set the mapped parameter a value, the method Query.setParam is used.  For example to set the 'postName' mapped param
+	 to 'foo':
+</p>
+<pre>
+query.setParam("postName", "foo", "string"); 
+</pre>
+<p>
+	The type argument can be set to the same 'type' attributes that can be found on <em>Property</em> elements in the
+	object configuration xml file, i.e. string, numeric, boolean, date, GUID, and UUID.  By default, it is set to 'string'.
+</p>
+<p>
+	The 'list' argument tells the Query object that the value being set to the mapped parameter is actually a list of
+	values, exactly like the 'list' attribute on <code>&lt;cfqueryparam&gt;</code>.  By default this set to false.
+</p>
+<p>
+	Again, exactly like <code>&lt;cfqueryparam&gt;</code>, the 'null' argument takes a boolean that sets the 
+	value of the mapped parameter to <code>NULL</code>.  By default, this is set to false.
+</p>
+<h4><a href="cfcdoc/content79a0.html#setCacheEvaluation()">Query.setCacheEvaluation(cacheEvaluation)</a></h4>
+<p>
+	When the structure of your TQL is not going to change between calls (mapped param values may change, but your
+	actual TQL isn't)
+	, you can tell Transfer to cache the 
+	evaluation of the TQL, which gives significant performance boosts.
+	To do this, you simply need to:
+</p>
+<pre>
+query.setCacheEvaluation(true);
+</pre>
+<p>
+	By default evaluation caching is set to false.
+</p>
+<h2>Transfer Query Language Syntax</h2>
+<p>
+	The Transfer Query Language is its own scripting language that was written in Java and Coldfusion.
+	The following is the syntax that is allowed when using TQL.
+</p>
+<fieldset>
+	<legend>Legend</legend>
+	[ x ] - 'x' can appear 0 or 1 times
+	<br/>
+	[ x ]* - 'x' can appear 0 to infinity times.
+	<br/>
+	( x ) - 'x' must appear
+	<br/>
+	 x | y  - 'x' or 'y'
+	 <br/>
+	 "(" - a real (
+	 <br/>
+	 ... - and so on...
+</fieldset>
+<h3>Identifers</h3>
+<ul>
+	<li>
+		<em>class</em> 
+		- A class name as defined in the Transer Object Configuration file, i.e. 'post.Post' or 'system.Category'
+	</li>
+	<li>
+		<em>property</em>
+		- The name of a property on the class that it is associated with.  i.e. 'post.Post.Name' 'Name' would be the
+		property 'Name' on 'post.Post'.
+	</li>
+	<li>
+		<em>columnAlias</em>
+		- The name you wish the column, i.e. the <em>property</em> to be in the resultant query. Can be of the pattern [ a-z | A-Z ][ a-z | A-Z | 0-9 | _ ]*
+		for Example: 'post.Post.name as postName', where 'postName' is the columnAlias.
+	</li>
+	<li>
+		<em>classAlias</em> - 
+		The shorthand version of the <em>class</em> you wish this to be in the query. Can be of the pattern [ a-z | A-Z ][ a-z | A-Z | 0-9 | _ ]*. For example: 
+		'post.Post as Post', where 'Post' is the classAlias. 
+	</li>
+	<li>
+		<em>mappedParameter</em> -
+		An identifier of pattern :[ a-z | A-Z | 0-9 | _ ]*, that is set in the TQL Query object 
+		before being evaluated.  For example: 'from post.Post where post.Post.name = :name' where ':name' is a
+		mappedParameter.
+	</li>
+	<li>
+		<em>subSelectStatement</em> - 
+		A subselect TQL statement.  Must start with a 'select...'. For example:
+		'from post.Post as Post where post.Name IN (select User.name from user.User as User)'
+		where 'select User.name from user.User as User' is a subSelectStatement.
+	</li>
+</ul>
+<h3>Basic List Queries</h3>
+<p>
+	<code>from <em>class</em></code>
+</p>
+<p class="indent">
+	This produces a query that selects all the columns that defined in the <em>class</em>es object definitions that are present in the 'from' statement.
+</p>
+<p class="indent">
+	For Example: <code>from post.Post</code> will return all the columns as defined from the 'post.Post' object, from the table that 'post.Post' is configured to.
+</p>
+<p>
+	<code>select * from <em>class</em></code>
+<p>
+<p class="indent">
+	This code, produces exactly the same result as above.  The '*' operator Transfer to resolve all properties of the given <em>class</em>es in the 'from' statement.
+</p>
+<p class="indent">
+	For example: <code>from post.Post</code> is exactly the same as <code>select * from post.Post</code>
+</p>
+<h3>Selecting specific columns</h3>
+<p>
+	<code>select <em>class</em>.<em>property</em> [, <em>class</em>.<em>property</em>]*  from <em>class</em></code>
+</p>
+<p class="indent">
+	To select specific properties from a query, you can specify them much like you would columns in a regular SQL expression.
+</p>
+<p class="indent">
+	For example: <code>select post.Post.postName, post.Post.postDate from post.Post</code> will select the 'postName' and the 'postDate' properties from the table
+	that represents 'post.Post'.
+</p>
+
+<h3>Aliasing column names</h3>
+<p>
+<code>
+	select <em>class</em>.<em>property</em> [as <em>columnAlias</em>]
+	from <em>class</em>
+</code>
+</p>
+<p class="indent">
+	It is also possible to manually alias columns to specific names.
+</p>
+<p class="indent">
+	For example: <code>select post.Post.name as title from post.Post</code> where 'title' is the alias, will alias the property 'postName' to 'title' in the query resultset.
+</p>
+
+<h3>Aliasing columns names, while also selecting all</h3>
+<code>
+	select <em>class</em>.<em>property</em> [as <em>columnAlias</em>]
+	[, <em>class</em>.<em>property</em> [as <em>columnAlias</em>] | * ]*
+	from <em>class</em>
+</code>
+<p class="indent">
+Often you will only want to alias some columns in a TQL query, but still automatically select the rest.  By including the '* operator
+into the 'select' part of the TQL script, this tells Transfer to include all properties into the query result.
+</p>
+<p class="indent">
+	For example, to select the 'name' property of 'post.Post' as 'title', but also to select all properties on 'post.Post', you would use:
+	<code>select post.Post.name as title, * from post.Post</code>
+</p>
+
+<h3>Aliasing Classes</h3>
+<code>from <em>class</em> as <em>classAlias</em></code>
+<p class="indent">
+	It is also possible to alias <em>class</em> declarations in your From statements.  This is useful for writing complicated Where statements, and
+	also for ease of development.
+</p>
+<p class="indent">
+	For example, to give the class 'post.Post' the alias of 'Post' for the query, simply use: <code>from post.Post as Post</code>
+</p>
+
+<h3>Selecting properties from aliased classes</h3>
+<p>
+<code>
+select <em>classAlias</em>.<em>property</em> from <em>class</em> as <em>classAlias</em>
+</code>
+</p>
+<p class="indent">
+	When aliasing <em>class</em>es, you <strong>must</strong> refer to them via their <em>classAlias</em>, and not via their full <em>class</em>.
+</p>
+<p class="indent">
+	Thus, when selecting a specific property from an aliased <em>class</em>, it is imperative that you preface the statement with the <em>classAlias</em>
+</p>
+<p class="indent">
+	For example, when selecting the 'name' property on a 'post.Post' object in the TQL script which has been aliased to 'Post', the TQL must look like:
+	<code>select Post.name from post.Post as Post</code>
+</p>
+
+<h3>Where statements with operators</h3>
+<p>
+<code>
+from <em>class</em> where <em>class</em>.<em>property</em>
+( = | &gt; | &lt; | != | &lt;&gt; | &lt;= | &gt;= | like ) 
+( <em>mappedParameter</em> | ( <em>class</em> | <em>classAlias</em> ).<em>property</em> )
+</code>
+</p>
+<p class="indent">
+	TQL also has Where statements, in which you can place conditional statements to filter out data from your TQL queries.
+</p>
+<p class="indent">
+	For example, to get a list of Posts, with a filter on a 'like' condition: <code>from post.Post where post.Post like :name</code>. From there you are able to 
+	set the <em>mappedParameter</em> to a value using the TQL Query object, as described above.
+</p>
+
+<h3>Where statement with an IN statemement</h3>
+<p>
+<code>
+from <em>class</em> where <em>class</em>.<em>property</em>
+[NOT] IN
+"(" ( <em>mappedParameter</em> | <em>subSelectStatement</em> ) ")"
+</code>
+</p>
+<p class="indent">
+	Where statements can utilise IN statements, in the same way that SQL can.  
+	IN statements can either take a <em>mappedParameter</em>, or a TQL subselect statement.
+</p>
+<p class="indent">
+	For example, if your using a <em>mappedParameter</em> statement within your TQL script, 
+	it could look something like:
+	<code>select from post.Post where post.Post.IDPost IN ( :idpostList )</code>.  From there you would
+	be setting the <em>mappedParameter</em> via the query object, most likely with the 'list' argument set to true.
+</p>
+<p class="indent">
+	You can also use a sub select within an IN statement.  A sub select <strong>must</strong> have only a single property 
+	selected on it.  For example: <code>from post.Post where post.Post.name IN ( select user.User.name from user.User )</code>
+	will select all Posts with the same name as a User.
+</p>
+
+<h3>Where statement with a NULL statemement</h3>
+<p>
+<code>
+from <em>class</em> where <em>class</em>.<em>property</em> IS
+[NOT] NULL
+</code>
+</p>
+<p class="indent">
+	Where Statements can also contains conditions against database NULL values.  For example, to get all Posts
+	where the Name of the post is NULL: <code>from post.Post where post.Post.name IS NULL</code>
+</p>
+
+<h3>Where statement with combinations of operators, NULL and IN statements</h3>
+<p class="indent">
+	A combination of operator, NULL, and IN statements can be made, seperated by 'and' or 'or' boolean
+	operators, as well as grouped with parenthesise.
+</p>
+<p class="indent">
+	For example:
+</p>
+<pre>
+	from
+		post.Post
+	where
+		post.Post.createdDate &gt;= :createDate
+		AND
+		(
+			post.Post.body like :search
+			OR
+			post.Post.name like :search
+		)
+</pre>
+<p class="indent">
+	will select all Posts that were created past a certain date, and whose Name or Body is LIKE a certain search term.
+</p>
+
+<h3>Where statements with aliased classes</h3>
+<p>
+<code>
+from <em>class</em> as <em>classAlias</em> where <em>classAlias</em>.<em>property</em> ...
+</code>
+</p>
+<p>
+	In the same way that selecting <em>properties</em> from an aliased <em>class</em>, in Where statement, if a <em>class</em>
+	has been aliased, it <strong>must</strong> be referred to by it's <em>classAlias</em>, rather than by it's full name.
+</p>
+<p>
+	For example: <code>from post.Post as Post where Post.name != :name</code> we have used the <em>classAlias</em> of 'Post' as appropriate
+	in the Where statement.
+</p>
+
+<h3>Auto Joins</h3>
+<p>
+<code>from <em>class</em> [as <em>classAlias</em>] [ join <em>class</em> [as <em>classAlias</em>] ]*</code>
+</p>
+<p class="indent">
+	Since Transfer knows about the relationships between classes and therefore thier corresponding tables, TQL can be used 
+	to automatically build SQL join statement for you.
+</p>
+<p class="indent">
+	For example, if we assume that 'post.Post' has a <em>onetomany</em> relationship to 'post.Comments', we could join
+	all posts to their comments simply by using the script: <code>from post.Post join post.Comments</code>
+</p>
+<p class="indent">
+	To continue that, if we wanted the Post joined with it's Comments and the User that created the Post, we could also have:
+	<code>from post.Post join post.Comment join user.User</code>
+</p>
+<h3>Specific Join</h3>
+<p>
+<code>
+from <em>class</em> [as <em>classAlias</em>] join <em>class</em> [as <em>classAlias</em>]
+ON ( <em>class</em> | <em>classAlias</em> ).<em>composite</em> 
+[ ( and | or ) ( <em>class</em> | <em>classAlias</em> ).<em>composite</em> ]*
+</code>
+</p>
+<p class="indent">
+	Sometimes when there are multiple relationships between <em>classs</em>es, you will want to only specify a particular relationship,
+	or set of relationships that you wish to join on. This is possible by specifiying the name of the composite element in a ON statement.
+</p>
+<p class="indent">
+	For example, if a 'post.Post' had relationships to two 'user.User's, one a the user that created it, and 
+	a user that the Post is about, we could specify that we only want the Author to be joined by saying:
+</p>
+<pre>
+	form post.Post as Post
+		join user.User 
+			ON Post.Author
+</pre>
+<p class="indent">
+	where 'Author' is the name of the <em>manytoone</em> composite element on the 'post.Post' object.
+</p>
+
+<p>
+</p>
+
+<h3>Manual Joins</h3>
+<p>
+<code>
+from <em>class</em> [as <em>classAlias</em>] join <em>class</em> [as <em>classAlias</em>]
+ON ( <em>class</em> | <em>classAlias</em> ).<em>property</em> ( ( = | &lt; | ... )... | IN... | IS [NOT] NULL... ) [ (AND|OR)...] </code>
+</p>
+<p class="indent">
+	Depending on your object configuration file, there may be no relationship for the 'join' to follow, in that case
+	it is possible to specify joins in almost exactly the same way you do in SQL, with the properties
+	of the configured <em>class</em>es.  
+</p>
+<p class="indent">
+	These conditions follow the same patterns as conditions in Where statements.
+</p>
+<p class="indent">
+	For example, to join all 'post.Post's with 'user.User' on their name property: 
+</p>
+<pre>
+	from
+		post.Post as Post
+			join
+				user.User as Author
+					ON Author.name = Post.name
+</pre>
+
+<h3>Multiple Joins</h3>
+<p>
+	Multiple joins on a single query may be executed, including Joins of different types, for example:
+</p>
+<p>
+<pre>
+from 
+	post.Post as Post 
+	join 
+	post.Comments 
+	join 
+	user.User as User 
+		on Post.Author 
+	join
+	User.UserSetting as Setting
+		on User.settingKey = Setting.key
+</pre>
+</p>
+<h3>Left and Right Outer Joins</h3>
+<p>
+<code>
+from <em>class</em> [[ left | right ] outer] join <em>class</em>
+</code>
+</p>
+<p class="indent">
+	It is also possible to do outer joins with TQL.  By default, TQL performs INNER JOIN statements on 
+	a 'join', but you can specify an outer join as well.  By default, TQL performs a LEFT OUTER JOIN, but 
+	you can specify a RIGHT OUTER JOIN as required.
+</p>
+<p class="indent">
+	For example, to do an outer join on Users with their Posts:
+	<code>from user.User outer join post.Post</code>
+</p>
+<h3>Order By</h3>
+<p>
+<code>
+	from <em>class</em> [as <em>classAlias</em>]
+	order by ( <em>class</em> | <em>classAlias</em> ).<em>property</em> [ asc | desc ]
+	[ , ( <em>class</em> | <em>classAlias</em> ).<em>property</em> [ asc | desc ] ]*
+</code>
+</p>
+<p class="indent">
+	In the same way you can do Order By statements in SQL to order your rows in your query, you can also do so in TQL.
+</p>
+<p class="indent">
+	For example, to order a list of Users by their name: <code>from user.User order by user.User.name</code>
+</p>
+
+<!-- 
+<h3>Examples of more complicated TQL statements</h3>
+<p>
+	[... more to come with in depth explanations ...]
+</p>
+[ Sorry - didn't have time to do this section ... ]
+ -->
+<h3>Not supported in TQL</h3>
+<ul>
+	<li>
+		Aggregate functions
+	</li>
+	<li>
+		SQL Functions
+	</li>
+	<li>
+		Subselect in FROM statements.
+	</li>
+	<li>
+		Subselect in SELECT Column statements.
+	</li>	
+</ul>
+
+</body>
+</html>

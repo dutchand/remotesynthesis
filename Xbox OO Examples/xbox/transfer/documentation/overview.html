@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Overview</title>
+<a href="index.html" id="nav">Home</a>
+<link rel="stylesheet" type="text/css" href="default.css" />
+</head>
+<body>
+<h1>Transfer Overview</h1>
+
+<p>Welcome to Transfer ORM!</p>
+
+<p>
+	When developing an Object Oriented web based application, it is normal to have a database with relational tables
+	and a series of objects that represent that data. Often, the amount of time and effort it takes to manually map
+	these objects back and forth from a database is large, and can be very costly.</p>
+<p>
+	Object Relational Mappers (ORM) were developed to cut down the amount of time this process takes, and automate the
+	translation between a relational database and an Object Oriented system.</p>
+<p>
+	Transfer ORM's main focus is to automate the repetitive tasks of creating the SQL and custom CFCs that are often
+	required when developing a ColdFusion application. Through a central configuration file Transfer knows how to
+	generate objects, and how to manage them and their relationships back to the database.</p>
+
+<p>So what does all that mean? &nbsp;</p>
+
+<h2>Generating Objects<span style="" lang="EN-AU">&nbsp;</span></h2>
+
+<p><font ><span style="" lang="EN-AU">First and foremost, Transfer generates <a href="http://www.compoundtheory.com/transfer/documentation/faq.html">TransferObjects</a> for you according to the <i>object</i> elements that are set up in the <a href="transfer.doc.html">transfer configuration file</a>. The </span><i>objectDefinitions</i> element allow you to map the objects in your application to tables in your relational database. </font><span style="" lang="EN-AU">&nbsp;</span></p>
+
+<p><span style="" lang="EN-AU">In
+addition to simple objects mapped to single tables, you can map
+composed objects to tables with <i>OneToMany</i>, <i>ManyToOne</i>, or <i>ManyToMany
+</i>relationships. The composed TransferObjects are generated for you.</span></p>
+
+<div shape="_x0000_s1026">
+
+<div style=""><span style="" lang="EN-AU">For instance, if you have an object definition in your transfer configuration file that looks like this:</span></div>
+
+<div style=""><font face="courier new,monospace"><span style="" lang="EN-AU"><br></span></font></div>
+
+<div style=""><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">&lt;object name="Subscriber" table="tblSubscriber"&gt;</span></font></div>
+
+<div style=""><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">&nbsp;&nbsp;&nbsp; &lt;id name="subscriberId" type="UUID" generate="true" /&gt;<br>&nbsp;&nbsp;&nbsp; &lt;property name="firstname" type="string" /&gt; <br></span></font></div>
+
+<div style=""><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">&nbsp; ....</span></font></div>
+
+<div style=""><span style="" lang="EN-AU"><font color="#000000" face="courier new,monospace">&lt;/object&gt;</font><br></span></div>
+
+<div style=""><span style="" lang="EN-AU"><br></span></div>
+
+<div style=""><span style="" lang="EN-AU">Then to create a new instance of a Subscriber, you'd simply call a method on the TransferFactory, passing in the <i>name</i> attribute of the object as defined above, like this:</span></div>
+
+<div style=""><span style="" lang="EN-AU"><br></span></div>
+
+<div style=""><font color="#cc0000"><span style="" lang="EN-AU"><font color="#000000" face="courier new,monospace">newSubscriber = getTransfer().new("Subscriber");<br></font><br><font color="#000000">Just
+to make it clear, you would not have to write a Subscriber.cfc, you'd
+only need to create a simple object configuration as above.</font></span></font></div>
+
+<div style=""><font color="#cc0000"><span style="" lang="EN-AU"><font color="#000000"><br></font></span></font></div>
+
+<div style=""><font size="2"><span style="" lang="EN-AU">* In these examples, <font face="courier new,monospace">getTransfer()</font>
+returns an instance of the TransferFactory. The TransferFactory
+(transfer.TransferFactory), should be instantiated as a singleton in your
+application at application startup. You can use ColdSpring to do that
+for you. An example of the configuration is given in the <a href="http://www.compoundtheory.com/transfer/documentation/faq.html">FAQ</a>.</span></font></div>
+
+<div style=""><font size="2"><span style="" lang="EN-AU">&nbsp;</span></font></div>
+
+<div style=""><span style="" lang="EN-AU">The
+generated TransferObjects have a wide variety of methods you can use,
+depending on their configuration, including getters and setters for all
+properties of the object, and a whole bunch of other useful stuff. See
+the <a href="methods.html">documentation</a> for details.</span><font size="2"><span style="" lang="EN-AU"></span></font><font color="#cc0000"><span style="" lang="EN-AU"></span></font></div>
+
+<div style="">
+<h2><span style="" lang="EN-AU">Custom Code</span></h2>
+
+<p><span style="" lang="EN-AU"><i>And if that ain't enough</i>,
+and you need to add custom methods to a TransferObject, you can do so
+in 2 ways. Either you can use the function tag in the transfer
+configuration file OR you can use a <i>decorator</i>, which you can specify in the transfer configuration file like so:<br><br></span><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">&lt;object name="Subscriber" table="tblSubscriber" decorator="path.to.SubscriberDecorator"&gt;</span></font><br><span style="" lang="EN-AU"><br></span><span style="" lang="EN-AU"><font color="#000099"><font color="#000000">Any
+method added to the SubscriberDecorator in this case becomes available to
+Subscriber. So if for instance you needed a method that returned the
+full name of a Subscriber, you could add this to your SubscriberDecorator:</font></font></span><span style="" lang="EN-AU">&nbsp;<br><br></span><span style="" lang="EN-AU"><font color="#000099"><font color="#000000"><font color="#000000" face="courier new,monospace">&lt;cffunction name="getFullName"&gt;<br>&nbsp;&nbsp;&nbsp; &lt;cfreturn getfirstName() &amp; " " &amp; getlastName() /&gt;<br>&lt;/cffunction&gt;</font><font color="#000000" face="courier new,monospace">&nbsp;</font><br><br>And call it like so<br><br><font color="#000000" face="courier new,monospace">fullName = Subscriber.getFullName()</font></font></font></span><span style="" lang="EN-AU"><font color="#000000" face="courier new,monospace">;</font><br></span></p>
+
+<h2><span style="" lang="EN-AU">CRUD<br></span></h2>
+</div>
+
+<div style=""><span style="" lang="EN-AU">In addition to generating TransferObjects, Transfer <i>very</i>
+conveniently handles <b>c</b>reate, <b>r</b>ead, <b>u</b>pdate and <b>d</b>elete operations between
+your TransferObjects and your database for you. Create is shown above
+already.&nbsp;</span></div>
+
+<div style=""><span style="" lang="EN-AU">&nbsp;</span></div>
+
+<div style="">
+<div style=""><span style="" lang="EN-AU">To get an existing Subscriber from the database and populate the </span><span style="" lang="EN-AU"></span><span style="" lang="EN-AU">Subscriber TransferObject:<br></span></div>
+
+<div style=""><span style="" lang="EN-AU">&nbsp;</span></div>
+
+<div style=""><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">Subscriber = </span><span style="" lang="EN-AU">getTransfer().get("Subscriber", subscriberId);</span>&nbsp;
+</font><span style="" lang="EN-AU"><br></span></div>
+</div>
+
+<div style=""><span style="" lang="EN-AU">&nbsp;</span></div>
+
+<div style=""><span style="" lang="EN-AU">To persist a TransferObject, all you need to do is pass your TransferObject to the TransferFactory, like this:</span></div>
+
+<div style=""><span style="" lang="EN-AU"><br></span></div>
+
+<div style=""><font color="#cc0000"><span style="" lang="EN-AU">&nbsp;<font color="#000000" face="courier new,monospace">getTransfer().save(Subscriber);</font></span></font></div>
+
+<div style=""><span style="" lang="EN-AU">&nbsp;</span></div>
+
+<div style="">To delete a Subscriber from the database, <br><span style="" lang="EN-AU">&nbsp;</span></div>
+
+<div style=""><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">getTransfer().delete(Subscriber);&nbsp;</span></font></div>
+
+<div style="">
+<h2><span style="" lang="EN-AU">List Queries<br></span></h2>
+</div>
+
+<div style=""><span style="" lang="EN-AU">If that weren't enough, Transfer also generates list queries for you. There are a variety <a href="database.html">list methods</a>,
+but as an example, to get a list of Subscribers ordered by date, you'd
+simply call the list method on the TransferFactory like so:</span></div>
+
+<div style=""><span style="" lang="EN-AU"><br></span></div>
+
+<div style=""><font color="#000000" face="courier new,monospace"><span style="" lang="EN-AU">getTransfer().list("Subscriber", "dateSubscribed");&nbsp;</span></font></div>
+
+<div style="">
+<h2>Caching</h2>
+</div>
+
+<div style="">
+<p><span style="" lang="EN-AU"><font color="#000099"><font color="#000000">Transfer also provides, <i>believe it or not</i>, an extensive, highly configurable <a href="caching.html">caching system</a>
+that stores TransferObjects in memory so you don't have to fetch them
+from the database each time you need them. You can configure the cache
+to your heart's content within the objectCache section of the transfer
+configuration file. For example, this setting would cache Subscriber
+objects for the duration of a session:<br><br></font></font></span><font color="#000000" face="courier new,monospace">&lt;cache class="Subscriber"&gt;<br>&nbsp;&nbsp; &lt;scope type="session"/&gt;<br>&lt;/cache&gt;</font><span style="" lang="EN-AU"><font color="#000099"><font color="#000000"><br><br>The
+cache is automatically synchronized with the database when you save()
+TransferObjects. Note that by default, Transfer's cache is configured
+to store objects in memory indefinitely. The cache automatically
+discards TransferObjects when the underlying Java engine requests
+memory to be freed, to ensure that the server's memory is not over run,
+and that the cache doesn't become a memory leak.<br><br>There are a
+group of methods you can use with Transfer's caching system, mainly to
+discard TransferObjects from the cache or recycle </font></font></span><span style="" lang="EN-AU"><font color="#000099"><font color="#000000">TransferObjects. See the <a href="caching.html">documentation</a> for details</font></font></span><span style="" lang="EN-AU"><font color="#000099"><font color="#000000">&nbsp;</font></font></span></p>
+
+<h2><span style="" lang="EN-AU"><font color="#000099"><font color="#000000">Events </font></font></span><span style="" lang="EN-AU"><br></span></h2>
+
+<p><span style="" lang="EN-AU"></span><span style="" lang="EN-AU"></span><span style="" lang="EN-AU"></span>Transfer also provides ... yes, there is <i>still more</i> ... an <a href="events.html">event model</a> that can be taken advantage of to notify other CFC's of updates, creates, deletes and new TransferObjects being created.<br></p>
+
+
+<p><span style="" lang="EN-AU">This can be used to clear query caches when data has been changed.&nbsp; For example, to clear the coldfusion query cache after an update, I would write this sort of method on my an Observer of the Transfer Events:</span></p>
+
+<p><span style="" lang="EN-AU"><font face="courier new,monospace">&lt;cffunction name="actionAfterUpdateTransferEvent" hint="Actions a Delete transfer Event" access="public" returntype="void" output="false"&gt;<br>&nbsp;&nbsp;&nbsp; &lt;cfargument name="event" hint="The event object" type="transfer.com.events.TransferEvent" required="Yes"&gt;<br>&nbsp;&nbsp;&nbsp; &lt;cfobjectcache action = "clear"&gt;<br>&lt;/cffunction&gt; </font><br></span></p>
+
+<p><span style="" lang="EN-AU">Now every time an object is updated, the ColdFusion query cache is cleared. &nbsp;</span></p>
+
+<h2><span style="" lang="EN-AU">Transfer Query Language&nbsp;</span></h2>
+
+<p><span style="" lang="EN-AU">There is also a scripting language that allows you to perform database queries based on the information and naming scheme that you set up in your transfer configuration file called <a href="tql.html"><b>T</b>ransfer <b>Q</b>uery <b>L</b>anguage</a> (TQL).&nbsp; TQL is very similar to SQL, however since Transfer already knows about the relationships in your system, you don't have to write as much code to perform complicated queries against your database.</span></p>
+
+
+<p><span style="" lang="EN-AU">For example,&nbsp; if we wanted to perform a query to list all Posts in my Blog System, with their Author, and all the Categories they belonged to, ordered by the post date we would write this is TQL:</span></p>
+
+
+<p>
+<code>
+<span style="" lang="EN-AU">&lt;cfsavecontent variable="tql"&gt;<br>&nbsp;&nbsp;&nbsp; from<br>&nbsp;&nbsp;&nbsp; post.Post as Post<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; join system.Category<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; join user.User<br>&nbsp;&nbsp;&nbsp; order by<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Post.dateTime desc</span>
+<br/><span style="" lang="EN-AU">&lt;/cfsavecontent&gt;<br></span>
+</code>
+</p>
+
+<p><span style="" lang="EN-AU">And then we would create a Transfer Query Object by passing the TQL to transfer.createQuery(), and then create the actual query we need by passing the Transfer Query Object to transfer.listByQuery(), as in the example below.<br></span></p>
+
+<p>
+<code>
+<span style="" lang="EN-AU">&lt;cfscript&gt;<br>&nbsp;&nbsp;&nbsp; query = transfer.createQuery(tql);<br>&nbsp;&nbsp;&nbsp; qPosts = transfer.listByQuery(query);<br>&lt;/cfscript&gt;<br></span>
+</code>
+</p>
+</div>
+</div>
+
+<p>Since Transfer already has the relationships between the Post, Category and User, it can intelligently create the SQL joins for you!&nbsp; Saving you even more time!</p>
+
+<p>There's another Database Management Method you can use with TQL besides transfer.listByQuery(), and that's transfer.readByQuery(). readByQuery returns a Transfer Object, whereas listByQuery() returns a query. readByQuery() requires TQL that will return only "one row" - if more than one row is returned, an exception is thrown - and it also requires that you specify the class, like all the other readBy* methods.</p>
+
+<p>Basically, readByQuery() is a way to create a Transfer Object when you don't want to use the primary key, but specify some other condition that will return only one record.<br></p>
+
+<p>For more information on these Transfer methods, see <a href="database.html">Using The Data Management Methods</a>.<br></span></span></p>
+
+</body>
+</html>

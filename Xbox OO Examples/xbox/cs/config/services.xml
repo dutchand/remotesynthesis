@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<!-- console -->
+	<bean id="consoleDAO" class="cs.com.xbox.consoleDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="consoleGateway" class="cs.com.xbox.consoleGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="consoleService" class="cs.com.xbox.consoleService">
+		<constructor-arg name="consoleDAO">
+			<ref bean="consoleDAO"/>
+		</constructor-arg>
+		<constructor-arg name="consoleGateway">
+			<ref bean="consoleGateway"/>
+		</constructor-arg>
+		<constructor-arg name="controlDAO">
+			<ref bean="controlDAO"/>
+		</constructor-arg>
+		<constructor-arg name="controlGateway">
+			<ref bean="controlGateway"/>
+		</constructor-arg>
+		<constructor-arg name="accessoryDAO">
+			<ref bean="accessoryDAO"/>
+		</constructor-arg>
+		<constructor-arg name="accessoryGateway">
+			<ref bean="accessoryGateway"/>
+		</constructor-arg>
+		<constructor-arg name="gameDAO">
+			<ref bean="gameDAO"/>
+		</constructor-arg>
+		<constructor-arg name="gameGateway">
+			<ref bean="gameGateway"/>
+		</constructor-arg>
+	</bean>
+	<!-- accessory -->
+	<bean id="accessoryDAO" class="cs.com.xbox.accessories.accessoryDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="accessoryGateway" class="cs.com.xbox.accessories.accessoryGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<!-- control -->
+	<bean id="controlDAO" class="cs.com.xbox.controls.controlDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="controlGateway" class="cs.com.xbox.controls.controlGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<!-- game -->
+	<bean id="gameDAO" class="cs.com.xbox.games.gameDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="gameGateway" class="cs.com.xbox.games.gameGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+</beans>

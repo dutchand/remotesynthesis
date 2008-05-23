@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<!-- Transfer -->
+	<bean id="transfer" class="transfer.TransferFactory">
+		<constructor-arg name="datasourcePath"><value>/tf_test/config/datasource.xml</value></constructor-arg>
+		<constructor-arg name="configPath"><value>/tf_test/config/transfer.xml</value></constructor-arg>
+		<constructor-arg name="definitionPath"><value>/tf_test/com/transfer</value></constructor-arg>
+	</bean>
+	<!-- console -->
+	<bean id="consoleGateway" class="tf_test.com.xbox.consoleGateway">
+		<constructor-arg name="transfer">
+			<bean id="transfer" factory-bean="transfer" factory-method="getTransfer" />
+		</constructor-arg>
+	</bean>
+	<bean id="consoleService" class="tf_test.com.xbox.consoleService">
+		<constructor-arg name="transfer">
+			<bean id="transfer" factory-bean="transfer" factory-method="getTransfer" />
+		</constructor-arg>
+		<constructor-arg name="consoleGateway">
+			<ref bean="consoleGateway"/>
+		</constructor-arg>
+		<constructor-arg name="controlGateway">
+			<ref bean="controlGateway"/>
+		</constructor-arg>
+		<constructor-arg name="accessoryGateway">
+			<ref bean="accessoryGateway"/>
+		</constructor-arg>
+		<constructor-arg name="gameGateway">
+			<ref bean="gameGateway"/>
+		</constructor-arg>
+	</bean>
+	<!-- accessory -->
+	<bean id="accessoryGateway" class="tf_test.com.xbox.accessories.accessoryGateway">
+		<constructor-arg name="transfer">
+			<bean id="transfer" factory-bean="transfer" factory-method="getTransfer" />
+		</constructor-arg>
+	</bean>
+	<!-- control -->
+	<bean id="controlGateway" class="tf_test.com.xbox.controls.controlGateway">
+		<constructor-arg name="transfer">
+			<bean id="transfer" factory-bean="transfer" factory-method="getTransfer" />
+		</constructor-arg>
+	</bean>
+	<!-- game -->
+	<bean id="gameGateway" class="tf_test.com.xbox.games.gameGateway">
+		<constructor-arg name="transfer">
+			<bean id="transfer" factory-bean="transfer" factory-method="getTransfer" />
+		</constructor-arg>
+	</bean>
+</beans>

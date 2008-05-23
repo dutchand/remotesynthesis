@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" />
+<title>Transfer - Transfer configuration file</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Transfer xml configuration file</h1>
+<p>
+This configuration file defines the packages and objects that are created and produced 
+by Transfer.
+</p>
+<p>
+The xml schema file can be found at:
+<a href="../resources/xsd/transfer.xsd">/transfer/resources/xsd/transfer.xsd</a>. 
+</p>
+<p>
+It is <strong>highly recommended</strong> that when creating a new
+transfer xml file, you validate your xml against this xml schema.
+</p>
+<p>
+Items in <em>italics</em> denoted an element attribute.
+</p>
+
+<h2>Elements</h2>
+<ul>
+	<li>
+		<strong>transfer</strong><br/>
+		Top level element for the xml file.
+		<ul>
+			<li>
+				<a name="objectCache"></a>
+				<strong>objectCache</strong> (optional) <br/>
+				Configure the settings for all object caching parameters.  If this is not set, the default values are used. More details on caching can be found at <a href="caching.html">Using Caching</a>
+				<ul>
+					<li><strong>scopes</strong> (optional)
+						Defines the keys that Transfer stores it's caching when using caching in shared scopes.
+						If this is not set, the default values are used.
+						<ul>
+							<li>
+								<strong>application</strong> (optional) <br/>
+								The scope key for 'application' cached objects, if not set, all caching is done under the 'application.transfer' scope.
+								<br/>
+								<em>key</em> The key to set the cache under, e.g. 'transfer'
+							</li>
+							<li>
+								<strong>session</strong> (optional) <br/>
+								The scope key for 'session', and cached objects, if not set, all caching is done under the 'session.transfer' scope.
+								This also applies to 'transaction' scoped objects, as these caches share these scopes.
+								<br/>
+								<em>key</em> The key to set the cache under, e.g. 'transfer'								
+							</li>
+							<li>
+								<strong>request</strong> (optional) <br/>
+								The scope key for 'request' cached objects, if not set, all caching is done under the 'request.transfer' scope.
+								<br/>
+								<em>key</em> The key to set the cache under, e.g. 'transfer'
+							</li>
+							<li>
+								<strong>server</strong> (optional) <br/>
+								The scope key for 'server' cached objects, if not set, all caching is done under the 'server.transfer' scope.
+								<br/>
+								<em>key</em> The key to set the cache under, e.g. 'transfer'
+							</li>																					
+						</ul>
+					</li>
+					<li>
+						<strong>defaultcache</strong> (optional) <br/>
+						This sets the default values for caching of objects within Transfer.  If this is not set, the default values are used.
+						<ul>
+							<li>
+								<strong>maxobjects</strong> (optional) <br/>
+								The maximum number of objects to store for any one Object class.  
+								<br/>
+								<em>value</em> The number of TransferObjects to cache, defaults to unlimited (0).
+							</li>
+							<li>
+								<strong>maxminutespersisted</strong> (optional) <br/>
+								The maximum number of minutes to store any TransferObject of a given class. 
+								<br/>
+								<em>value</em> The number of minutes to cache, defaults to unlimited (0).
+							</li>
+							<li>
+								<strong>scope</strong> (optional) <br/>
+								The scope to store all TransferObjects under. Details on the types of caching available can found at <a href="caching.html">Using Caching</a>.
+								<br/>
+								<em>type</em> 'instance', 'application', 'session', 'request', 'transaction', 'server', 'none'.  Defaults to 'instance'
+							</li>
+						</ul>
+					</li>
+					<li>
+						<strong>cache</strong> (optional) <br/>
+						<em>class</em> The class to set the caching settings for<br/>
+						This overwrites the default settings for caching for a specific class
+						<ul>
+							<li>
+								<strong>maxobjects</strong> (optional) <br/>
+								The maximum number of objects to store for this class.  
+								<br/>
+								<em>value</em> The number to cache, defaults to unlimited (0).
+							</li>
+							<li>
+								<strong>maxminutespersisted</strong> (optional) <br/>
+								The maximum number of minutes to store TransferObjects of this class. 
+								<br/>
+								<em>value</em> The number of minutes to cache, defaults to unlimited (0).
+							</li>
+							<li>
+								<strong>scope</strong> (optional) <br/>
+								The scope to store TransferObjects of this class under. Details on the types of caching available can found at <a href="caching.html">Using Caching</a>.
+								<br/>
+								<em>type</em> 'instance', 'application', 'session', 'request', 'transaction', 'server', 'none'.  Defaults to 'instance'
+							</li>
+						</ul>						
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a name="nullValues"></a>
+				<strong>nullValues</strong> (optional) <br/>
+				Configure the default null values for properties
+				<ul>
+					<li>
+						<strong>string</strong><br/>
+						The default null value for all string types.<br/>
+						<em>value</em> The null value to use. Defaults to ''.
+					</li>
+					<li>
+						<strong>numeric</strong><br/>
+						The default null value for all numeric types.<br/>
+						<em>value</em> The null value to use. Defaults to 0.
+					</li>
+					<li>
+						<strong>date</strong><br/>
+						The default null value for all date types.<br/>
+						<em>value</em> The null value to use. Defaults to 1/1/100.
+					</li>
+					<li>
+						<strong>boolean</strong><br/>
+						The default null value for all boolean types.<br/>
+						<em>value</em> The null value to use. Defaults to 'false'.
+					</li>
+					<li>
+						<strong>UUID</strong><br/>
+						The default null value for all UUID types.<br/>
+						<em>value</em> The null value to use. Defaults to '00000000-0000-0000-0000000000000000'.
+					</li>
+					<li>
+						<strong>GUID</strong><br/>
+						The default null value for all GUID types.<br/>
+						<em>value</em> The null value to use. Defaults to '00000000-0000-0000-0000-000000000000'.
+					</li>																														
+				</ul>
+			</li>
+			<li>
+			
+				<strong>objectDefinitions</strong><br/>
+				All the Object definitions
+				<ul>
+					<li>
+						<strong>package</strong>
+						<br/>
+						Organisational element to store various objects of similar aspect together. e.g. a 'user' package.
+						<br/>
+						<em>name</em> The name of the package
+						<ul>
+							<li>
+								<strong>object</strong> <br/>
+								Package can contain multiple object elements
+							</li>
+							<li>
+								<strong>package</strong><br/>
+								Package can contain multiple package elements
+							</li>
+						</ul>
+					</li>
+					<li>
+						<strong>object</strong><br/>
+						A class definition for a 
+						<a href="cfcdoc/content3bbf.html">transfer.com.TransferObject</a>
+						to be 
+						manufactured into a bean that represents a record in the set
+						database table.
+						<br/>
+						<em>name</em> The name of the TransferObject, e.g. 'User'.
+						<br/>
+						<em>table (optional)</em> The database table that the TransferObject refers to, e.g. 'tbl_User'. 
+						Defaults to the value of @name
+						<br/>
+						<em>decorator (optional)</em>
+						The value of a ColdFusion component that extends 'transfer.com.TransferDecorator' and will
+						decorate the generated TransferObject.  Details on Decorators can be found at <a href="decorators.html">Using Decorators</a>
+						<br/>
+						<em>sequence (optional)</em> Specifically for Oracle and PostGreSQL support.  This is the
+						name of the sequence that corresponds with this object's table.  Defaults to the value of @table + '_seq'
+						<ul>
+							<li>
+								<strong>id</strong><br/>
+								This is the definition of the primary key as set in the database.<br/>
+								This results in getter and setter functions
+								on the TransferObject.
+								Details on all these methods can be found at
+								<a href="methods.html#id">generated methods</a>.<br/>
+								There can only be one ID declaration.
+								<br/>
+								<em>name</em> The name of the ID, e.g. 'IDUser'
+								<br/>
+								<em>type</em>
+								The typing of the primary key, either numeric, string, date, boolean, UUID, GUID.
+								<br/>
+								<em>column (optional)</em>
+								The primary key column on the table of this TransferObject. e.g. 'IDUser'.
+								Defaults to the value of @name.
+								<br/>
+								<em>generate (optional)</em> If this is set to true, Transfer will generate
+								the primary key when the record is inserted into the database. Otherwise it will assume that the 
+								primary key is automatically generated by the database.  Transfer currently supports 
+								generating numeric, UUID, and GUID IDs.  Defaults to false.
+							</li>
+							<li>
+								<strong>property</strong><br/>
+								A single property on the TransferObject.<br/>
+								This results in getter and setter functions
+								on the TransferObject.
+								Details on these methods can be found at
+								<a href="methods.html#property">generated methods</a>.<br/>
+								Default values for these properties can be found in <a href="property.html">Default property values</a><br/>
+								TransferObjects can have multiple property declarations.
+								<br/>
+								<em>name</em> The name of the property, e.g. 'Name'
+								<br/>
+								<em>type</em>
+								The type of the property. Either numeric, string, date, boolean, UUID, GUID.
+								<br/>
+								<em>column (optional)</em>
+								The column on the table this property refers to, e.g. 'user_Name'. Defaults to the value of @name
+								<br/>
+								<em>set (optional)</em>
+								If this is set to 'false' the setter function has a scope of private. Defaults
+								to 'true'.
+								<br/>
+								<em>nullable (optional)</em>
+								Defines whether or not values from this property can be inserted into the database as NULL values.
+								<br/>
+								<em>nullvalue (optional)</em>
+								Overrides the default null value for this property. Only relevent if @nullable='true'.
+								<br/>
+								<em>ignore-insert (optional)</em>
+									Will ignore this property when performing an insert of this object into its table.
+								<br/>
+								<em>refresh-insert (optional)</em>
+									This will query the database for the value of this column and refresh its state
+									after an insert.
+								<br/>
+								<em>ignore-update (optional)</em>
+									Will ignore this property when performing an update of this object into its table.
+								<br/>
+								<em>refresh-update (optional)</em>
+									This will query the database for the value of this column and refresh its state
+									after an update.								
+							</li>
+							<li>
+								<strong>manytoone</strong>
+								<br/>
+								This defines a relationship when many of a this object's table records
+								link directly to one of another tables. e.g. 'tbl_User.lnkIDPermission = tbl_Permission.IDPermission'.<br/>
+								It creates getter and setter functions on the TransferObject that get and set 
+								the composite TransferObject.  Details on these methods can be found at
+								<a href="methods.html#manytoone">generated methods</a>.<br/>
+								TransferObjects can have multiple manytoone declarations.
+								<br/>
+								<em>name</em>
+								The name of this relationship, e.g. 'Permission'.
+								<br/>
+								<em>lazy (optional)</em>
+								If this is set to 'true', the manytoone composition will only be loaded when requested.
+								This defaults to 'false'.
+								<ul>
+									<li>
+										<strong>link</strong><br/>
+										Defines what other TransferObject the composition is made up of.
+										<br/>
+										<em>to</em>
+										The class name of the TransferObject this links to, e.g. 'user.Permission'.
+										<br/>
+										<em>column</em>
+										The column on the parent TranferObject table that is the foreign key to the composite child, 
+										e.g. 'lnkIDPermission'.
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>onetomany</strong><br/>
+								This defines a relationship where one of this object's table records corresponds 
+								to many of another tables records. e.g. 'tbl_User.IDUser = tbl_Post.lnkIDUser'.<br/>
+								This creates several methods on the parent and child TransferObjects, dependent on the set
+								collection type. 
+								Details on all these methods can be found at
+								<a href="methods.html#onetomany">generated methods</a>.<br/>
+								TransferObjects can have multiple one to many declarations.
+								<br/>
+								<em>name</em>
+								The name of this collection, e.g. 'Permission'.
+								<br/>
+								<em>lazy (optional)</em>
+								If this is set to 'true', the onetomany composition will only be loaded when requested.
+								This defaults to 'false'.								
+								<ul>
+									<li>
+										<strong>link</strong><br/>
+										Defines the TransferObject the composition is made up of.
+										<br/>
+										<em>to</em>
+										The class name of the TransferObject this links to, e.g. 'user.Permission'.
+										<br/>
+										<em>column</em>
+										The column on the child TranferObject table that is the foreign key to the parent, 
+										e.g. 'lnkIDUser'.
+									</li>
+									<li>
+										<strong>collection</strong><br/>
+										This element sets the details of the type of collection of TransferObject
+										that is added to the parent.
+										<br/>
+										<em>type</em> Either 'struct' or 'array'. If 'struct' is selected, a structure is
+										used to manage the composite TransferObjects, whereas an array is used when the type 
+										is set to 'array'.
+										<ul>
+											<li>
+												<strong>condition</strong> (Optional) Used to place a filtering condition on the 
+												child elements that are retrieved from the database.
+												<br/>
+												<em>property (optional)</em>
+												The property on the child object to filter by.
+												<br/>
+												<em>value (required if property has a value)</em>
+												The value of the property to filter by.
+												<br/>
+												<em>where (required if property/value is not set)</em>
+												The SQL statement to filter the child object by. 
+												Child properties enclosed with '{}' will be resolved to their column names.
+											</li>
+											<li>
+												<strong>key</strong> (if <em>collection[@type]</em> = 'struct')<br/>
+												The property to be used in the key when adding and retrieving
+												items from parent. This property much have a unique value.
+												<br/>
+												<em>property</em> The name of the property on the child TransferObject
+												to be used as the key, 									
+												e.g. 'permissionName'.
+											</li>
+											<li>
+												<strong>order</strong> (optional if <em>collection[@type]</em> = 'array')<br/>
+												The order in which to sort the collection.
+												<br/>
+												<em>property</em> The name of the property on the child TransferObject
+												to sort the array by.
+												<br/>
+												<em>order</em> The order to sort by, either 'asc' or 'desc'.
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>manytomany</strong><br/>
+								This defines a relationship where many of this object's table records corresponds
+								to many of another tables.  This is normally accomplished at a database level by
+								use of an intermediary linking table.
+								e.g. 
+								'tbl_User.IDUser = lnk_UserPermssion.lnkIDUser
+								AND
+								lnk_UserPermission.lnkIDPermission = tbl_Permission.IDPermission'.<br/>
+								This creates several methods on the parent TransferObject, dependent on the set
+								collection type. 
+								Details on all these methods can be found at
+								<a href="methods.html#manytomany">generated methods</a>.<br/>
+								TransferObjects can have multiple manytomany declarations.
+								<br/>
+								<em>name</em>
+								The name of this collection, e.g. 'Permission'.
+								<br/>
+								<em>table</em>
+								The name of the intermediary table that creates the many to many relationship. 
+								e.g. 'lnk_UserPermission'
+								<br/>
+								<em>lazy (optional)</em>
+								If this is set to 'true', the manytomany composition will only be loaded when requested.
+								This defaults to 'false'.								
+								<ul>
+									<li>
+										<strong>link</strong><br/>
+										The first link specifies the connection information for the 
+										intermediary table to the parent table.
+										<br/>
+										<em>to</em>
+										This first link MUST be the same class name as the Parent TransferObject. e.g. 'user.User'
+										<br/>
+										<em>column</em>
+										This is the column on the intermediary table that is the foreign key
+										to the parent TransferObject's table, e.g. 'lnkIDUser'
+									</li>
+									<li>
+										<strong>link</strong><br/>
+										The second link defines the TransferObject the composition is made up of.
+										<br/>
+										<em>to</em>
+										This second link is the class name to the child TransferObject, e.g. 'user.Permission'.
+										<br/>
+										<em>column</em>
+										This is the column on the intermediary table that is the foreign key
+										to the child TransferObject's table, e.g. 'lnkIDPermission'				
+									</li>
+									<li>
+										<strong>collection</strong><br/>
+										This element sets the details of the type of collection of TransferObject
+										that is added to the parent.
+										<br/>
+										<em>type</em> Either 'struct' or 'array'. If 'struct' is selected, a structure is
+										used to manage the composite TransferObjects, whereas an array is used when the type 
+										is set to 'array'.
+										<ul>
+											<li>
+												<strong>condition</strong> (Optional) Used to place a filtering condition on the 
+												child elements that are retrieved from the database.
+												<br/>
+												<em>property (optional)</em>
+												The property on the child object to filter by.
+												<br/>
+												<em>value (required if property has a value)</em>
+												The value of the property to filter by.
+												<br/>
+												<em>where (required if property/value is not set)</em>
+												The SQL statement to filter the child object by. 
+												Child properties enclosed with '{}' will be resolved to their column names.
+												</li>
+											<li>
+												<strong>key</strong> (if <em>collection[@type]</em> = 'struct')<br/>
+												The property to be used in the key when adding and retrieving
+												items from parent. This property much have a unique value
+												<br/>
+												<em>property</em>The name of the property on the child TransferObject
+												to be used as the key, 									
+												e.g. 'permissionName'.
+											</li>
+											<li>
+												<strong>order</strong> (optional if <em>collection[@type]</em> = 'array')<br/>
+												The order in which to sort the collection.
+												<br/>
+												<em>property</em> The name of the property on the child TransferObject
+												to sort the array by.
+												<br/>
+												<em>order</em> The order to sort by, either 'asc' or 'desc'.
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a name="function"/>
+								<strong>function</strong><br/>
+								A cfml function that you want added to this TransferObject.<br/>
+								TransferObjects can have multiple function declarations.
+								<br/>
+								Details on custom methods can be found at
+								<a href="custommethods.html">custom methods</a>.
+								<br/>
+								<em>name</em> The name of the function<br/>
+								<em>access</em> Access of the function, public, private or package.<br/>
+								<em>returntype</em> Type of what is returned by this function.<br/>
+								<ul>
+									<li>
+										<strong>argument</strong><br/>
+										A defined argument for the function<br/>
+										A Function can have multiple function declarations.
+										<br/>
+										<em>name</em> The name of the argument<br/>
+										<em>type</em> The type of the argument<br/>
+										<em>required (optional)</em> If the argument is required, defaults to 'false'.<br/>
+										<em>default (optional)</em> The default value for this argument if it is not set. <br/>
+									</li>
+									<li>
+										<strong>body</strong><br/>
+										The cfml body of the function.  It may be neccessary to utilise a CDATA declaration in this area.<br/>
+										There can only be one body declaration per function.
+									</li>
+								</ul>
+								
+							</li>
+						</ul>
+					</li>
+				</ul>				
+			</li>
+		</ul>
+	</li>
+</ul>
+</body>
+</html>

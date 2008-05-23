@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mach-ii PUBLIC
+	"-//Mach-II//DTD Mach-II Configuration 1.1.1//EN"
+	"http://www.mach-ii.com/dtds/mach-ii_1_1_1.dtd">
+
+<mach-ii version="1.0">
+
+	<!-- PROPERTIES -->
+	<properties>
+		<property name="applicationRoot" value="/m2/"/>
+		<property name="defaultEvent" value="home"/>
+		<property name="eventParameter" value="event"/>
+		<property name="parameterPrecedence" value="form"/>
+		<property name="maxEvents" value="10"/>
+		<property name="exceptionEvent" value="exception"/>
+		<property name="dsn" value="xbox"/>
+	</properties>
+
+	<!-- LISTENERS -->
+	<listeners>
+		<!--
+		<listener name="yourListenerName" type="fully.Qualified.Dot.Delimited.Path.To.CFC">
+			<parameters>
+				<parameter name="yourParameterName" value="yourParameterValue" />
+			</parameters>
+		</listener>
+		-->
+		<listener name="consoleListener" type="m2.com.consoleListener" />
+	</listeners>
+	
+	<!-- EVENT-FILTERS -->
+	<event-filters>
+		<!--
+		<event-filter name="yourEventFilterName" type="fully.Qualified.Dot.Delimited.Path.To.CFC">
+			<parameters>
+				<parameter name="yourParameterName" value="yourParameterValue" />
+			</parameters>
+		</event-filter>
+		-->
+		<event-filter name="consoleValidation" type="m2.filters.consoleValidation" />
+		<event-filter name="gameValidation" type="m2.filters.gameValidation" />
+		<event-filter name="accessoryValidation" type="m2.filters.accessoryValidation" />
+	</event-filters>
+
+	<!-- EVENT-HANDLERS -->
+	<event-handlers>
+		<event-handler event="home" access="public">
+			<notify listener="consoleListener" method="getConsole" resultArg="console" />
+			<view-page name="addConsole" contentKey="request.content" />
+			<announce event="layout" copyEventArgs="true" />
+		</event-handler>
+
+		<event-handler event="console.process" access="public">
+			<event-mapping event="success" mapping="home" />
+			<event-mapping event="failed" mapping="home" />
+			<filter name="consoleValidation" />
+			<notify listener="consoleListener" method="updateConsole" />
+			<notify listener="consoleListener" method="saveConsole" />
+		</event-handler>
+
+		<event-handler event="games.add" access="public">
+			<notify listener="consoleListener" method="getGame" resultArg="game" />
+			<view-page name="addGame" contentKey="request.content" />
+			<announce event="layout" copyEventArgs="true" />
+		</event-handler>
+
+		<event-handler event="games.process" access="public">
+			<event-mapping event="success" mapping="home" />
+			<event-mapping event="failed" mapping="games.add" />
+			<filter name="gameValidation" />
+			<event-bean name="game" type="m2.com.xbox.games.game" /> 
+			<!-- using event bean can replace the need to call create method
+			<notify listener="consoleListener" method="createGame" resultArg="game" />
+			 -->
+			<notify listener="consoleListener" method="saveGame" />
+		</event-handler>
+
+		<event-handler event="console.clear" access="public">
+			<event-arg name="clearConsole" value="true" />
+			<redirect event="home" args="clearConsole" />
+		</event-handler>
+
+		<event-handler event="accessories.add" access="public">
+			<notify listener="consoleListener" method="getAccessory" resultArg="accessory" />
+			<view-page name="addAccessory" contentKey="request.content" />
+			<announce event="layout" copyEventArgs="true" />
+		</event-handler>
+
+		<event-handler event="accessories.process" access="public">
+			<event-mapping event="success" mapping="home" />
+			<event-mapping event="failed" mapping="accessories.add" />
+			<filter name="accessoryValidation" />
+			<event-bean name="accessory" type="m2.com.xbox.accessories.accessory" /> 
+			<notify listener="consoleListener" method="saveAccessory" />
+		</event-handler>
+
+		<event-handler event="layout" access="private">
+			<view-page name="layout"/>
+		</event-handler>
+
+		<event-handler event="exception" access="private">
+			<view-page name="exception"/>
+		</event-handler>
+	</event-handlers>
+	
+	<!-- PAGE-VIEWS -->
+	<page-views>
+		<page-view name="layout" page="/views/dsp_layout.cfm"/>
+		<page-view name="addConsole" page="/views/frm_console.cfm"/>
+		<page-view name="addGame" page="/views/frm_game.cfm"/>
+		<page-view name="addAccessory" page="/views/frm_accessory.cfm"/>
+		<page-view name="exception" page="/views/exception.cfm"/>
+	</page-views>
+	
+	<!-- PLUGINS -->
+	<plugins>
+		<plugin name="sessionPlugin" type="m2.plugins.session" />
+		<!--
+		<plugin name="yourPluginName" type="fully.Qualified.Dot.Delimited.Path.To.CFC">
+			<parameters>
+				<parameter name="yourParameterName" value="yourParameterValue"/>
+			</parameters>
+		</plugin>
+		-->
+	</plugins>
+
+</mach-ii>

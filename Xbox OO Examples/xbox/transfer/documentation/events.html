@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="default.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transfer - Using the Event Model</title>
+</head>
+<body>
+<a href="index.html" id="nav">Home</a>
+<h1>Using the Event Model</h1>
+<p>
+Transfer has an event model that can be taken advantage of to notify other CFC's of updates, creates and deletes within
+the Transfer system, and essentially, the database.
+</p>
+
+<p>
+	Since coldfusion does not have interfaces, the methods required are set by convention.  The object that is added
+	as an observer must have the appropriate method defined as set below for it to work correctly.
+</p>
+
+<h2>AfterNew</h2>
+<p>
+	This event is fired after a TransferObject is created.  This is after 'init()' and 'configure()' have been called on the TransferObject.
+</p>
+<p>
+	Required method on the observer:
+</p>
+<pre>
+&lt;cffunction name="actionAfterNewTransferEvent" hint="Actions an event before a create happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<h2>BeforeCreate</h2>
+<p>
+	This event is fired just before a TransferObject is inserted into the database.
+</p>
+<p>
+	Required method on the observer:	
+</p>
+<pre>
+&lt;cffunction name="actionBeforeCreateTransferEvent" hint="Actions an event before a create happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+<p>
+	To add or remove a Observer for a BeforeCreateEvent:
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#addBeforeCreateObserver()">Transfer.addBeforeCreateObserver(component)</a>
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#removeBeforeCreateObserver()">Transfer.removeBeforeCreateObserver(component)</a>
+</p>
+<h2>AfterCreate</h2>
+
+<p>
+	This event is fired after a TransferObject is inserted into the database.
+</p>
+<p>
+	Required method on the observer:
+</p>
+<pre>
+&lt;cffunction name="actionAfterCreateTransferEvent" hint="Actions an event after a create happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+<p>
+	To add or remove an Observer for a AfterCreateEvent:
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#addAfterCreateObserver()">Transfer.addAfterCreateObserver(component)</a>
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#removeAfterCreateObserver()">Transfer.removeAfterCreateObserver(component)</a>
+</p>
+
+<h2>BeforeUpdate</h2>
+<p>
+	This event is fired just before a TransferObject is updated in the database.
+</p>
+<p>
+	Required method on the observer:
+</p>
+<pre>
+&lt;cffunction name="actionBeforeUpdateTransferEvent" hint="Actions an event before a update happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+<p>
+	Do note, that if there is no change to the updated TransferObject, it will not be updated, and therefore the BeforeUpdate Event will not be fired.
+</p>
+<p>
+	To add or remove a Observer for a BeforeUpdateEvent:
+</p>
+
+<p>
+	<a href="cfcdoc/content3c54.html#addBeforeUpdateObserver()">Transfer.addBeforeUpdateObserver(component)</a>
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#removeBeforeUpdateObserver()">Transfer.removeBeforeUpdateObserver(component)</a>
+</p>
+
+
+<h2>AfterUpdate</h2>
+<p>
+	This event is fired after a TransferObject is updated in the database.
+</p>
+<p>
+	Required method on the observer:
+</p>
+<pre>
+&lt;cffunction name="actionAfterUpdateTransferEvent" hint="Actions an event after a update happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+<p>
+	Do note, that if there is no change to the updated TransferObject, it will not be updated, and therefore the AfterUpdate Event will not be fired.
+</p>
+
+
+<p>
+	To add or remove a Observer for a AfterUpdateEvent:
+</p>
+
+<p>
+	<a href="cfcdoc/content3c54.html#addAfterUpdateObserver()">Transfer.addAfterUpdateObserver(component)</a>
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#removeAfterUpdateObserver()">Transfer.removeAfterUpdateObserver(component)</a>
+</p>
+
+
+<h2>BeforeDelete</h2>
+
+<p>
+	This event is fired just before a TransferObject is deleted in the database.
+</p>
+<p>
+	Required method on the observer:
+</p>
+<pre>
+&lt;cffunction name="actionBeforeDeleteTransferEvent" hint="Actions an event before a delete happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+<p>
+	To add or remove a Observer for a BeforeDeleteEvent:
+</p>
+	
+<p>
+	<a href="cfcdoc/content3c54.html#addBeforeDeleteObserver()">Transfer.addBeforeDeleteObserver(component)</a>
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#removeBeforeDeleteObserver()">Transfer.removeBeforeDeleteObserver(component)</a>
+</p>
+
+<h2>AfterDelete</h2>
+<p>
+	This event is fired after a TransferObject is deleted in the database.
+</p>
+<p>
+	Required method on the observer:
+</p>
+<pre>
+&lt;cffunction name="actionAfterDeleteTransferEvent" hint="Actions an event after a delete happens" access="public" returntype="void" output="false"&gt;
+	&lt;cfargument name="event" hint="The event object" type="<a href="cfcdoc/content7235.html">transfer.com.events.TransferEvent</a>" required="Yes"&gt;
+	&lt;!--- Do work ---&gt;
+&lt;/cffunction&gt;
+</pre>
+<p>
+	To add or remove a Observer for a AfterDeleteEvent:
+</p>
+
+<p>
+	<a href="cfcdoc/content3c54.html#addAfterDeleteObserver()">Transfer.addAfterDeleteObserver(component)</a>
+</p>
+<p>
+	<a href="cfcdoc/content3c54.html#removeAfterDeleteObserver()">Transfer.removeAfterDeleteObserver(component)</a>
+</p>
+</body>
+</html>

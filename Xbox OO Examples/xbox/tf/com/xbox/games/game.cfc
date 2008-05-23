@@ -1,0 +1,1 @@
+<cfcomponent displayname="game" output="false" extends="transfer.com.TransferDecorator">		<cfproperty name="gameID" type="uuid" default="" />		<cfproperty name="gameName" type="String" default="" />		<cfproperty name="specialEdition" type="Boolean" default="" />		</cfcomponent>

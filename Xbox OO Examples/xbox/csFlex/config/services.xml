@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<!-- console -->
+	<bean id="consoleDAO" class="csFlex.com.xbox.consoleDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="consoleGateway" class="csFlex.com.xbox.consoleGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="consoleService" class="csFlex.com.xbox.consoleService">
+		<constructor-arg name="consoleDAO">
+			<ref bean="consoleDAO"/>
+		</constructor-arg>
+		<constructor-arg name="consoleGateway">
+			<ref bean="consoleGateway"/>
+		</constructor-arg>
+		<constructor-arg name="controlDAO">
+			<ref bean="controlDAO"/>
+		</constructor-arg>
+		<constructor-arg name="controlGateway">
+			<ref bean="controlGateway"/>
+		</constructor-arg>
+		<constructor-arg name="accessoryDAO">
+			<ref bean="accessoryDAO"/>
+		</constructor-arg>
+		<constructor-arg name="accessoryGateway">
+			<ref bean="accessoryGateway"/>
+		</constructor-arg>
+		<constructor-arg name="gameDAO">
+			<ref bean="gameDAO"/>
+		</constructor-arg>
+		<constructor-arg name="gameGateway">
+			<ref bean="gameGateway"/>
+		</constructor-arg>
+	</bean>
+	<bean id="consoleService_remote" class="coldspring.aop.framework.RemoteFactoryBean">
+		<property name="target">
+			<ref bean="consoleService" />
+		</property>
+		<property name="serviceName">
+			<value>consoleServiceRemote</value>
+		</property>
+		<property name="beanFactoryName">
+			<value>factory</value>
+		</property>
+		<property name="relativePath">
+			<value>/csFlex/com/xbox/</value>
+		</property>
+		<property name="remoteMethodNames">
+			<value>getGames</value>
+		</property>
+	</bean>
+	<!-- accessory -->
+	<bean id="accessoryDAO" class="csFlex.com.xbox.accessories.accessoryDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="accessoryGateway" class="csFlex.com.xbox.accessories.accessoryGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<!-- control -->
+	<bean id="controlDAO" class="csFlex.com.xbox.controls.controlDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="controlGateway" class="csFlex.com.xbox.controls.controlGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<!-- game -->
+	<bean id="gameDAO" class="csFlex.com.xbox.games.gameDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="gameGateway" class="csFlex.com.xbox.games.gameGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+</beans>
