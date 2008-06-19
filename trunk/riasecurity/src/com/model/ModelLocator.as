@@ -22,6 +22,6 @@ package com.model
    		if ( com.model.ModelLocator.modelLocator != null )
 				throw new Error( "Only one ModelLocator instance should be instantiated" );	
    	}
-		public var publicKey:String;
+		public var token:String;
 	}
 }

@@ -14,6 +14,8 @@ package com.control
 			addCommand(LoginEvent.EVENT_LOGIN, LoginCommand);
 			addCommand(LogoutEvent.EVENT_LOGOUT, LogoutCommand);
 			addCommand(SaveUserEvent.EVENT_SAVE_USER, SaveUserCommand);
+			addCommand(VerifyPasswordEvent.EVENT_VERIFY_PASSWORD, VerifyPasswordCommand);
+			addCommand(VerifyTokenEvent.EVENT_VERIFY_TOKEN, VerifyTokenCommand);
 		}
 		
 	}

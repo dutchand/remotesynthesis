@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="132" title="Login with a Token">
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.events.VerifyPasswordEvent;
+			import com.events.VerifyTokenEvent;
+			import com.model.ModelLocator;
+			
+			[Bindable]
+			public var model : ModelLocator = ModelLocator.getInstance();
+			
+			private function verifyPassword():void {
+				var verifyPasswordEvent:VerifyPasswordEvent = new VerifyPasswordEvent(verifyEmailTxt.text,verifyPasswordTxt.text);
+				CairngormEventDispatcher.getInstance().dispatchEvent(verifyPasswordEvent);
+			}
+			
+			private function verifyToken():void {
+				var verifyTokenEvent:VerifyTokenEvent = new VerifyTokenEvent();
+				CairngormEventDispatcher.getInstance().dispatchEvent(verifyTokenEvent);
+			}
+		]]>
+	</mx:Script>
+	<mx:Label x="10" y="36" text="Password:"/>
+	<mx:Label x="10" y="10" text="Email:"/>
+	<mx:TextInput x="79" y="8" width="291" id="verifyEmailTxt" text="brian.rinaldi@gmail.com"/>
+	<mx:TextInput id="verifyPasswordTxt" displayAsPassword="true" width="291" x="79" y="34"/>
+	<mx:Button label="Verify Login" click="verifyPassword()" x="276" y="64"/>
+	<mx:Button x="151" y="64" label="Verify My Token" click="verifyToken()"/>
+</mx:Panel>

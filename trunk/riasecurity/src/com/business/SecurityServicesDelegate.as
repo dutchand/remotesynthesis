@@ -38,5 +38,20 @@ package com.business {
 			// notify this command when the service call completes
 			token.addResponder( responder );
 		}
+		
+		
+		public function verifyPassword(email:String,password:String) : void {
+			// call the service
+			var token:AsyncToken = securityService.verifyPassword.send(email,password);
+			// notify this command when the service call completes
+			token.addResponder( responder );
+		}
+		
+		public function verifyToken(token:String) : void {
+			// call the service
+			var asyncToken:AsyncToken = securityService.verifyToken.send(token);
+			// notify this command when the service call completes
+			asyncToken.addResponder( responder );
+		}
 	}
 }

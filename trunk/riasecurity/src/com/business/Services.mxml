@@ -9,5 +9,7 @@
 		<mx:method name="saveUser" />
 		<mx:method name="login" />
 		<mx:method name="logoutUser" />
+		<mx:method name="verifyPassword" />
+		<mx:method name="verifyToken" />
 	</mx:RemoteObject>
 </cairngorm:ServiceLocator>
