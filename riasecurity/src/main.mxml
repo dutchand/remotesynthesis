@@ -8,4 +8,5 @@
 	<control:SecurityControl id="controller"/>
 	
 	<view:userInformation x="10" y="10" />
+	<view:loginWithToken x="10" y="178" />
 </mx:Application>

@@ -11,18 +11,16 @@ package com.events
 		public var fullName : String;
 		public var email : String;
 		public var password : String;
-		public var ssn : String;
 		
-		public function SaveUserEvent(fullName:String=null,email:String=null,password:String=null,ssn:String="") 
+		public function SaveUserEvent(fullName:String=null,email:String=null,password:String=null) 
 		{
 			super(EVENT_SAVE_USER);
 			this.fullName = fullName;
 			this.email = email;
 			this.password = password;
-			this.ssn = ssn;
 		}
 		override public function clone():Event {
-            return new SaveUserEvent(fullName,email,password,ssn);
+            return new SaveUserEvent(fullName,email,password);
         }
 
 	}	

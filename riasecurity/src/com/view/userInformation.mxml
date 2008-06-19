@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="158" title="User Information">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="160" title="User Information">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEventDispatcher;
@@ -34,7 +34,7 @@
 	<mx:TextInput x="83" y="34" width="287" id="emailTxt" text="brian.rinaldi@gmail.com"/>
 	<mx:TextInput x="83" y="60" width="287" id="passwordTxt" displayAsPassword="true"/>
 	<mx:Button x="304" y="90" label="Submit" id="submitBtn" click="saveUser()" />
-	<mx:Button x="120" y="90" label="Login as User" click="login('user')" />
-	<mx:Button x="0" y="90" label="Login as Admin" click="login('admin')" />
-	<mx:Button x="229" y="90" label="Logout" click="logout()" />
+	<mx:Button x="122" y="90" label="Login as User" click="login('user')" />
+	<mx:Button x="4" y="90" label="Login as Admin" click="login('admin')" />
+	<mx:Button x="232" y="90" label="Logout" click="logout()" />
 </mx:Panel>
