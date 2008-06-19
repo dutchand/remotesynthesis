@@ -24,12 +24,7 @@ package com.commands {
 			var delegate : SecurityServicesDelegate = new SecurityServicesDelegate( this );
 			// hash the password (one way)
 			var password:String = SHA256.hash(saveUserEvent.password);
-			// hash the ssn (two way)
-			var key:ByteArray = Hex.toArray(model.publicKey);
-			var cipher:ICipher = Crypto.getCipher("aes", key);
-			var encryptedSSN:ByteArray = Hex.toArray(saveUserEvent.ssn);
-			cipher.encrypt(encryptedSSN);
-			var user:User = new User(saveUserEvent.fullName,saveUserEvent.email,password,"",encryptedSSN);
+			var user:User = new User(saveUserEvent.fullName,saveUserEvent.email,password);
 			delegate.saveUser(user);
 		}
 		
@@ -40,7 +35,6 @@ package com.commands {
 			message += "Full Name : " + user.fullName + "\n";
 			message += "Email : " + user.email + "\n";
 			message += "Password : " + user.password + "\n";
-			message += "SSN : " + user.ssn;
 			Alert.show(message);
 		}
 		

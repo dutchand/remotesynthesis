@@ -25,9 +25,16 @@ package com.business {
 			token.addResponder( responder );
 		}
 		
-		public function getPublicKey() : void {
+		public function login(username:String,password:String,userRole:String) : void {
 			// call the service
-			var token:AsyncToken = securityService.getPublicKey.send();
+			var token:AsyncToken = securityService.login.send(username,password,userRole);
+			// notify this command when the service call completes
+			token.addResponder( responder );
+		}
+		
+		public function logoutUser() : void {
+			// call the service
+			var token:AsyncToken = securityService.logoutUser.send();
 			// notify this command when the service call completes
 			token.addResponder( responder );
 		}
