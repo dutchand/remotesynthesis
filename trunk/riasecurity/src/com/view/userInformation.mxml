@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="228" title="User Information">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="158" title="User Information">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEventDispatcher;
 			import com.events.SaveUserEvent;
+			import com.events.LoginEvent;
+			import com.events.LogoutEvent;
 			import com.model.ModelLocator;
 			
 			[Bindable]
 			public var model : ModelLocator = ModelLocator.getInstance();
 			
+			private function login(role:String):void {
+				var loginEvent:LoginEvent = new LoginEvent("remotesynth","foo",role);
+				CairngormEventDispatcher.getInstance().dispatchEvent(loginEvent);
+			}
+			
+			private function logout():void {
+				var logoutEvent:LogoutEvent = new LogoutEvent();
+				CairngormEventDispatcher.getInstance().dispatchEvent(logoutEvent);
+			}
+			
 			private function saveUser():void {
-				var saveUserEvent:SaveUserEvent = new SaveUserEvent(fullNameTxt.text,emailTxt.text,passwordTxt.text,ssnTxt.text);
+				var saveUserEvent:SaveUserEvent = new SaveUserEvent(fullNameTxt.text,emailTxt.text,passwordTxt.text);
 				CairngormEventDispatcher.getInstance().dispatchEvent(saveUserEvent);
 			}
 		]]>
@@ -18,12 +30,11 @@
 	<mx:Label x="10" y="10" text="Full Name:"/>
 	<mx:Label x="10" y="36" text="Email:"/>
 	<mx:Label x="10" y="62" text="Password:"/>
-	<mx:Label x="10" y="90" text="SSN"/>
-	<mx:TextInput x="83" y="8" width="287" id="fullNameTxt"/>
-	<mx:TextInput x="83" y="34" width="287" id="emailTxt"/>
+	<mx:TextInput x="83" y="8" width="287" id="fullNameTxt" text="Brian Rinaldi"/>
+	<mx:TextInput x="83" y="34" width="287" id="emailTxt" text="brian.rinaldi@gmail.com"/>
 	<mx:TextInput x="83" y="60" width="287" id="passwordTxt" displayAsPassword="true"/>
-	<mx:TextInput x="83" y="88" width="287" id="ssnTxt"/>
-	<mx:Button x="304" y="156" label="Submit" id="submitBtn" click="saveUser()" />
-	<mx:Label x="10" y="116" text="Public Key:"/>
-	<mx:Text x="84" y="116" text="{model.publicKey}" id="publicKey"/>
+	<mx:Button x="304" y="90" label="Submit" id="submitBtn" click="saveUser()" />
+	<mx:Button x="120" y="90" label="Login as User" click="login('user')" />
+	<mx:Button x="0" y="90" label="Login as Admin" click="login('admin')" />
+	<mx:Button x="229" y="90" label="Logout" click="logout()" />
 </mx:Panel>

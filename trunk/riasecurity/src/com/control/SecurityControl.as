@@ -11,7 +11,8 @@ package com.control
 		
 		public function SecurityControl():void
 		{
-			addCommand(GetPublicKeyEvent.EVENT_GET_KEY, GetPublicKeyCommand);
+			addCommand(LoginEvent.EVENT_LOGIN, LoginCommand);
+			addCommand(LogoutEvent.EVENT_LOGOUT, LogoutCommand);
 			addCommand(SaveUserEvent.EVENT_SAVE_USER, SaveUserCommand);
 		}
 		

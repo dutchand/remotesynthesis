@@ -7,6 +7,7 @@
 			destination="ColdFusion"
 			source="com.cf.securityRemote" showBusyCursor="true">
 		<mx:method name="saveUser" />
-		<mx:method name="getPublicKey" />
+		<mx:method name="login" />
+		<mx:method name="logoutUser" />
 	</mx:RemoteObject>
 </cairngorm:ServiceLocator>
