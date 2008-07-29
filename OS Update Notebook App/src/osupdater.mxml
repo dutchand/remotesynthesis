@@ -170,13 +170,17 @@
 				for(var i:Number=0; i<entries.length; i++){
 					if (entries[i].category.id != 0) {
 						if (i == 0 || entries[i].category.id != entries[i-1].category.id) {
-							fileText += "<h3>" + entries[i].category.categoryName + "</h3>\n\n";
+							fileText += "<p><h3>" + entries[i].category.categoryName + "</h3></p>\n\n";
 						}
 						if (i == 0 || entries[i].project != entries[i-1].project) {
-							fileText += "<strong>" + entries[i].project + "</strong><br />\n";
+							fileText += "<p><strong>";
+							if (entries[i].isNew == true) {
+								fileText += "New Project: ";
+							}
+							fileText += entries[i].project + "</strong><br />\n";
 						}
 						fileText += "<a href='" + entries[i].url + "'>" + entries[i].title + "</a><br />\n";
-						fileText += entries[i].content + "\n\n";
+						fileText += entries[i].content + "</p>\n\n";
 					}
 				}
 				return fileText;
@@ -203,6 +207,7 @@
 			<mx:columns>
 				<mx:DataGridColumn dataField="title" />
 				<mx:DataGridColumn dataField="url" />
+				<mx:DataGridColumn dataField="isNew" />
 				<mx:DataGridColumn headerText="category" labelFunction="getCategoryName" sortCompareFunction="categoryCompare" />
 				<mx:DataGridColumn dataField="project" />
 			</mx:columns>
