@@ -11,6 +11,7 @@ package com.vo
 		public var content:String = "";
 		public var category:Category = new Category;
 		public var project:String = "";
+		public var isNew:Boolean = false;
 
 		public function Entry()
 		{
