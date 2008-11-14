@@ -179,6 +179,9 @@
 							}
 							fileText += entries[i].project + "</strong><br />\n";
 						}
+						else {
+							fileText += "<p>";
+						}
 						fileText += "<a href='" + entries[i].url + "'>" + entries[i].title + "</a><br />\n";
 						fileText += entries[i].content + "</p>\n\n";
 					}
