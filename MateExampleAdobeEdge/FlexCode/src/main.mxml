@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="handleCreationComplete()"
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view="com.view.*"
+	xmlns:maps="com.maps.*"
+	layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import com.vo.*;
+			import com.events.CountriesEvent;
+			
+			private function handleCreationComplete():void {
+				addEventListener(CountriesEvent.COUNTRIESRECEIVED,metroSelector.setDefaultCountry);
+			}
+			
+		]]>
+	</mx:Script>
+	<maps:MainEventMap />
+	<mx:VBox x="2" y="2">
+		<view:MetroSelector id="metroSelector" />
+		<view:EventPanel />	
+	</mx:VBox>
+</mx:Application>

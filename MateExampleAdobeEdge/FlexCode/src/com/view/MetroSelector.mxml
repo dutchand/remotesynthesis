@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="600" height="90"
+	title="Event Search Parameters"
+	creationComplete="handleCreationComplete()">
+	<mx:Script>
+		<![CDATA[
+			import com.events.StatesEvent;
+			import mx.events.CollectionEvent;
+			import mx.collections.ArrayCollection;
+			import com.vo.metro.*;
+			import com.events.CountriesEvent;
+			import com.events.MetrosEvent;
+			import com.events.SearchEvent;
+
+			[Bindable]
+			public var countries:ArrayCollection;
+		
+			[Bindable]
+			public var upcomingStates:ArrayCollection;
+		
+			[Bindable]
+			public var metros:ArrayCollection;
+			
+			private function handleCreationComplete():void {
+				upcomingStates.addEventListener(CollectionEvent.COLLECTION_CHANGE,getMetros);
+			}
+			
+			public function setDefaultCountry(event:Event):void {
+				for (var i:Number = 0; i < countries.length; i++) {
+					if (countries[i].id == CountriesEvent.DEFAULT_COUNTRY) {
+						countrySelector.selectedIndex = i;
+						break;
+					}
+				}
+			}
+			
+			private function getStates(e:Event):void {
+				if (countries.length) {
+					var event:StatesEvent = new StatesEvent(StatesEvent.GET_STATES);
+					event.countryId = countrySelector.selectedItem.id;
+					dispatchEvent(event);
+				}
+			}
+			
+			private function getMetros(e:Event):void {
+				if (upcomingStates.length) {
+					var event:MetrosEvent = new MetrosEvent(MetrosEvent.GETMETROS);
+					event.stateId = stateSelector.selectedItem.id;
+					dispatchEvent(event);
+				}
+			}
+			
+			private function doSearch(e:Event):void {
+				var event:SearchEvent = new SearchEvent(SearchEvent.SEARCH);
+				event.countryId = countrySelector.selectedItem.id;
+				event.stateId = stateSelector.selectedItem.id;
+				event.metroId = metroSelector.selectedItem.id;
+				dispatchEvent(event);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:ComboBox id="countrySelector" dataProvider="{countries}" labelField="countryName" x="2" y="2" change="getStates(event)" />
+	<mx:ComboBox id="stateSelector" dataProvider="{upcomingStates}" labelField="stateName" x="{countrySelector.x + countrySelector.width + 2}" y="2" change="getMetros(event)" />
+	<mx:ComboBox id="metroSelector" dataProvider="{metros}" labelField="metroName" x="{stateSelector.x + stateSelector.width + 2}" y="2" />
+	<mx:Button id="searchButton" label="Search" x="{metroSelector.x + metroSelector.width + 2}" y="2" click="doSearch(event)" />
+</mx:Panel>

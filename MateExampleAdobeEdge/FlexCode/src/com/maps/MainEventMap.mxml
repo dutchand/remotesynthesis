@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	<mx:Script>
+		<![CDATA[
+			import com.events.*;
+			import com.business.UpcomingManager;
+			import com.view.*;
+			import mx.events.FlexEvent;
+		]]>
+	</mx:Script>
+	<mx:RemoteObject id="upcomingRemote" destination="ColdFusion" source="org.upcoming.upcomingRemote" />
+	
+	<EventHandlers type="{FlexEvent.APPLICATION_COMPLETE}" debug="false">
+		<EventAnnouncer generator="{CountriesEvent}" type="getCountries" />
+		<EventAnnouncer generator="{StatesEvent}" type="getStates">
+			<Properties countryId="{CountriesEvent.DEFAULT_COUNTRY}" />
+		</EventAnnouncer>
+	</EventHandlers>
+	
+	<EventHandlers type="{CountriesEvent.GETCOUNTRIES}" debug="false">
+		<RemoteObjectInvoker instance="{upcomingRemote}" method="getCountryList" debug="false">
+			<resultHandlers>
+         		<MethodInvoker generator="{UpcomingManager}"
+         			method="setCountries"
+         			arguments="{resultObject}"/>
+         		<EventAnnouncer generator="{CountriesEvent}" type="countriesReceived" />
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{StatesEvent.GET_STATES}" debug="false">
+		<RemoteObjectInvoker instance="{upcomingRemote}" method="getStateList" debug="false"
+			arguments="{[event.countryId]}">
+			<resultHandlers>
+         		<MethodInvoker generator="{UpcomingManager}"
+         			method="setUpcomingStates"
+         			arguments="{resultObject}"/>
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{MetrosEvent.GETMETROS}" debug="false">
+		<RemoteObjectInvoker instance="{upcomingRemote}" method="getMetroList" debug="false"
+			arguments="{[event.stateId]}">
+			<resultHandlers>
+         		<MethodInvoker generator="{UpcomingManager}"
+         			method="setMetros"
+         			arguments="{resultObject}"/>
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{SearchEvent.SEARCH}" debug="false">
+		<RemoteObjectInvoker instance="{upcomingRemote}" method="search" debug="false"
+			arguments="{[event.searchText,event.countryId,event.stateId,event.metroId]}">
+			<resultHandlers>
+         		<MethodInvoker generator="{UpcomingManager}"
+         			method="setUpcomingEvents"
+         			arguments="{resultObject}"/>
+         	</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+	
+	<Injectors target="{MetroSelector}">
+		<PropertyInjector targetKey="countries" source="{UpcomingManager}" sourceKey="countries" />
+		<PropertyInjector targetKey="upcomingStates" source="{UpcomingManager}" sourceKey="upcomingStates" />
+		<PropertyInjector targetKey="metros" source="{UpcomingManager}" sourceKey="metros" />
+	</Injectors>
+	
+	<Injectors target="{EventPanel}">
+		<PropertyInjector targetKey="upcomingEvents" source="{UpcomingManager}" sourceKey="upcomingEvents" />
+	</Injectors>
+</EventMap>
