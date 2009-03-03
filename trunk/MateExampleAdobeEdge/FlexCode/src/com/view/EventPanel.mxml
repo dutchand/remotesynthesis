@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="600" height="400" title="Search Results" creationComplete="handleCreationComplete()">
+	<mx:Script>
+		<![CDATA[
+			import com.vo.upcomingEvent.UpcomingEvent;
+			import mx.formatters.DateFormatter;
+			import mx.collections.ArrayCollection;
+			import mx.events.CollectionEvent;
+			
+			[Bindable]
+			public var upcomingEvents:ArrayCollection;
+			
+			[Bindable]
+			public var selectedEvent:UpcomingEvent;
+			
+			private var df:DateFormatter = new DateFormatter();
+			
+			private function handleCreationComplete():void {
+				upcomingEvents.addEventListener(CollectionEvent.COLLECTION_CHANGE,openGrid);
+				df.formatString = "MM/DD/YYYY";
+			}
+			
+			private function openGrid(event:Event):void {
+				if (upcomingEvents.length > 0 && eventsGrid.height < openEventsGrid.toValue) {
+					openEventsGrid.play()
+					openEventProps.play(null,true);
+				}
+			}
+			
+			private function setSelectedEvent():void {
+				if (eventsGrid.selectedItem != null) {
+					selectedEvent = eventsGrid.selectedItem as UpcomingEvent;
+				}
+			}
+			
+			private function closeGrid(event:Event):void {
+				if (eventsGrid.selectedItem != null && eventsGrid.height > openEventsGrid.fromValue) {
+					openEventsGrid.play(null,true)
+					openEventProps.play();
+				}
+			}
+			
+			private function formatDateColumn(item:Object, column:DataGridColumn):String
+			{
+				return df.format(item[column.dataField]);
+			}
+			
+			private function formatDate(item:Object):String
+			{
+				return df.format(item);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:AnimateProperty
+		id="openEventsGrid"
+		target="{eventsGrid}"
+		fromValue="100" 
+		property="height"
+		toValue="350" />
+	<mx:AnimateProperty
+		id="openEventProps"
+		target="{eventProps}"
+		fromValue="0" 
+		property="height"
+		toValue="250" />
+	<mx:DataGrid id="eventsGrid" width="99%" height="0" x="2" y="2" dataProvider="{upcomingEvents}" itemClick="setSelectedEvent();closeGrid(event)">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Event Name" dataField="eventName" />
+			<mx:DataGridColumn headerText="Start Date" dataField="startDate" labelFunction="formatDateColumn" />
+			<mx:DataGridColumn headerText="Price" dataField="ticketPrice" />
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:Panel id="eventProps" height="0" width="99%" x="{eventsGrid.x}" y="{eventsGrid.y + eventsGrid.height + 2}" title="{selectedEvent.eventName}">
+		<mx:VBox width="100%">
+			<mx:Text text="Start Date: {formatDate(selectedEvent.startDate)}" />
+			<mx:Text text="End Date: {formatDate(selectedEvent.endDate)}" />
+			<mx:Text text="Price: {selectedEvent.ticketPrice}" />
+			<mx:Text text="Venue: {selectedEvent.venueName}" />
+			<mx:Text text="Address: {selectedEvent.venueAddress}" />
+			<mx:Text text="City, State ZIP: {selectedEvent.venueCity}, {selectedEvent.venueState} {selectedEvent.venueZip}" />
+		</mx:VBox>
+	</mx:Panel>
+</mx:Panel>
