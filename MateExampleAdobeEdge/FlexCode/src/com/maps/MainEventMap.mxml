@@ -62,6 +62,7 @@
 	</EventHandlers>
 	
 	<Injectors target="{MetroSelector}">
+		<ListenerInjector method="setDefaultCountry" eventType="{CountriesEvent.COUNTRIESRECEIVED}"/>
 		<PropertyInjector targetKey="countries" source="{UpcomingManager}" sourceKey="countries" />
 		<PropertyInjector targetKey="upcomingStates" source="{UpcomingManager}" sourceKey="upcomingStates" />
 		<PropertyInjector targetKey="metros" source="{UpcomingManager}" sourceKey="metros" />

@@ -25,7 +25,7 @@
 				upcomingStates.addEventListener(CollectionEvent.COLLECTION_CHANGE,getMetros);
 			}
 			
-			public function setDefaultCountry(event:Event):void {
+			private function setDefaultCountry(event:Event):void {
 				for (var i:Number = 0; i < countries.length; i++) {
 					if (countries[i].id == CountriesEvent.DEFAULT_COUNTRY) {
 						countrySelector.selectedIndex = i;
