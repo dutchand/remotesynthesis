@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans default-autowire="byName">
+	<bean id="artDAO" class="com.withcsoption2.art.artDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="artGateway" class="com.withcsoption2.art.artGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="artGalleryService" class="com.withcsoption2.artGalleryService">
+	</bean>
+	<bean id="artistDAO" class="com.withcsoption2.artists.artistDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="artistGateway" class="com.withcsoption2.artists.artistGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+</beans>

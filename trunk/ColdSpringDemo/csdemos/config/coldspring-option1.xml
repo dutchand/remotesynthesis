@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<bean id="artDAO" class="com.withcs.art.artDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+		<constructor-arg name="artistDAO">
+			<ref bean="artistDAO"/>
+		</constructor-arg>
+	</bean>
+	<bean id="artGateway" class="com.withcs.art.artGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="artGalleryService" class="com.withcs.artGalleryService">
+		<constructor-arg name="artDAO">
+			<ref bean="artDAO"/>
+		</constructor-arg>
+		<constructor-arg name="artGateway">
+			<ref bean="artGateway"/>
+		</constructor-arg>
+		<constructor-arg name="artistDAO">
+			<ref bean="artistDAO"/>
+		</constructor-arg>
+		<constructor-arg name="artistGateway">
+			<ref bean="artistGateway"/>
+		</constructor-arg>
+	</bean>
+	<bean id="artistDAO" class="com.withcs.artists.artistDAO">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+	<bean id="artistGateway" class="com.withcs.artists.artistGateway">
+		<constructor-arg name="dsn"><value>${dsn}</value></constructor-arg>
+	</bean>
+</beans>
