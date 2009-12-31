@@ -1,0 +1,29 @@
+<application>
+
+	<name>Application Skeleton Generator</name>
+	<author>Brian Rinaldi</author>
+	<version>0.1</version>
+	<email>brian.rinaldi@gmail.com</email>	
+	<description>Creates a framework for starting new applications from a customizable list of app skeletons</description>	
+	<version>0</version>
+	<license>WTFPL (Do What The Fuck You Want To Public License)</license>
+    <menucontributions >
+
+		<contribution target="projectview">
+			<menu name="Skeletons">
+				<filters>
+					<filter type="folder" />
+					<filter type="project" />
+				</filters>
+	    		<action name="Generate Application Skeleton" handlerid="gen_skeleton" showResponse="true">
+				</action>
+			</menu>
+		</contribution>
+
+    </menucontributions>	
+
+	<handlers>		
+		<handler id="gen_skeleton" type="CFM" filename="selectSkeleton.cfm" />
+	</handlers>
+
+</application>
