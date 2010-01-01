@@ -118,6 +118,9 @@ component  output="false"
 		local.httpService.setUrl(arguments.urlToCheck);
 		local.httpService.setPath(expandPath("temp"));
 		local.result = local.httpService.send().getPrefix();
+
+		local.zipService = createObject("component","zipService").doUnzip(expandPath("../") & getFileFromPath(arguments.urlToCheck),expandPath("temp"));
+		
 	}
 	
 	private void function downloadFromRIAForge(
