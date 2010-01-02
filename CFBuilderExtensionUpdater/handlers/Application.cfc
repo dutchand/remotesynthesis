@@ -13,5 +13,7 @@ component  output="false" extends="BaseApplication"
 		required string targetPage) output="true"
 	{
 		super.onRequest(arguments.targetPage);
+		
+		include "#arguments.targetPage#";
 	}
 }

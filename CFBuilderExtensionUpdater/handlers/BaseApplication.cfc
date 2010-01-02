@@ -38,14 +38,15 @@ component  output="false"
 			url.downloadUpdate = false;
 		}
 		
-		if (structKeyExists(url,"downloadUpdate") && url.downloadUpdate == true) {
+		local.data = xmlParse(ideeventinfo);
+		if (isDefined("local.data.event.user.input.xmlAttributes.value") && local.data.event.user.input.xmlAttributes.value eq "Yes") {
 			// do the download and install
 			application.builderUpdaterService.downloadUpdate();
 			
 			// display the complete form. cleanup is done on the next time the extension is opened
 			application.builderUpdaterService.displayUpdateComplete();
 		}
-		else if (structKeyExists(url,"downloadUpdate") && url.downloadUpdate == false) {
+		else if (isDefined("data.event.user.input.xmlAttributes.value") && data.event.user.input.xmlAttributes.value eq "No") {
 			application.builderUpdaterService.setLastDateChecked(now());
 			local.iniPath = ExpandPath("settings.ini");
 			SetProfileString(local.iniPath,"main","lastDateChecked",application.builderUpdaterService.getLastDateChecked());
