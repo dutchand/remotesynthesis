@@ -43,7 +43,12 @@ component  output="false"
 			// do the download and install
 			application.builderUpdaterService.downloadUpdate();
 			
+			// run the cleanup
+			application.builderUpdaterService.completeUpdate();
 			// display the complete form. cleanup is done on the next time the extension is opened
+			application.builderUpdaterService.setLastDateChecked(now());
+			local.iniPath = ExpandPath("settings.ini");
+			SetProfileString(local.iniPath,"main","lastDateChecked",application.builderUpdaterService.getLastDateChecked());
 			application.builderUpdaterService.displayUpdateComplete();
 		}
 		else if (isDefined("data.event.user.input.xmlAttributes.value") && data.event.user.input.xmlAttributes.value eq "No") {

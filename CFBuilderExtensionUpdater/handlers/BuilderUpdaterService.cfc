@@ -70,6 +70,12 @@ component  output="false"
 	public void function completeUpdate()
 		hint="does cleanup tasks when a new update has been installed" output="false"
 	{
+		if (directoryExists(expandPath("temp"))) {
+			directoryDelete(expandPath("temp"),true);
+		}
+		if (directoryExists(expandPath("../__MACOSX"))) {
+			directoryDelete(expandPath("../__MACOSX"),true);
+		}
 	}
 	
 	private boolean function checkURL(

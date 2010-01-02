@@ -3,6 +3,6 @@
 		<cfargument name="file" type="string" required="true" />
 		<cfargument name="destination" type="string" required="true" />
 		
-		<cfzip file="#arguments.file#" action="unzip" destination="#arguments.destination#" storepath="yes" />
+		<cfzip file="#arguments.file#" action="unzip" destination="#arguments.destination#" storepath="yes" overwrite="yes" />
 	</cffunction>
 </cfcomponent>
