@@ -34,6 +34,10 @@ component  output="false"
 			onApplicationStart();
 		}
 		
+		if (isDefined("data.event.user.input.xmlAttributes.value") && data.event.user.input.xmlAttributes.value eq "No") {
+			url.downloadUpdate = false;
+		}
+		
 		if (structKeyExists(url,"downloadUpdate") && url.downloadUpdate == true) {
 			// do the download and install
 			application.builderUpdaterService.downloadUpdate();
