@@ -119,7 +119,7 @@ component  output="false"
 		local.httpService.setPath(expandPath("temp"));
 		local.result = local.httpService.send().getPrefix();
 
-		local.zipService = createObject("component","zipService").doUnzip(expandPath("../") & getFileFromPath(arguments.urlToCheck),expandPath("temp"));
+		local.zipService = createObject("component","zipService").doUnzip(expandPath("temp/") & getFileFromPath(arguments.urlToCheck),expandPath("../"));
 		
 	}
 	
