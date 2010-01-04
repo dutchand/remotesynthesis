@@ -10,6 +10,7 @@ component  output="false"
 		variables.currentVersion = arguments.currentVersion;
 		variables.remoteVersion = 0;
 		variables.riaForgeProjectName = arguments.riaForgeProjectName;
+		variables.riaForgeDownloadURL = "";
 		variables.urlToCheck = arguments.urlToCheck;
 		variables.lastDateChecked = arguments.lastDateChecked;
 		
@@ -121,7 +122,8 @@ component  output="false"
 		if (arrayLen(local.projectXML) and isNumeric(local.projectVersion[1].xmlText)) {
 			variables.remoteVersion = local.projectVersion[1].xmlText;
 			// get the download url
-			local.projectVersion = xmlSearch(local.result,"//project[starts-with(NAME,'#arguments.riaForgeProjectName#')]/VERSION");
+			local.projectURL = xmlSearch(local.result,"//project[starts-with(NAME,'#arguments.riaForgeProjectName#')]/PROJECTURL");
+			variables.riaForgeDownloadURL = local.projectURL + "/index.cfm?event=action.download&doit=true";
 		}
 		
 		if (variables.remoteVersion > variables.currentVersion) {
@@ -151,11 +153,22 @@ component  output="false"
 		
 	}
 	
-	private void function downloadFromRIAForge(
-		required string riaForgeProjectName)
+	private void function downloadFromRIAForge()
 		hint="downloads the zip from RIAForge" output="false"
 	{
-		// needs to be implemented
+		// put into temp folder
+		if (not directoryExists(expandPath('temp'))) {
+			directoryCreate(expandPath("temp"));
+		}
+		local.httpService = new http();
+		local.httpService.setMethod("get");
+		local.httpService.setCharset("utf-8");
+		local.httpService.setTimeout(10);
+		local.httpService.setUrl(variables.riaForgeDownloadURL);
+		local.httpService.setPath(expandPath("temp"));
+		local.result = local.httpService.send().getPrefix();
+
+		local.zipService = createObject("component","zipService").doUnzip(expandPath("temp/") & getFileFromPath(arguments.urlToCheck),expandPath("../"));
 	}
 
 }
