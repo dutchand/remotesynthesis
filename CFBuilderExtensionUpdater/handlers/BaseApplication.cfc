@@ -11,19 +11,12 @@ component  output="false"
 		local.riaForgeProjectName = trim(GetProfileString(local.iniPath,"main","riaForgeProjectName"));
 		local.lastDateChecked = trim(GetProfileString(local.iniPath,"main","lastDateChecked"));
 		
-		// read in the settings from the xml config
-		local.ide_config = fileRead(expandPath("../ide_config.xml"));
-		local.ide_config = xmlParse(local.ide_config);
-		
-		if (isNumeric(local.ide_config.application.version.xmlText)) {
-			local.currentVersion = local.ide_config.application.version.xmlText;
-			SetProfileString(local.iniPath,"main","version",local.currentVersion);
-		}
+		local.currentVersion = checkIDEConfig(local.iniPath);
 		
 		application.builderUpdaterService = new BuilderUpdaterService(local.currentVersion,local.urlToCheck,local.riaForgeProjectName,local.lastDateChecked); 
 		
 		SetProfileString(local.iniPath,"main","lastDateChecked",application.builderUpdaterService.getLastDateChecked());
-		
+
 		return true;
 	}
 	
@@ -49,6 +42,7 @@ component  output="false"
 			application.builderUpdaterService.setLastDateChecked(now());
 			local.iniPath = ExpandPath("settings.ini");
 			SetProfileString(local.iniPath,"main","lastDateChecked",application.builderUpdaterService.getLastDateChecked());
+			checkIDEConfig(local.iniPath); // reset the version in the config
 			application.builderUpdaterService.displayUpdateComplete();
 		}
 		else if (isDefined("data.event.user.input.xmlAttributes.value") && data.event.user.input.xmlAttributes.value eq "No") {
@@ -61,5 +55,19 @@ component  output="false"
 		else if (application.builderUpdaterService.isNewVersionAvailable()) {
 			application.builderUpdaterService.displayUpdateForm();
 		}
+	}
+	
+	private numeric function checkIDEConfig(
+		required string iniPath) {
+		// read in the settings from the xml config
+		local.ide_config = fileRead(expandPath("../ide_config.xml"));
+		local.ide_config = xmlParse(local.ide_config);
+		
+		if (isNumeric(local.ide_config.application.version.xmlText)) {
+			local.currentVersion = local.ide_config.application.version.xmlText;
+			SetProfileString(arguments.iniPath,"main","version",local.currentVersion);
+		}
+		
+		return local.currentVersion;
 	}
 }
