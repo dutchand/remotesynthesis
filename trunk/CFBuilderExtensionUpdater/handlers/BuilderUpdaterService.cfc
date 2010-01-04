@@ -34,7 +34,7 @@ component  output="false"
 		
 		if ((not isDate(variables.lastDateChecked)) or (dateDiff("d",now(),variables.lastDateChecked) < 0)) {
 			if (len(variables.riaForgeProjectName)) {
-				local.isRemoteVersionNewer = checkRIAForge(variables.riaForgeProjectName);
+				local.isRemoteVersionNewer = checkRIAForge(variables.urlToCheck,variables.riaForgeProjectName);
 			}
 			else {
 				local.isRemoteVersionNewer = checkURL(local.configLocation);
@@ -54,7 +54,7 @@ component  output="false"
 		hint="if the user accepted the update download it" output="false"
 	{
 		if (len(variables.riaForgeProjectName)) {
-			downloadFromRIAForge(variables.riaForgeProjectName);
+			downloadFromRIAForge(variables.urlToCheck,variables.riaForgeProjectName);
 		}
 		else {
 			downloadFromURL(variables.urlToCheck);
@@ -103,10 +103,32 @@ component  output="false"
 	}
 	
 	private boolean function checkRIAForge(
+		required string urlToCheck,
 		required string riaForgeProjectName)
 		hint="checks a for a newer version of this project at RIAForge" output="false"
 	{
-		return false;
+		local.isRemoteVersionNewer = false;
+		local.httpService = new http();
+		local.httpService.setMethod("get");
+		local.httpService.setCharset("utf-8");
+		local.httpService.setTimeout(10);
+		local.httpService.setUrl(arguments.urlToCheck);
+
+		local.result = local.httpService.send().getPrefix();
+		local.result = xmlParse(local.result.fileContent);
+		
+		local.projectVersion = xmlSearch(local.result,"//project[starts-with(NAME,'#arguments.riaForgeProjectName#')]/VERSION");
+		if (arrayLen(local.projectXML) and isNumeric(local.projectVersion[1].xmlText)) {
+			variables.remoteVersion = local.projectVersion[1].xmlText;
+			// get the download url
+			local.projectVersion = xmlSearch(local.result,"//project[starts-with(NAME,'#arguments.riaForgeProjectName#')]/VERSION");
+		}
+		
+		if (variables.remoteVersion > variables.currentVersion) {
+			local.isRemoteVersionNewer =  true;
+		}
+		
+		return local.isRemoteVersionNewer;
 	}
 	
 	private void function downloadFromURL(
