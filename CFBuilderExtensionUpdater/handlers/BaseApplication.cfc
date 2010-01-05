@@ -38,7 +38,7 @@ component  output="false"
 			
 			// run the cleanup
 			application.builderUpdaterService.completeUpdate();
-			// display the complete form. cleanup is done on the next time the extension is opened
+			// display the complete form.
 			application.builderUpdaterService.setLastDateChecked(now());
 			local.iniPath = ExpandPath("settings.ini");
 			SetProfileString(local.iniPath,"main","lastDateChecked",application.builderUpdaterService.getLastDateChecked());
