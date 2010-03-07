@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin id="remotesynth" name="Remotesynth" version="2.0" provider-name="BrianRinaldi" lastModified="2010-Mar-5">
+	<description>Remote Synthesis blog design</description>
+	<url></url>
+	<author>Brian Rinaldi</author>
+	<authorUrl>http://www.remotesynthesis.com</authorUrl>
+	<designAuthor>no idea</designAuthor>
+	<designAuthorUrl>http://www.remotesynthesis.com</designAuthorUrl>
+	<thumbnail></thumbnail>
+	<preview></preview>
+	<requiresVersion match="greaterOrEqual">1.1</requiresVersion>
+	<adminEditorCss>assets/styles/adminEditor.css</adminEditorCss>
+	<license></license>
+	<pageTemplates></pageTemplates>
+	<podlocations>
+		<location id="sidebar" name="Sidebar - general">
+			<!-- template pods defined in the skin -->
+			<pod id="tla">Sponsored Links</pod>
+			<pod id="categories">Categories</pod>
+			<pod id="monthly-archives">Archives (monthly)</pod>
+			<pod id="feeds">List of syndication feeds</pod>
+		</location>
+	</podlocations>
+</skin>
