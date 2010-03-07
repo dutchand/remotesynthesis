@@ -1,0 +1,261 @@
+body {
+	padding:0px;
+	margin:0px;
+	background-image:url('/skins/remotesynth/assets/images/bg.jpg');
+	font-family:Helvetica,sans-serif;
+}
+#header {
+	height:243px;
+	background-image:url('/skins/remotesynth/assets/images/header-bg.jpg');
+	background-repeat:repeat-x;
+}
+#header-inner {
+	background-image:url('/skins/remotesynth/assets/images/header.jpg');
+	background-repeat:no-repeat;
+	height:240px;
+	background-position:center;
+}
+#header-bot {
+	height:96px;
+	background-image:url('/skins/remotesynth/assets/images/header-bg-bot.png');
+	background-repeat:repeat-x;
+}
+#nav-outer {
+	margin-top:-187px;
+}
+#nav {
+	background-image:url('/skins/remotesynth/assets/images/nav-bg.png');
+	height:152px;
+	width:940px;
+	font-size:19px;
+}
+#nav {
+	margin-left:20px;
+}
+#nav-inner {
+	margin-left:20px
+}
+#nav-inner img {
+	padding-top:5px;
+	float:left;
+}
+#nav-inner #search {
+	padding-top:50px;
+	float:right;
+	text-align:center;
+	padding-right:25px;
+}
+.navitem {
+	height: 85px;
+	padding-top:50px;
+	float:left;
+	width:125px;
+	text-align:center;
+}
+.navitem-selected {
+	background-image: url('/skins/remotesynth/assets/images/nav_over.png');
+}
+#main {
+	width:1025px;
+}
+#main #sidebar-right {
+	width:280px;
+	float:right;
+	margin-right:55px;
+	display:block;
+}
+#main #sidebar-right .sidebar-box {
+	margin-bottom:15px;
+	border:1px solid #998227;
+	background-color:#EDEA8D;
+	min-height:150px;
+	color:#545454;
+}
+#main #sidebar-right .sidebar-box .pushpin {
+	background-image:url('/skins/remotesynth/assets/images/pushpin.png');
+	background-repeat:no-repeat;
+	background-position:center;
+	min-height:36px;
+}
+#main #sidebar-right .sidebar-box .sidebar-box-inner {
+	padding-top:5px;
+	padding-bottom:10px;
+	padding-right:30px;
+	padding-left:30px;
+	font-size:14px;
+	line-height:19px;
+}
+
+#main #sidebar-right .sidebar-box .sidebar-box-inner a {
+	color:#545454;
+	text-decoration:none;
+}
+
+.content {
+	width:701px;
+	margin-bottom:15px;
+}
+.content .content-top {
+	background-image:url('/skins/remotesynth/assets/images/content-area-top.png');
+	background-repeat:no-repeat;
+	width:701px;
+	height:60px;
+	position:relative;
+}
+.content .content-top .content-date {
+	position:absolute;
+	left:12px;
+	top:25px;
+	float:left;
+}
+
+.content .content-top .comment-count {
+	width:40px;
+	position:absolute;
+	right:41px;
+	top:20px;
+	color:#5E5D60;
+}
+.content .content-header {
+	font-size:28px;
+	text-decoration:none;
+	color:#E3DC19;
+}
+.content a {
+	color:#E3DC19;
+}
+.content .content-mid {
+	background-image:url('/skins/remotesynth/assets/images/content-area-mid.png');
+	background-repeat:repeat-y;
+	width:701px;
+	min-height:200px;
+	padding-left:80px;
+}
+.content-inner {
+	width:540px;
+	color:#FFFFFF;
+	font-size:14px;
+	padding-left:20px;
+	padding-bottom:14px;
+}
+.content .content-bot {
+	background-image:url('/skins/remotesynth/assets/images/content-area-bot.png');
+	background-repeat:no-repeat;
+	width:701px;
+	height:9px;
+}
+.gravatar {
+	width:60px;
+	float:left;
+	text-align:center;
+	padding-top:5px;
+}
+.gravatar-inner {
+	background-image:url('/skins/remotesynth/assets/images/gravatar-bg.png');
+	background-repeat:no-repeat;
+	height:50px;
+	width:60px;
+	padding-top:10px;
+}
+#comment {
+	display:block;
+	min-height:65px;
+	margin-bottom:10px;
+}
+#comment .comment-inner {
+	width:461px;
+	min-height:65px;
+	float:left;
+	display:block;
+}
+#comment .comment-inner-author {
+	width:421px;
+	min-height:65px;
+	float:left;
+	display:block;
+}
+.comment-left {
+	background-image:url('/skins/remotesynth/assets/images/comment-left.png');
+	background-repeat:no-repeat;
+	width:17px;
+	min-height:65px;
+	float:left;
+}
+.comment-top {
+	background-image:url('/skins/remotesynth/assets/images/comment-top.png');
+	height:6px;
+}
+.comment-top-author {
+	background-image:url('/skins/remotesynth/assets/images/comment-top-author.png');
+	height:6px;
+}
+.comment-bot {
+	background-image:url('/skins/remotesynth/assets/images/comment-bot.png');
+	height:6px;
+}
+.comment-bot-author {
+	background-image:url('/skins/remotesynth/assets/images/comment-bot-author.png');
+	height:6px;
+}
+.comment-byline {
+	font-size:17px;
+	font-style:italic;
+}
+.comment-left-author {
+	background-image:url('/skins/remotesynth/assets/images/comment-left-author.png');
+	background-repeat:no-repeat;
+	width:17px;
+	min-height:65px;
+	float:left;
+}
+.comment-body {
+	background-color:#482710;
+	min-height:45px;
+	color:#FFFFFF;
+	font-size:13px;
+	padding-top:3px;
+	padding-bottom:3px;
+	padding-left:10px;
+	padding-right:7px;
+}
+.comment-body-author {
+	background-color:#8696ac;
+	color:#FFFFFF;
+	font-size:13px;
+	padding-top:3px;
+	padding-bottom:3px;
+	padding-left:10px;
+	padding-right:7px;
+}
+.comment-body .comment-name {
+	color:#AD7E6A;
+}
+.comment-body .comment-name a {
+	color:#AD7E6A;
+	text-decoration:none;
+}
+.comment-body-author .comment-name {
+	color:#112a55;
+}
+.comment-body-author .comment-name a {
+	color:#112a55;
+	text-decoration:none;
+}
+.previous,.next {
+	color:#E3DC19;
+	text-decoration:none;
+}
+#footer {
+	background-color:#3F2313;
+	color:#FFFFFF;
+	text-align:center;
+	font-size:11px;
+	line-height:17px;
+	height:20px;
+}
+#archive h1 {
+	padding-left: 80px;
+	color:#E3DC19;
+	font-size: 16px;
+}
+}
